@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Layout from './Layout';
+import Layout from '../Layout';
 import { collection, addDoc } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db } from '../../firebase';
 import { Navigate } from 'react-router-dom';
-import { useUserContext } from './UserContext'; // Import useUserContext hook
+import { useUserContext } from '../UserContext'; // Import useUserContext hook
 import './moodTracker.css';
 
 const MoodTracker = () => {

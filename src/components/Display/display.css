@@ -1,0 +1,65 @@
+.display {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+    margin-top: 24px;
+  }
+  
+  .display-section {
+    margin-bottom: 32px;
+  }
+  
+  .section-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 16px;
+  }
+  
+  .section-content {
+    font-size: 16px;
+    color: #555555;
+    line-height: 1.6;
+  }
+  
+  .mental-health-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  
+  .info-item {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .info-label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #777777;
+    margin-bottom: 4px;
+  }
+  
+  .info-value {
+    font-size: 16px;
+    color: #333333;
+  }
+  
+  .interests-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .interest-item {
+    background-color: #f5f5f5;
+    color: #333333;
+    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+  }

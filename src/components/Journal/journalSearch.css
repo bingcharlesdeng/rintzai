@@ -1,0 +1,28 @@
+.journal-search {
+    margin-bottom: 1rem;
+  }
+  
+  .journal-search form {
+    display: flex;
+    align-items: center;
+  }
+  
+  .journal-search input {
+    flex: 1;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+  }
+  
+  .journal-search button {
+    margin-left: 1rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background-color: #764ba2;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
