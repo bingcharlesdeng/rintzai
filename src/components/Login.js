@@ -4,6 +4,7 @@ import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPasswor
 import { useUserContext } from './UserContext';
 import { createUserInDB } from './userService';
 import './login.css';
+import Navbar from './Navbar';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -48,6 +49,8 @@ const Login = () => {
   };
 
   return (
+    <>
+    <Navbar />
     <div className="login-container">
       <div className="login-card">
         <h1 className="login-title">Mental Wellness App</h1>
@@ -91,6 +94,7 @@ const Login = () => {
         </p>
       </div>
     </div>
+    </>
   );
 };
 

@@ -1,54 +1,76 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './display.css';
+import Header from './Header';
+import Gallery from './Gallery';
+import Navbar from '../Navbar';
+import { useUserContext } from '../UserContext';
+import { collection, query, where, getDocs, addDoc } from 'firebase/firestore';
+import { db, storage } from '../../firebase';
+import defaultAvatar from '../../assets/default-avatar.png';
+import NewPostModal from './NewPostModal';
 
-const Display = ({ user }) => {
+const Display = () => {
+  const { user } = useUserContext();
+  const [posts, setPosts] = useState([]);
+  const [isNewPostModalOpen, setIsNewPostModalOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      if (user) {
+        const postsRef = collection(db, 'posts');
+        const q = query(postsRef, where('userId', '==', user.uid));
+        const querySnapshot = await getDocs(q);
+        const fetchedPosts = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setPosts(fetchedPosts);
+        console.log('Posts fetched:', fetchedPosts);
+      }
+    };
+
+    fetchPosts();
+  }, [user]);
+
+  const handleNewPostClick = () => {
+    setIsNewPostModalOpen(true);
+  };
+
+  const handleNewPostModalClose = () => {
+    setIsNewPostModalOpen(false);
+  };
+
+  const handleNewPostSubmit = async (newPost) => {
+    try {
+      const postsRef = collection(db, 'posts');
+      await addDoc(postsRef, { ...newPost, userId: user.uid });
+      console.log('New post created:', newPost);
+      setIsNewPostModalOpen(false);
+    } catch (error) {
+      console.error('Error creating new post:', error);
+    }
+  };
+
   return (
-    <div className="display">
-      <div className="display-header">
-        <img src={user?.avatarUrl} alt="User Avatar" className="display-avatar" />
-        <div className="display-user-info">
-          <h2 className="display-name">{user?.name}</h2>
-          <p className="display-bio">{user?.bio}</p>
+    <>
+      <Navbar />
+      <div className="display-container">
+        <Header user={user} posts={posts} />
+        <Gallery posts={posts} />
+        <div className="new-post-button-container">
+          <button className="new-post-button" onClick={handleNewPostClick}>
+            <i className="fas fa-plus"></i> New Post
+          </button>
         </div>
+        {isNewPostModalOpen && (
+          <NewPostModal
+            onClose={handleNewPostModalClose}
+            onSubmit={handleNewPostSubmit}
+          />
+        )}
       </div>
-      <div className="display-stats">
-        <div className="stat-item">
-          <span className="stat-count">{user?.journalEntries || 0}</span>
-          <span className="stat-label">Journal Entries</span>
-        </div>
-        <div className="stat-item">
-          <span className="stat-count">{user?.moodTrackerEntries || 0}</span>
-          <span className="stat-label">Mood Tracker Entries</span>
-        </div>
-        <div className="stat-item">
-          <span className="stat-count">{user?.gratitudePosts || 0}</span>
-          <span className="stat-label">Gratitude Posts</span>
-        </div>
-      </div>
-      <div className="display-section">
-        <h3 className="section-title">Interests</h3>
-        <ul className="interests-list">
-          {user?.interests?.map((interest, index) => (
-            <li key={index} className="interest-item">
-              {interest}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
+    </>
   );
-};
-
-Display.defaultProps = {
-  user: {
-    avatarUrl: 'default-avatar.jpg',
-    name: 'Unknown User',
-    bio: '',
-    journalEntries: 0,
-    moodTrackerEntries: 0,
-    gratitudePosts: 0,
-    interests: [],
-  },
 };
 
 export default Display;

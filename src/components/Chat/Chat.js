@@ -131,7 +131,6 @@ const Chat = () => {
       <div className="chat-app">
         <div className="sidebar">
           <div className="header">
-            <h1>Chats</h1>
             <button className="new-chat-button" onClick={handleNewChat}>
               New Chat
             </button>

@@ -10,12 +10,22 @@ const Navbar = () => {
 
   const handleGoBack = () => {
     navigate(-1);
+    console.log('Navigating back');
   };
+
+  const handleLogoClick = () => {
+    navigate('/');
+    console.log('Navigating to home');
+  };
+
+  console.log('Navbar rendered');
 
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        <h1 className="navbar-logo">Rintzai</h1>
+        <h1 className="navbar-logo" onClick={handleLogoClick}>
+          Rintzai
+        </h1>
         <div className="navbar-buttons">
           <button
             className="navbar-button"
@@ -24,7 +34,14 @@ const Navbar = () => {
           >
             Go Back
           </button>
-          {isLoggedIn && <LogoutButton />}
+          {isLoggedIn && (
+            <>
+              <button className="navbar-button" onClick={() => navigate('/profile')}>
+                Profile
+              </button>
+              <LogoutButton />
+            </>
+          )}
         </div>
       </div>
     </nav>

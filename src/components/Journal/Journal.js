@@ -8,6 +8,7 @@ import JournalEntryForm from './JournalEntryForm';
 import PastEntryList from './PastEntryList';
 import EntryDetails from './EntryDetails';
 import JournalSearch from './JournalSearch';
+import Navbar from '../Navbar';
 
 const Journal = () => {
   const { user } = useUserContext();
@@ -53,6 +54,8 @@ const Journal = () => {
   );
 
   return (
+    <>
+    <Navbar/>
     <div className="journal-container">
       <h2 className="journal-title">My Journal</h2>
       <JournalSearch onSearch={handleSearch} />
@@ -65,6 +68,7 @@ const Journal = () => {
         </>
       )}
     </div>
+    </>
   );
 };
 
