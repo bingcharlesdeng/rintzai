@@ -1,26 +1,32 @@
 .profile-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    background-color: #f0f2f5;
+    background-color: #f8f9fa;
+    padding: 2rem 0;
   }
   
-  .profile-content {
+  .profile-wrapper {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
   
-  .profile-main {
+  .profile-content-wrapper {
     display: flex;
-    gap: 30px;
-    margin-top: 30px;
+    padding: 2rem;
   }
   
   .profile-sidebar {
     flex: 1;
+    margin-right: 2rem;
   }
   
-  .profile-sections {
+  .profile-content {
     flex: 2;
+  }
+  
+  .profile-actions {
+    padding: 1rem 2rem;
+    text-align: right;
+    border-top: 1px solid #e9ecef;
   }

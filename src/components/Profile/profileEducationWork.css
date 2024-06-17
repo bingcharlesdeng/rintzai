@@ -1,0 +1,27 @@
+.profile-education-work {
+    grid-column: 2 / 3;
+  }
+  
+  .occupation-text,
+  .education-text {
+    font-size: 1.2rem;
+    color: #333;
+  }
+  
+  .occupation-input,
+  .education-input {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  
+  .occupation-input:focus,
+  .education-input:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }

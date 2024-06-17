@@ -10,7 +10,7 @@ const ProfileActions = ({ editMode, onEdit, onSave }) => {
         </button>
       ) : (
         <button onClick={onEdit} className="edit-button">
-          Edit
+          Edit Profile
         </button>
       )}
     </div>

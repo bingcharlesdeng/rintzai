@@ -1,27 +1,23 @@
 .profile-actions {
   display: flex;
   justify-content: flex-end;
-  margin-top: 20px;
+  margin-top: 2rem;
 }
 
 .edit-button,
 .save-button {
-  background-color: #1877f2;
+  background-color: #007bff;
   color: #fff;
   border: none;
   border-radius: 5px;
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.2rem;
   font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s;
 }
 
 .edit-button:hover,
 .save-button:hover {
-  background-color: #166fe5;
-}
-
-.save-button {
-  margin-left: 10px;
+  background-color: #0056b3;
 }

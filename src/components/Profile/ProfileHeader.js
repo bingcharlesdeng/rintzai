@@ -15,27 +15,17 @@ const ProfileHeader = ({ profile, editMode, onFieldChange, onImageUpload }) => {
 
   const handleCoverImageUpload = async (e) => {
     const file = e.target.files[0];
-    try {
-      await onImageUpload('coverImage', file);
-    } catch (error) {
-      console.error('Error uploading cover image:', error);
-      // Handle the error, show an error message, or perform any necessary actions
-    }
+    await onImageUpload('coverImage', file);
   };
 
   const handleAvatarUpload = async (e) => {
     const file = e.target.files[0];
-    try {
-      await onImageUpload('avatarUrl', file);
-    } catch (error) {
-      console.error('Error uploading avatar:', error);
-      // Handle the error, show an error message, or perform any necessary actions
-    }
+    await onImageUpload('avatarUrl', file);
   };
 
   return (
     <div className="profile-header">
-      <div className="profile-cover" onClick={editMode ? handleCoverImageClick : null}>
+      <div className="cover-image" onClick={editMode ? handleCoverImageClick : null}>
         {profile.coverImage ? (
           <img src={profile.coverImage} alt="Cover" />
         ) : (
@@ -49,8 +39,8 @@ const ProfileHeader = ({ profile, editMode, onFieldChange, onImageUpload }) => {
           onChange={handleCoverImageUpload}
         />
       </div>
-      <div className="profile-info">
-        <div className="profile-avatar" onClick={editMode ? handleAvatarClick : null}>
+      <div className="header-content">
+        <div className="avatar" onClick={editMode ? handleAvatarClick : null}>
           {profile.avatarUrl ? (
             <img src={profile.avatarUrl} alt="User Avatar" />
           ) : (
@@ -64,28 +54,19 @@ const ProfileHeader = ({ profile, editMode, onFieldChange, onImageUpload }) => {
             onChange={handleAvatarUpload}
           />
         </div>
-        {editMode ? (
-          <input
-            type="text"
-            value={profile.name}
-            onChange={(e) => onFieldChange('name', e.target.value)}
-            className="profile-name-input"
-            placeholder="Name"
-          />
-        ) : (
-          <h2 className="profile-name">{profile.name || 'N/A'}</h2>
-        )}
-        {editMode ? (
-          <input
-            type="text"
-            value={profile.location}
-            onChange={(e) => onFieldChange('location', e.target.value)}
-            className="profile-location-input"
-            placeholder="Location"
-          />
-        ) : (
-          <p className="profile-location">{profile.location || 'N/A'}</p>
-        )}
+        <div className="profile-name">
+          {editMode ? (
+            <input
+              type="text"
+              value={profile.name}
+              onChange={(e) => onFieldChange('name', e.target.value)}
+              className="name-input"
+              placeholder="Name"
+            />
+          ) : (
+            <h2 className="name">{profile.name || 'N/A'}</h2>
+          )}
+        </div>
       </div>
     </div>
   );
