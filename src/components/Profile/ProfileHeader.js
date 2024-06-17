@@ -1,3 +1,4 @@
+// ProfileHeader.js
 import React, { useRef } from 'react';
 import './profileHeader.css';
 

@@ -1,9 +1,10 @@
+// Profile.js
 import React, { useState, useEffect } from 'react';
 import './profile.css';
-import ProfileHeader from './ProfileHeader';
-import ProfileSidebar from './ProfileSidebar';
-import ProfileContent from './ProfileContent';
-import ProfileActions from './ProfileActions';
+import ProfileHeader from './ProfileHeader'; // Import the component normally
+import ProfileSidebar from './ProfileSidebar'; // Import the component normally
+import ProfileContent from './ProfileContent'; // Import the component normally
+import ProfileActions from './ProfileActions'; // Import the component normally
 import Navbar from '../Navbar';
 import { useUserContext } from '../UserContext';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
@@ -19,7 +20,6 @@ const Profile = () => {
     name: '',
     about: '',
     location: '',
-    about: '',
     mentalHealthJourney: '',
     favoriteQuotes: [],
     hobbies: [],
@@ -99,5 +99,10 @@ const Profile = () => {
     </div>
   );
 };
+
+console.log('ProfileHeader:', ProfileHeader); // Log the imported component
+console.log('ProfileSidebar:', ProfileSidebar); // Log the imported component
+console.log('ProfileContent:', ProfileContent); // Log the imported component
+console.log('ProfileActions:', ProfileActions); // Log the imported component
 
 export default Profile;

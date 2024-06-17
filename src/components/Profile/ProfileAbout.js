@@ -1,3 +1,4 @@
+// ProfileAbout.js
 import React from 'react';
 import './profileAbout.css';
 
