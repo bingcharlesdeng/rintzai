@@ -1,36 +1,57 @@
-// Profile.js
 import React, { useState, useEffect } from 'react';
 import './profile.css';
-import ProfileHeader from './ProfileHeader'; // Import the component normally
-import ProfileSidebar from './ProfileSidebar'; // Import the component normally
-import ProfileContent from './ProfileContent'; // Import the component normally
-import ProfileActions from './ProfileActions'; // Import the component normally
+import ProfileHeader from './ProfileHeader';
+import ProfileSidebar from './ProfileSidebar';
+import ProfileContent from './ProfileContent';
+import ProfileActions from './ProfileActions';
 import Navbar from '../Navbar';
 import { useUserContext } from '../UserContext';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db, storage } from '../../firebase';
+import LoadingSpinner from '../LoadingSpinner';
+
 
 const Profile = () => {
   const { user } = useUserContext();
   const [editMode, setEditMode] = useState(false);
-  const [profile, setProfile] = useState({
-    coverImage: '',
-    avatarUrl: '',
-    name: '',
-    about: '',
-    location: '',
-    mentalHealthJourney: '',
-    favoriteQuotes: [],
-    hobbies: [],
-    occupation: '',
-    education: '',
-    age: '',
-    gender: '',
-    diagnoses: [],
-    treatments: [],
-    medications: [],
-  });
+  const [profile, setProfile] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      if (user) {
+        const profileRef = doc(db, 'profiles', user.uid);
+        const profileDoc = await getDoc(profileRef);
+
+        if (profileDoc.exists()) {
+          setProfile(profileDoc.data());
+        } else {
+          setProfile({
+            coverImage: '',
+            avatarUrl: '',
+            name: '',
+            about: '',
+            location: '',
+            mentalHealthJourney: '',
+            favoriteQuotes: [],
+            hobbies: [],
+            occupation: '',
+            education: '',
+            age: '',
+            gender: '',
+            diagnoses: [],
+            treatments: [],
+            medications: [],
+          });
+        }
+
+        setIsLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, [user]);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -75,7 +96,9 @@ const Profile = () => {
       }));
     }
   };
-
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
   return (
     <div className="profile-container">
       <Navbar />
@@ -86,6 +109,13 @@ const Profile = () => {
           onFieldChange={handleChange}
           onImageUpload={handleImageUpload}
         />
+        <div className="avatar-container">
+          {profile.avatarUrl ? (
+            <img src={profile.avatarUrl} alt="User Avatar" />
+          ) : (
+            <div className="avatar-placeholder">Upload Avatar</div>
+          )}
+        </div>
         <div className="profile-content-wrapper">
           <ProfileSidebar profile={profile} />
           <ProfileContent
@@ -99,6 +129,7 @@ const Profile = () => {
     </div>
   );
 };
+
 
 console.log('ProfileHeader:', ProfileHeader); // Log the imported component
 console.log('ProfileSidebar:', ProfileSidebar); // Log the imported component

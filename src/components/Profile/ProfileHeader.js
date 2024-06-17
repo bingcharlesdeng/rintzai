@@ -4,24 +4,14 @@ import './profileHeader.css';
 
 const ProfileHeader = ({ profile, editMode, onFieldChange, onImageUpload }) => {
   const coverImageInputRef = useRef(null);
-  const avatarInputRef = useRef(null);
 
   const handleCoverImageClick = () => {
     coverImageInputRef.current.click();
   };
 
-  const handleAvatarClick = () => {
-    avatarInputRef.current.click();
-  };
-
   const handleCoverImageUpload = async (e) => {
     const file = e.target.files[0];
     await onImageUpload('coverImage', file);
-  };
-
-  const handleAvatarUpload = async (e) => {
-    const file = e.target.files[0];
-    await onImageUpload('avatarUrl', file);
   };
 
   return (
@@ -41,20 +31,6 @@ const ProfileHeader = ({ profile, editMode, onFieldChange, onImageUpload }) => {
         />
       </div>
       <div className="header-content">
-        <div className="avatar" onClick={editMode ? handleAvatarClick : null}>
-          {profile.avatarUrl ? (
-            <img src={profile.avatarUrl} alt="User Avatar" />
-          ) : (
-            <div className="avatar-placeholder">Upload Avatar</div>
-          )}
-          <input
-            type="file"
-            accept="image/*"
-            ref={avatarInputRef}
-            style={{ display: 'none' }}
-            onChange={handleAvatarUpload}
-          />
-        </div>
         <div className="profile-name">
           {editMode ? (
             <input
