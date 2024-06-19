@@ -1,4 +1,3 @@
-// ProfileDetails.js
 import React from 'react';
 import './profileDetails.css';
 

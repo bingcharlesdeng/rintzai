@@ -1,8 +1,8 @@
-// ProfileHeader.js
 import React, { useRef } from 'react';
 import './profileHeader.css';
+import ProfileActions from './ProfileActions';
 
-const ProfileHeader = ({ profile, editMode, onFieldChange, onImageUpload }) => {
+const ProfileHeader = ({ profile, editMode, onFieldChange, onImageUpload, onEdit, onSave, onCancel }) => {
   const coverImageInputRef = useRef(null);
 
   const handleCoverImageClick = () => {
@@ -20,7 +20,7 @@ const ProfileHeader = ({ profile, editMode, onFieldChange, onImageUpload }) => {
         {profile.coverImage ? (
           <img src={profile.coverImage} alt="Cover" />
         ) : (
-          <div className="cover-placeholder">Upload Cover Image</div>
+          <div className="cover-placeholder">Add Cover Photo</div>
         )}
         <input
           type="file"
@@ -31,6 +31,13 @@ const ProfileHeader = ({ profile, editMode, onFieldChange, onImageUpload }) => {
         />
       </div>
       <div className="header-content">
+        <div className="avatar">
+          {profile.avatarUrl ? (
+            <img src={profile.avatarUrl} alt="User Avatar" />
+          ) : (
+            <div className="avatar-placeholder">Add Photo</div>
+          )}
+        </div>
         <div className="profile-name">
           {editMode ? (
             <input
@@ -45,6 +52,7 @@ const ProfileHeader = ({ profile, editMode, onFieldChange, onImageUpload }) => {
           )}
         </div>
       </div>
+      <ProfileActions editMode={editMode} onEdit={onEdit} onSave={onSave} onCancel={onCancel} />
     </div>
   );
 };

@@ -39,6 +39,9 @@ const Navbar = () => {
               <button className="navbar-button" onClick={() => navigate('/profile')}>
                 Profile
               </button>
+              <button className="navbar-button" onClick={() => navigate('/home')}>
+                Home
+              </button>
               <LogoutButton />
             </>
           )}

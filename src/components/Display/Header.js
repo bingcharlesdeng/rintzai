@@ -2,7 +2,7 @@ import React from 'react';
 import './header.css';
 import defaultAvatar from '../../assets/default-avatar.png';
 
-const Header = ({ user, posts }) => {
+const Header = ({ user, posts, onNewPostClick }) => {
   const followers = user?.followers || 0;
   const following = user?.following || 0;
 
@@ -33,6 +33,9 @@ const Header = ({ user, posts }) => {
           </div>
         </div>
       </div>
+      <button className="new-post-button" onClick={onNewPostClick}>
+        <i className="fas fa-plus"></i> New Post
+      </button>
     </header>
   );
 };

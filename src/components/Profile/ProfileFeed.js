@@ -1,4 +1,3 @@
-// ProfileFeed.js
 import React, { useState, useEffect } from 'react';
 import './profileFeed.css';
 import { collection, query, where, getDocs } from 'firebase/firestore';
@@ -8,6 +7,10 @@ import { useUserContext } from '../UserContext';
 const ProfileFeed = ({ profile }) => {
   const { user } = useUserContext();
   const [posts, setPosts] = useState([]);
+
+  console.log('ProfileFeed rendered');
+  console.log('user:', user);
+  console.log('profile:', profile);
 
   useEffect(() => {
     const fetchUserPosts = async () => {

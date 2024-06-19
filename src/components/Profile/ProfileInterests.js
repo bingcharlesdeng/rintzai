@@ -17,28 +17,29 @@ const ProfileInterests = ({ profile, editMode, onFieldChange }) => {
         ) : (
           <ul className="favorite-quotes-list">
             {profile.favoriteQuotes.map((quote, index) => (
-<li key={index} className="favorite-quote">
-{quote}
-</li>
-))}
-</ul>
-)}
-</div>
-<div className="profile-section">
-<h4 className="subsection-title">Hobbies</h4>
-{editMode ? (
-<input
-type="text"
-value={profile.hobbies.join(', ')}
-onChange={(e) => onFieldChange('hobbies', e.target.value.split(',').map((hobby) => hobby.trim()))}
-className="hobbies-input"
-placeholder="Enter your hobbies, separated by commas"
-/>
-) : (
-<p className="hobbies-text">{profile.hobbies.join(', ') || 'N/A'}</p>
-)}
-</div>
-</div>
-);
+              <li key={index} className="favorite-quote">
+                {quote}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+      <div className="profile-section">
+        <h4 className="subsection-title">Hobbies</h4>
+        {editMode ? (
+          <input
+            type="text"
+            value={profile.hobbies.join(', ')}
+            onChange={(e) => onFieldChange('hobbies', e.target.value.split(',').map((hobby) => hobby.trim()))}
+            className="hobbies-input"
+            placeholder="Enter your hobbies, separated by commas"
+          />
+        ) : (
+          <p className="hobbies-text">{profile.hobbies.join(', ') || 'N/A'}</p>
+        )}
+      </div>
+    </div>
+  );
 };
+
 export default ProfileInterests;

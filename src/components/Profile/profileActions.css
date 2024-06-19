@@ -1,23 +1,7 @@
 .profile-actions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 2rem;
-}
+  position: absolute;
+display: end;
+margin-top: -50px;
+left: 100%;
 
-.edit-button,
-.save-button {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 0.75rem 1.5rem;
-  font-size: 1.2rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.edit-button:hover,
-.save-button:hover {
-  background-color: #0056b3;
 }

@@ -3,7 +3,6 @@ import './profile.css';
 import ProfileHeader from './ProfileHeader';
 import ProfileSidebar from './ProfileSidebar';
 import ProfileContent from './ProfileContent';
-import ProfileActions from './ProfileActions';
 import Navbar from '../Navbar';
 import { useUserContext } from '../UserContext';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
@@ -11,12 +10,17 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db, storage } from '../../firebase';
 import LoadingSpinner from '../LoadingSpinner';
 
-
 const Profile = () => {
   const { user } = useUserContext();
   const [editMode, setEditMode] = useState(false);
   const [profile, setProfile] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  console.log('Profile rendered');
+  console.log('user:', user);
+  console.log('editMode:', editMode);
+  console.log('profile:', profile);
+  console.log('isLoading:', isLoading);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -33,35 +37,14 @@ const Profile = () => {
             name: '',
             about: '',
             location: '',
-            mentalHealthJourney: '',
-            favoriteQuotes: [],
-            hobbies: [],
-            occupation: '',
-            education: '',
-            age: '',
-            gender: '',
-            diagnoses: [],
-            treatments: [],
-            medications: [],
+            pronouns: '',
+            posts: [],
+            friends: [],
+            photos: [],
           });
         }
 
         setIsLoading(false);
-      }
-    };
-
-    fetchProfile();
-  }, [user]);
-
-  useEffect(() => {
-    const fetchProfile = async () => {
-      if (user) {
-        const profileRef = doc(db, 'profiles', user.uid);
-        const profileDoc = await getDoc(profileRef);
-
-        if (profileDoc.exists()) {
-          setProfile(profileDoc.data());
-        }
       }
     };
 
@@ -78,8 +61,10 @@ const Profile = () => {
     setEditMode(false);
   };
 
+  const handleCancel = () => setEditMode(false);
+
   const handleChange = (field, value) => {
-    setProfile(prevProfile => ({
+    setProfile((prevProfile) => ({
       ...prevProfile,
       [field]: value,
     }));
@@ -90,15 +75,17 @@ const Profile = () => {
       const storageRef = ref(storage, `profiles/${user.uid}/${field}`);
       await uploadBytes(storageRef, file);
       const downloadURL = await getDownloadURL(storageRef);
-      setProfile(prevProfile => ({
+      setProfile((prevProfile) => ({
         ...prevProfile,
         [field]: downloadURL,
       }));
     }
   };
+
   if (isLoading) {
     return <LoadingSpinner />;
   }
+
   return (
     <div className="profile-container">
       <Navbar />
@@ -108,32 +95,25 @@ const Profile = () => {
           editMode={editMode}
           onFieldChange={handleChange}
           onImageUpload={handleImageUpload}
+          onEdit={handleEdit}
+          onSave={handleSave}
+          onCancel={handleCancel}
         />
-        <div className="avatar-container">
-          {profile.avatarUrl ? (
-            <img src={profile.avatarUrl} alt="User Avatar" />
-          ) : (
-            <div className="avatar-placeholder">Upload Avatar</div>
-          )}
-        </div>
         <div className="profile-content-wrapper">
-          <ProfileSidebar profile={profile} />
+          <ProfileSidebar
+            profile={profile}
+            editMode={editMode}
+            onFieldChange={handleChange}
+          />
           <ProfileContent
             profile={profile}
             editMode={editMode}
             onFieldChange={handleChange}
           />
         </div>
-        <ProfileActions editMode={editMode} onEdit={handleEdit} onSave={handleSave} />
       </div>
     </div>
   );
 };
-
-
-console.log('ProfileHeader:', ProfileHeader); // Log the imported component
-console.log('ProfileSidebar:', ProfileSidebar); // Log the imported component
-console.log('ProfileContent:', ProfileContent); // Log the imported component
-console.log('ProfileActions:', ProfileActions); // Log the imported component
 
 export default Profile;

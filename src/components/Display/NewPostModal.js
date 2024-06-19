@@ -1,151 +1,108 @@
+// NewPostModal.js
 import React, { useState } from 'react';
+import UploadPage from './UploadPage';
+import DetailsPage from './DetailsPage';
 import './newPostModal.css';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { storage } from '../../firebase';
 
 const NewPostModal = ({ onClose, onSubmit }) => {
+  const [currentPage, setCurrentPage] = useState(1);
   const [mediaType, setMediaType] = useState('image');
   const [mediaFile, setMediaFile] = useState(null);
-  const [mediaPreview, setMediaPreview] = useState(null);
   const [caption, setCaption] = useState('');
-  const [aspectRatio, setAspectRatio] = useState('16:9');
+  const [location, setLocation] = useState('');
+  const [altText, setAltText] = useState('');
+  const [isUploading, setIsUploading] = useState(false);
 
-  const handleMediaTypeChange = (e) => {
-    setMediaType(e.target.value);
-    setMediaFile(null);
-    setMediaPreview(null);
-  };
-
-  const handleMediaFileChange = async (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setMediaFile(file);
-
-      // Upload the file to Firebase Storage and get the download URL
-      const storageRef = ref(storage, `posts/${file.name}`);
-      await uploadBytes(storageRef, file);
-      const downloadURL = await getDownloadURL(storageRef);
-      setMediaPreview(downloadURL);
+  const handleNext = () => {
+    if (currentPage === 1 && !mediaFile) {
+      console.log('Please upload a file before proceeding');
+      return;
     }
+    setCurrentPage((prevPage) => prevPage + 1);
   };
 
-  const handleCaptionChange = (e) => {
-    setCaption(e.target.value);
+  const handlePrev = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
   };
 
-  const handleAspectRatioChange = (e) => {
-    setAspectRatio(e.target.value);
-  };
-
-  const handleSubmit = () => {
-    if (mediaFile && mediaPreview) {
+  const handleSubmit = async () => {
+    if (mediaFile) {
+      setIsUploading(true);
       const newPost = {
         type: mediaType,
-        url: mediaPreview,
+        file: mediaFile,
         caption,
-        aspectRatio,
+        location,
+        altText,
       };
-      onSubmit(newPost);
+      console.log('Submitting new post:', newPost);
+      await onSubmit(newPost);
+      setIsUploading(false);
+      onClose();
+    } else {
+      console.log('No file uploaded');
     }
+  };
+
+  const handleFileUpload = (file) => {
+    console.log('File uploaded:', file);
+    setMediaFile(file);
   };
 
   return (
-    <div className="new-post-modal">
-      <div className="modal-content">
-        <span className="close-button" onClick={onClose}>
-          &times;
-        </span>
-        <h2>New Post</h2>
-        <div className="media-type-selector">
-          <label>
-            <input
-              type="radio"
-              name="mediaType"
-              value="image"
-              checked={mediaType === 'image'}
-              onChange={handleMediaTypeChange}
-            />
-            Image
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="mediaType"
-              value="video"
-              checked={mediaType === 'video'}
-              onChange={handleMediaTypeChange}
-            />
-            Video
-          </label>
-        </div>
-        <div className="media-upload">
-          <input
-            type="file"
-            accept={mediaType === 'image' ? 'image/*' : 'video/*'}
-            onChange={handleMediaFileChange}
-          />
-          {mediaPreview && (
-            <div className="media-preview-container">
-              <div
-                className={`media-preview ${
-                  aspectRatio === '16:9'
-                    ? 'aspect-ratio-16-9'
-                    : aspectRatio === '9:16'
-                    ? 'aspect-ratio-9-16'
-                    : 'aspect-ratio-1-1'
-                }`}
-              >
-                {mediaType === 'image' ? (
-                  <img src={mediaPreview} alt="Media Preview" />
-                ) : (
-                  <video src={mediaPreview} controls />
-                )}
-              </div>
+    <div className="modal-overlay">
+      <div className="new-post-modal">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h2>Create New Post</h2>
+            <button className="close-button" onClick={onClose}>
+              <i className="fas fa-times"></i>
+            </button>
+          </div>
+          {isUploading ? (
+            <div className="loading-spinner-container">
+                <div className="spinner"></div>
+                <p>Uploading...</p>
+            </div>
+          ) : (
+            <div className="modal-body">
+              {currentPage === 1 && (
+                <UploadPage
+                  mediaType={mediaType}
+                  setMediaType={setMediaType}
+                  onFileUpload={handleFileUpload}
+                />
+              )}
+              {currentPage === 2 && (
+                <DetailsPage
+                  caption={caption}
+                  setCaption={setCaption}
+                  location={location}
+                  setLocation={setLocation}
+                  altText={altText}
+                  setAltText={setAltText}
+                />
+              )}
             </div>
           )}
+          <div className="modal-footer">
+            {!isUploading && currentPage > 1 && (
+              <button className="prev-button" onClick={handlePrev}>
+                <i className="fas fa-chevron-left"></i> Prev
+              </button>
+            )}
+            {!isUploading && currentPage < 2 && (
+              <button className="next-button" onClick={handleNext}>
+                Next <i className="fas fa-chevron-right"></i>
+              </button>
+            )}
+            {!isUploading && currentPage === 2 && (
+              <button className="submit-button" onClick={handleSubmit}>
+                Share
+              </button>
+            )}
+          </div>
         </div>
-        <div className="aspect-ratio-selector">
-          <label>
-            <input
-              type="radio"
-              name="aspectRatio"
-              value="16:9"
-              checked={aspectRatio === '16:9'}
-              onChange={handleAspectRatioChange}
-            />
-            16:9
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="aspectRatio"
-              value="9:16"
-              checked={aspectRatio === '9:16'}
-              onChange={handleAspectRatioChange}
-            />
-            9:16
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="aspectRatio"
-              value="1:1"
-              checked={aspectRatio === '1:1'}
-              onChange={handleAspectRatioChange}
-            />
-            1:1
-          </label>
-        </div>
-        <div className="caption-input">
-          <textarea
-            placeholder="Write a caption..."
-            value={caption}
-            onChange={handleCaptionChange}
-          />
-        </div>
-        <button className="submit-button" onClick={handleSubmit}>
-          Post
-        </button>
       </div>
     </div>
   );

@@ -1,0 +1,60 @@
+.profile-posts {
+    margin-top: 20px;
+  }
+  
+  .section-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .post-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .post-item {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .post-content {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .post-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .like-button,
+  .comment-button,
+  .share-button {
+    background-color: transparent;
+    border: none;
+    color: #007bff;
+    font-size: 14px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: color 0.3s;
+  }
+  
+  .like-button:hover,
+  .comment-button:hover,
+  .share-button:hover {
+    color: #0056b3;
+  }
+  
+  .no-posts {
+    font-size: 16px;
+    color: #6c757d;
+    text-align: center;
+    font-style: italic;
+  }

@@ -1,39 +1,38 @@
 .profile-interests {
-    grid-column: 1 / 2;
-  }
-  
-  .favorite-quotes-list {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .favorite-quote {
-    font-size: 1.2rem;
-    font-style: italic;
-    color: #6c757d;
-    margin-bottom: 0.5rem;
-  }
-  
-  .favorite-quotes-input,
-  .hobbies-input {
-    width: 100%;
-    padding: 1rem;
-    font-size: 1.2rem;
-    line-height: 1.6;
-    border: 1px solid #ced4da;
-    border-radius: 5px;
-    outline: none;
-    transition: border-color 0.3s;
-  }
-  
-  .favorite-quotes-input:focus,
-  .hobbies-input:focus {
-    border-color: #80bdff;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-  }
-  
-  .hobbies-text {
-    font-size: 1.2rem;
-    color: #333;
-  }
-  
+  grid-column: 1 / 2;
+}
+
+.favorite-quotes-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.favorite-quote {
+  font-size: 16px;
+  font-style: italic;
+  color: #6c757d;
+  margin-bottom: 10px;
+}
+
+.favorite-quotes-input,
+.hobbies-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  line-height: 1.5;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.favorite-quotes-input:focus,
+.hobbies-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.hobbies-text {
+  font-size: 16px;
+  color: #333;
+}
