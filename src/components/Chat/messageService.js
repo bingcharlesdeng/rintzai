@@ -1,4 +1,4 @@
-import { db, collection, getDocs, query, where, addDoc, serverTimestamp, orderBy, doc, updateDoc, arrayUnion } from '../../firebase';
+import { db, collection, getDocs, query, where, addDoc, serverTimestamp, orderBy, doc, updateDoc, arrayUnion } from '../../firebase/firebase';
 
 // Fetch messages for a conversation
 const fetchMessages = async (conversationId) => {

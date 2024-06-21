@@ -1,0 +1,67 @@
+.support-network {
+    padding: 20px;
+  }
+  
+  .support-network h2 {
+    color: var(--color-primary);
+    font-size: 24px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--color-primary-light);
+    padding-bottom: 10px;
+  }
+  
+  .network-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .supporter-item {
+    background-color: var(--color-background-tertiary);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+  
+  .supporter-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .supporter-item img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+  
+  .supporter-info h3 {
+    color: var(--color-primary-dark);
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+  
+  .supporter-info p {
+    color: var(--color-text-secondary);
+    font-size: 14px;
+  }
+  
+  .add-supporter-button {
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+  }
+  
+  .add-supporter-button:hover {
+    background-color: var(--color-primary-dark);
+  }

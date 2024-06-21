@@ -5,7 +5,7 @@ import ChatInput from './ChatInput';
 import NewChatModal from './NewChatModal';
 import ConversationSearch from './ConversationSearch';
 import { sendMessage, fetchConversationsForUser, createNewConversation } from './messageService';
-import { db, collection, onSnapshot, query, where, orderBy } from '../../firebase';
+import { db, collection, onSnapshot, query, where, orderBy } from '../../firebase/firebase';
 import './chat.css';
 import UserContext from '../UserContext';
 import Navbar from '../Navbar';

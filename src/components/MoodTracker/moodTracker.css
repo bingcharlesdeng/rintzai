@@ -1,98 +1,99 @@
 .mood-tracker-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 2rem;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .mood-tracker-title {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-    color: #764ba2;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-  
-  .mood-selection {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-    margin-bottom: 1.5rem;
-  }
-  
-  .mood-button {
-    padding: 0.75rem 1.5rem;
-    background-color: #f0f0f0;
-    color: #333;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 1rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .mood-button:hover {
-    background-color: #ddd;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-  }
-  
-  .mood-button.selected {
-    background-color: #764ba2;
-    color: #fff;
-  }
-  
-  .mood-notes {
-    width: 100%;
-    padding: 1rem;
-    margin-bottom: 1.5rem;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    outline: none;
-    resize: vertical;
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
-  }
-  
-  .mood-notes:focus {
-    border-color: #764ba2;
-  }
-  
-  .submit-mood-button {
-    padding: 0.75rem 1.5rem;
-    background-color: #764ba2;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 1rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .submit-mood-button:hover {
-    background-color: #667eea;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-  }
-  
-  .submit-mood-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-  }
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.mood-tracker-title {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.mood-tracker-form {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.mood-selection, .mood-intensity, .mood-notes {
+  margin-bottom: 2rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.mood-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.mood-button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: #f0f0f0;
+}
+
+.mood-button:hover {
+  background-color: #e0e0e0;
+}
+
+.mood-button.selected {
+  background-color: #4CAF50;
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.mood-intensity input {
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.submit-mood-button {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.2rem;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-mood-button:hover {
+  background-color: #45a049;
+}
+
+.submit-mood-button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+.mood-tracker-insights {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}

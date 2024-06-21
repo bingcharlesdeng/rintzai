@@ -1,0 +1,30 @@
+.mood-calendar {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .mood-calendar h3 {
+    margin-bottom: 1rem;
+    color: #333;
+  }
+  
+  .react-calendar {
+    width: 100%;
+    border: none;
+    font-family: Arial, sans-serif;
+  }
+  
+  .mood-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin: 0 auto;
+  }
+  
+  .mood-indicator.happy { background-color: #FFD700; }
+  .mood-indicator.sad { background-color: #4169E1; }
+  .mood-indicator.angry { background-color: #FF4500; }
+  .mood-indicator.anxious { background-color: #9932CC; }
+  .mood-indicator.neutral { background-color: #808080; }

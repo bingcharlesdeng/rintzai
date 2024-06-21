@@ -1,0 +1,64 @@
+.journey-posts {
+    padding: 20px;
+  }
+  
+  .journey-posts h2 {
+    color: var(--color-primary);
+    font-size: 24px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--color-primary-light);
+    padding-bottom: 10px;
+  }
+  
+  .posts-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .post-item {
+    background-color: var(--color-background-tertiary);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+  }
+  
+  .post-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .post-item h3 {
+    color: var(--color-primary-dark);
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .post-item p {
+    color: var(--color-text-primary);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  
+  .post-date {
+    display: block;
+    color: var(--color-text-secondary);
+    font-size: 14px;
+    margin-top: 10px;
+  }
+  
+  .add-post-button {
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+  }
+  
+  .add-post-button:hover {
+    background-color: var(--color-primary-dark);
+  }

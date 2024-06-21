@@ -1,0 +1,29 @@
+.profile-navigation {
+    display: flex;
+    background-color: var(--color-background-secondary);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  
+  .nav-item {
+    flex: 1;
+    padding: 15px;
+    text-align: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--color-text-secondary);
+    transition: all 0.3s ease;
+  }
+  
+  .nav-item:hover {
+    background-color: var(--color-background-tertiary);
+  }
+  
+  .nav-item.active {
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+    font-weight: bold;
+  }

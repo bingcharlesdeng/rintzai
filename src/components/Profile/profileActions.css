@@ -1,7 +1,43 @@
 .profile-actions {
-  position: absolute;
-display: end;
-margin-top: -50px;
-left: 100%;
+  display: flex;
+  align-items: center;
+}
 
+.edit-button,
+.save-button,
+.cancel-button,
+.more-button {
+  background-color: var(--color-primary);
+  color: var(--color-text-light);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 1rem;
+}
+
+.edit-button:hover,
+.save-button:hover,
+.cancel-button:hover,
+.more-button:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.cancel-button {
+  background-color: var(--color-danger);
+}
+
+.cancel-button:hover {
+  background-color: var(--color-danger-dark);
+}
+
+.more-button {
+  background-color: var(--color-background-secondary);
+  color: var(--color-text-primary);
+}
+
+.more-button:hover {
+  background-color: var(--color-background-tertiary);
 }

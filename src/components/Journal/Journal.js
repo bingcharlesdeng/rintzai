@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
-import { db } from '../../firebase';
+import { db } from '../../firebase/firebase';
 import { useUserContext } from '../UserContext';
 import { Navigate } from 'react-router-dom';
 import './journal.css';

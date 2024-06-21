@@ -1,0 +1,24 @@
+.mood-indicator {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .mood-label {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    margin-right: 10px;
+  }
+  
+  .mood-value {
+    font-size: 16px;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 15px;
+  }
+  
+  .mood-value.happy { background-color: #FFD700; color: #000; }
+  .mood-value.sad { background-color: #4169E1; color: #fff; }
+  .mood-value.angry { background-color: #FF4500; color: #fff; }
+  .mood-value.anxious { background-color: #9932CC; color: #fff; }
+  .mood-value.neutral { background-color: #808080; color: #fff; }

@@ -1,89 +1,38 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './profileContent.css';
-import ProfileMentalHealth from './ProfileMentalHealth';
-import ProfileInterests from './ProfileInterests';
-import ProfileEducationWork from './ProfileEducationWork';
-import ProfilePosts from './ProfilePosts';
-import ProfileAbout from './ProfileAbout';
-import ProfileFriends from './ProfileFriends';
-import ProfilePhotos from './ProfilePhotos';
+import JourneyPosts from './JourneyPosts';
+import SupportNetwork from './SupportNetwork';
+import Milestones from './Milestones';
+import RecoveryGoals from './RecoveryGoals';
+import TherapyNotes from './TherapyNotes';
+import MoodOverview from './MoodOverview';
 
-const ProfileContent = ({ profile, editMode, onFieldChange }) => {
-  const [activeTab, setActiveTab] = useState('Posts');
+const ProfileContent = ({ profile, activeTab, moodEntries, onProfileUpdate }) => {
+  console.log('Rendering ProfileContent', { activeTab, profile });
 
-  console.log('ProfileContent rendered');
-  console.log('activeTab:', activeTab);
-  console.log('profile:', profile);
-  console.log('editMode:', editMode);
-
-  const renderTabContent = () => {
+  const renderContent = () => {
     switch (activeTab) {
-      case 'Posts':
-        return <ProfilePosts posts={profile.posts} />;
-      case 'About':
-        return <ProfileAbout profile={profile} editMode={editMode} onFieldChange={onFieldChange} />;
-      case 'Friends':
-        return <ProfileFriends friends={profile.friends} />;
-      case 'Photos':
-        return <ProfilePhotos photos={profile.photos} />;
-      case 'Mental Health':
-        return <ProfileMentalHealth profile={profile} editMode={editMode} onFieldChange={onFieldChange} />;
-      case 'Interests':
-        return <ProfileInterests profile={profile} editMode={editMode} onFieldChange={onFieldChange} />;
-      case 'Education & Work':
-        return <ProfileEducationWork profile={profile} editMode={editMode} onFieldChange={onFieldChange} />;
+      case 'Journey':
+        return <JourneyPosts posts={profile.journeyPosts} onProfileUpdate={onProfileUpdate} />;
+      case 'Support Network':
+        return <SupportNetwork network={profile.supportNetwork} onProfileUpdate={onProfileUpdate} />;
+      case 'Milestones':
+        return <Milestones milestones={profile.milestones} onProfileUpdate={onProfileUpdate} />;
+      case 'Recovery Goals':
+        return <RecoveryGoals goals={profile.recoveryGoals} onProfileUpdate={onProfileUpdate} />;
+      case 'Therapy Notes':
+        return <TherapyNotes notes={profile.therapyNotes} onProfileUpdate={onProfileUpdate} />;
+      case 'Mood Overview':
+        return <MoodOverview moodEntries={moodEntries} />;
       default:
+        console.log('Unknown tab selected:', activeTab);
         return null;
     }
   };
 
   return (
-    <div className="profile-content">
-      <div className="profile-tabs">
-        <div
-          className={`tab ${activeTab === 'Posts' ? 'active' : ''}`}
-          onClick={() => setActiveTab('Posts')}
-        >
-          Posts
-        </div>
-        <div
-          className={`tab ${activeTab === 'About' ? 'active' : ''}`}
-          onClick={() => setActiveTab('About')}
-        >
-          About
-        </div>
-        <div
-          className={`tab ${activeTab === 'Friends' ? 'active' : ''}`}
-          onClick={() => setActiveTab('Friends')}
-        >
-          Friends
-        </div>
-        <div
-          className={`tab ${activeTab === 'Photos' ? 'active' : ''}`}
-          onClick={() => setActiveTab('Photos')}
-        >
-          Photos
-        </div>
-        <div
-          className={`tab ${activeTab === 'Mental Health' ? 'active' : ''}`}
-          onClick={() => setActiveTab('Mental Health')}
-        >
-          Mental Health
-        </div>
-        <div
-          className={`tab ${activeTab === 'Interests' ? 'active' : ''}`}
-          onClick={() => setActiveTab('Interests')}
-        >
-          Interests
-        </div>
-        <div
-          className={`tab ${activeTab === 'Education & Work' ? 'active' : ''}`}
-          onClick={() => setActiveTab('Education & Work')}
-        >
-          Education & Work
-        </div>
-      </div>
-      <div className="profile-tab-content">{renderTabContent()}</div>
+    <div className="profile-content-container">
+      {renderContent()}
     </div>
   );
 };

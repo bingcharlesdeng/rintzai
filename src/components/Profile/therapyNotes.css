@@ -1,0 +1,76 @@
+.therapy-notes {
+    padding: 20px;
+  }
+  
+  .therapy-notes h2 {
+    color: var(--color-primary);
+    font-size: 24px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--color-primary-light);
+    padding-bottom: 10px;
+  }
+  
+  .notes-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .note-item {
+    background-color: var(--color-background-tertiary);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+    position: relative;
+  }
+  
+  .note-item::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    width: 20px;
+    height: 20px;
+    background-color: var(--color-background-tertiary);
+    transform: rotate(45deg);
+  }
+  
+  .note-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .note-item h3 {
+    color: var(--color-primary-dark);
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .note-item p {
+    color: var(--color-text-primary);
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+  
+  .note-date {
+    display: block;
+    color: var(--color-text-secondary);
+    font-size: 14px;
+  }
+  
+  .add-note-button {
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+  }
+  
+  .add-note-button:hover {
+    background-color: var(--color-primary-dark);
+  }

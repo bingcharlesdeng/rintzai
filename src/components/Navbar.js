@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useUserContext } from './UserContext';
 import LogoutButton from './LogoutButton';
 import './navbar.css';
@@ -18,33 +18,57 @@ const Navbar = () => {
     console.log('Navigating to home');
   };
 
+  const renderNavLinks = () => {
+    if (isLoggedIn) {
+      return (
+        <>
+          <NavLink to="/profile" className="navbar-link" activeClassName="active">
+            Profile
+          </NavLink>
+          <NavLink to="/home" className="navbar-link" activeClassName="active">
+            Home
+          </NavLink>
+          <NavLink to="/journal" className="navbar-link" activeClassName="active">
+            Journal
+          </NavLink>
+          <NavLink to="/mood-tracker" className="navbar-link" activeClassName="active">
+            Mood Tracker
+          </NavLink>
+          <NavLink to="/chat" className="navbar-link" activeClassName="active">
+            Chat
+          </NavLink>
+          <NavLink to="/quotes" className="navbar-link" activeClassName="active">
+            Quotes
+          </NavLink>
+          <LogoutButton />
+        </>
+      );
+    }
+    return null;
+  };
+
+  const renderBackButton = () => {
+    if (window.location.pathname !== '/') {
+      return (
+        <button className="navbar-back-button" onClick={handleGoBack}>
+          &larr; Go Back
+        </button>
+      );
+    }
+    return null;
+  };
+
   console.log('Navbar rendered');
 
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        <h1 className="navbar-logo" onClick={handleLogoClick}>
+        <NavLink to="/" className="navbar-logo" onClick={handleLogoClick}>
           Rintzai
-        </h1>
-        <div className="navbar-buttons">
-          <button
-            className="navbar-button"
-            onClick={handleGoBack}
-            disabled={window.location.pathname === '/'}
-          >
-            Go Back
-          </button>
-          {isLoggedIn && (
-            <>
-              <button className="navbar-button" onClick={() => navigate('/profile')}>
-                Profile
-              </button>
-              <button className="navbar-button" onClick={() => navigate('/home')}>
-                Home
-              </button>
-              <LogoutButton />
-            </>
-          )}
+        </NavLink>
+        <div className="navbar-links">
+          {renderBackButton()}
+          {renderNavLinks()}
         </div>
       </div>
     </nav>

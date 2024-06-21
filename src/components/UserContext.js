@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { createUserInDB } from './userService'; // Import the createUserInDB function
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { db } from '../firebase/firebase';
 
 const UserContext = createContext(null);
 
@@ -10,11 +11,16 @@ export const UserProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const auth = getAuth();
 
-  // Listen for auth state changes
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
-        await createUserInDB(currentUser); // Create a new user in the database if they don't exist
+        const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
+        if (!userDoc.exists()) {
+          await setDoc(doc(db, 'users', currentUser.uid), {
+            email: currentUser.email,
+            displayName: currentUser.displayName || '',
+          });
+        }
         setUser(currentUser);
         setIsLoggedIn(true);
       } else {
@@ -27,29 +33,18 @@ export const UserProvider = ({ children }) => {
     return () => unsubscribe();
   }, [auth]);
 
-  const login = (userData) => {
-    setUser(userData);
-    setIsLoggedIn(true);
-  };
-
-  const logout = async () => {
-    try {
-      await auth.signOut();
-      setUser(null);
-      setIsLoggedIn(false);
-    } catch (error) {
-      console.error('Logout failed:', error);
+  const updateUserProfile = async (userData) => {
+    if (user) {
+      await setDoc(doc(db, 'users', user.uid), userData, { merge: true });
+      setUser({ ...user, ...userData });
     }
   };
 
-  const value = { user, isLoggedIn, login, logout, isLoading };
+  const value = { user, isLoggedIn, isLoading, updateUserProfile };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
 
-export const useUserContext = () => {
-  const context = useContext(UserContext);
-  return context;
-};
+export const useUserContext = () => useContext(UserContext);
 
 export default UserContext;

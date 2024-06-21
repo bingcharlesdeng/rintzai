@@ -6,7 +6,7 @@ import Gallery from './Gallery';
 import Navbar from '../Navbar';
 import { useUserContext } from '../UserContext';
 import { collection, query, where, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore';
-import { db, storage, ref, uploadBytesResumable, getDownloadURL } from '../../firebase';
+import { db, storage, ref, uploadBytesResumable, getDownloadURL } from '../../firebase/firebase';
 import NewPostModal from './NewPostModal';
 import PostModal from './PostModal';
 

@@ -1,84 +1,60 @@
 import React, { useState, useEffect } from 'react';
 import './profile.css';
 import ProfileHeader from './ProfileHeader';
-import ProfileSidebar from './ProfileSidebar';
+import ProfileNavigation from './ProfileNavigation';
 import ProfileContent from './ProfileContent';
-import Navbar from '../Navbar';
+import ProfileSidebar from './ProfileSidebar';
 import { useUserContext } from '../UserContext';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { db, storage } from '../../firebase';
+import { fetchUserProfile, fetchUserMoodEntries, updateUserProfile } from './profileService';
 import LoadingSpinner from '../LoadingSpinner';
+import Navbar from '../Navbar';
 
 const Profile = () => {
   const { user } = useUserContext();
-  const [editMode, setEditMode] = useState(false);
+  const [activeTab, setActiveTab] = useState('Journey');
   const [profile, setProfile] = useState(null);
+  const [moodEntries, setMoodEntries] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  console.log('Profile rendered');
-  console.log('user:', user);
-  console.log('editMode:', editMode);
-  console.log('profile:', profile);
-  console.log('isLoading:', isLoading);
-
   useEffect(() => {
-    const fetchProfile = async () => {
-      if (user) {
-        const profileRef = doc(db, 'profiles', user.uid);
-        const profileDoc = await getDoc(profileRef);
+    console.log('Profile component mounted');
+    const loadProfileData = async () => {
+      if (user && user.uid) {
+        console.log('Fetching profile data for user:', user.uid);
+        try {
+          const profileData = await fetchUserProfile(user.uid);
+          setProfile(profileData);
+          console.log('Profile data fetched:', profileData);
 
-        if (profileDoc.exists()) {
-          setProfile(profileDoc.data());
-        } else {
-          setProfile({
-            coverImage: '',
-            avatarUrl: '',
-            name: '',
-            about: '',
-            location: '',
-            pronouns: '',
-            posts: [],
-            friends: [],
-            photos: [],
-          });
+          const moodData = await fetchUserMoodEntries(user.uid);
+          setMoodEntries(moodData);
+          console.log('Mood entries fetched:', moodData);
+        } catch (error) {
+          console.error('Error fetching profile data:', error);
+        } finally {
+          setIsLoading(false);
         }
-
+      } else {
+        console.log('User not logged in or user ID not available');
         setIsLoading(false);
       }
     };
 
-    fetchProfile();
+    loadProfileData();
+
+    return () => {
+      console.log('Profile component unmounted');
+    };
   }, [user]);
 
-  const handleEdit = () => setEditMode(true);
-
-  const handleSave = async () => {
-    if (user) {
-      const profileRef = doc(db, 'profiles', user.uid);
-      await setDoc(profileRef, profile);
-    }
-    setEditMode(false);
-  };
-
-  const handleCancel = () => setEditMode(false);
-
-  const handleChange = (field, value) => {
-    setProfile((prevProfile) => ({
-      ...prevProfile,
-      [field]: value,
-    }));
-  };
-
-  const handleImageUpload = async (field, file) => {
-    if (user && file) {
-      const storageRef = ref(storage, `profiles/${user.uid}/${field}`);
-      await uploadBytes(storageRef, file);
-      const downloadURL = await getDownloadURL(storageRef);
-      setProfile((prevProfile) => ({
-        ...prevProfile,
-        [field]: downloadURL,
-      }));
+  const handleProfileUpdate = async (updatedProfile) => {
+    console.log('Updating profile:', updatedProfile);
+    try {
+      const updated = await updateUserProfile(user.uid, updatedProfile);
+      setProfile(updated);
+      console.log('Profile updated successfully');
+    } catch (error) {
+      console.error('Error updating profile:', error);
     }
   };
 
@@ -86,33 +62,36 @@ const Profile = () => {
     return <LoadingSpinner />;
   }
 
+  if (!user || !profile) {
+    return <div>Please log in to view your profile.</div>;
+  }
+
+  const latestMood = moodEntries.length > 0 ? moodEntries[moodEntries.length - 1].mood : null;
+
   return (
-    <div className="profile-container">
+    <>
       <Navbar />
-      <div className="profile-wrapper">
+      <div className="profile-container">
         <ProfileHeader
           profile={profile}
-          editMode={editMode}
-          onFieldChange={handleChange}
-          onImageUpload={handleImageUpload}
-          onEdit={handleEdit}
-          onSave={handleSave}
-          onCancel={handleCancel}
+          latestMood={latestMood}
+          isOwnProfile={true}
+          onProfileUpdate={handleProfileUpdate}
         />
-        <div className="profile-content-wrapper">
-          <ProfileSidebar
-            profile={profile}
-            editMode={editMode}
-            onFieldChange={handleChange}
-          />
-          <ProfileContent
-            profile={profile}
-            editMode={editMode}
-            onFieldChange={handleChange}
-          />
+        <div className="profile-content">
+          <ProfileSidebar profile={profile} />
+          <div className="profile-main">
+            <ProfileNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
+            <ProfileContent 
+              profile={profile} 
+              activeTab={activeTab} 
+              moodEntries={moodEntries}
+              onProfileUpdate={handleProfileUpdate}
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

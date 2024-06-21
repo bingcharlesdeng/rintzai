@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { db, collection, onSnapshot, query, where, orderBy } from '../../firebase';
+import { db, collection, onSnapshot, query, where, orderBy } from '../../firebase/firebase';
 import './chatWindow.css';
 import ChatMessage from './ChatMessage';
 
