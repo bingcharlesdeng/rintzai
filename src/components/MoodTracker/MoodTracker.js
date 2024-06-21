@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../Layout';
 import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
-import { db } from '../../firebase/firebase';
 import { Navigate } from 'react-router-dom';
 import { useUserContext } from '../UserContext';
 import './moodTracker.css';
@@ -13,6 +12,9 @@ import PhysicalSensations from './PhysicalSensations';
 import SignificantChanges from './SignificantChanges';
 import MoodCalendar from './MoodCalender';
 import ProgressReport from './ProgressReport';
+import { db } from '../../firebase/firebase';
+
+
 
 const MoodTracker = () => {
   const { user } = useUserContext();

@@ -3,6 +3,7 @@ import { formatRelativeTime } from './utils';
 import './conversationItem.css';
 import { db, collection, doc, getDoc } from '../../firebase/firebase';
 
+
 const ConversationItem = ({ conversation, onSelectConversation, isSelected, loggedInUser }) => {
   const [participantName, setParticipantName] = useState('');
 

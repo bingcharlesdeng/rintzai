@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { db, collection, getDocs, query, where, orderBy } from '../../firebase/firebase';
 
+
 const ConversationSearch = ({ conversations, onSearchResults }) => {
   const [searchTerm, setSearchTerm] = useState('');
 

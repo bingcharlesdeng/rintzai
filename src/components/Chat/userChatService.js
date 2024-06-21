@@ -1,5 +1,6 @@
 import { db, collection, getDocs, query, where } from '../../firebase/firebase';
 
+
 const searchUsers = async (searchTerm) => {
   const usersRef = collection(db, 'users');
   const q = query(
