@@ -9,12 +9,13 @@ import Home from './components/Home/Home';
 import Journal from './components/Journal/Journal';
 import MoodTracker from './components/MoodTracker/MoodTracker';
 import Chat from './components/Chat/Chat';
-import DailyQuote from './components/Quotes';
+import Quotes from './components/Quotes/Quotes';
 import Profile from './components/Profile/Profile';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { UserProvider } from './components/UserContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Display from './components/Display/Display';
+import Gratitude from './components/Gratitude/Gratitude';
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -47,7 +48,9 @@ const App = () => {
             <Route path="journal" element={<Journal />} />
             <Route path="mood-tracker" element={<MoodTracker />} />
             <Route path="chat" element={<Chat />} />
-            <Route path="quotes" element={<DailyQuote />} />
+            <Route path="quotes" element={<Quotes />} />
+            <Route path="gratitude" element={<Gratitude />} />
+
 
           </Route>
         </Routes>

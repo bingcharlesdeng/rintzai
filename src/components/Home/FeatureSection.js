@@ -12,6 +12,8 @@ const FeatureSection = () => {
       <Link to="/journal">Journal</Link>
       <Link to="/chat">Chat</Link>
       <Link to="/quotes">Quotes</Link>
+      <Link to="/gratitude">Gratitude</Link>
+
     </div>
   );
 };

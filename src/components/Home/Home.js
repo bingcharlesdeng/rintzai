@@ -4,7 +4,7 @@ import { useUserContext } from '../UserContext';
 import Navbar from '../Navbar';
 import WelcomeMessage from '../WelcomeMessage';
 import FeatureSection from './FeatureSection';
-import QuoteSection from '../QuoteSection';
+import QuoteSection from '../Quotes/QuoteSection';
 import AnimatedArt from '../AnimatedArt';
 import './home.css';
 

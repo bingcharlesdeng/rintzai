@@ -1,0 +1,63 @@
+.journal-entry-list {
+    margin-top: 20px;
+  }
+  
+  .journal-entry-list h2 {
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 1.8rem;
+  }
+  
+  .entry-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: box-shadow 0.3s, transform 0.3s;
+  }
+  
+  .entry-item:hover {
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+  }
+  
+  .entry-item.selected {
+    background-color: #e6f7ff;
+    border-color: #91d5ff;
+  }
+  
+  .entry-item h3 {
+    margin: 0 0 10px 0;
+    color: #333;
+    font-size: 1.2rem;
+  }
+  
+  .entry-item p {
+    color: #666;
+    margin: 0 0 10px 0;
+    font-size: 1rem;
+  }
+  
+  .entry-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+  }
+  
+  .mood-indicator {
+    padding: 3px 8px;
+    border-radius: 12px;
+    text-transform: capitalize;
+  }
+  
+  .mood-indicator.happy { background-color: #ffd700; color: #333; }
+  .mood-indicator.sad { background-color: #87cefa; color: #333; }
+  .mood-indicator.angry { background-color: #ff6347; color: white; }
+  .mood-indicator.neutral { background-color: #d3d3d3; color: #333; }
+  
+  .entry-date {
+    color: #888;
+  }

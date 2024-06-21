@@ -1,55 +1,56 @@
 import React, { useState } from 'react';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { db } from '../../firebase/firebase';
-import { useUserContext } from '../UserContext';
 import './journalEntryForm.css';
 
-const JournalEntryForm = ({ onSave }) => {
-  const { user } = useUserContext();
-  const [journalEntry, setJournalEntry] = useState('');
-  const [notes, setNotes] = useState('');
+const JournalEntryForm = ({ onAddEntry }) => {
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [mood, setMood] = useState('neutral');
+  const [tags, setTags] = useState('');
 
-  const handleEntryChange = (e) => setJournalEntry(e.target.value);
-  const handleNotesChange = (e) => setNotes(e.target.value);
-
-  const saveEntry = async () => {
-    if (!journalEntry) return;
-
-    const entry = {
-      content: journalEntry,
-      createdAt: serverTimestamp(),
-      userId: user.uid,
-      notes: notes,
-    };
-
-    const entriesRef = collection(db, 'journalEntries');
-    await addDoc(entriesRef, entry);
-
-    console.log('Journal Entry saved:', entry);
-    setJournalEntry('');
-    setNotes('');
-    onSave();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Submitting new entry');
+    onAddEntry({
+      title,
+      content,
+      mood,
+      tags: tags.split(',').map(tag => tag.trim())
+    });
+    setTitle('');
+    setContent('');
+    setMood('neutral');
+    setTags('');
   };
 
   return (
-    <div className="journal-entry-form">
-      <h3 className="entry-form-title">Write your journal entry</h3>
-      <textarea
-        value={journalEntry}
-        onChange={handleEntryChange}
-        placeholder="Write about your day, thoughts, or feelings"
-        className="journal-entry-textarea"
+    <form className="journal-entry-form" onSubmit={handleSubmit}>
+      <input
+        type="text"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        placeholder="Entry Title"
+        required
       />
       <textarea
-        value={notes}
-        onChange={handleNotesChange}
-        placeholder="Add notes or annotations (optional)"
-        className="notes-textarea"
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+        placeholder="Write your thoughts..."
+        required
       />
-      <button onClick={saveEntry} disabled={!journalEntry} className="save-entry-button">
-        Save Entry
-      </button>
-    </div>
+      <select value={mood} onChange={(e) => setMood(e.target.value)}>
+        <option value="happy">Happy</option>
+        <option value="sad">Sad</option>
+        <option value="angry">Angry</option>
+        <option value="neutral">Neutral</option>
+      </select>
+      <input
+        type="text"
+        value={tags}
+        onChange={(e) => setTags(e.target.value)}
+        placeholder="Tags (comma-separated)"
+      />
+      <button type="submit">Save Entry</button>
+    </form>
   );
 };
 

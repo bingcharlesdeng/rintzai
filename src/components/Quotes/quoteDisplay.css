@@ -1,0 +1,42 @@
+.quote-display {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .quote-display blockquote {
+    font-size: 1.2em;
+    font-style: italic;
+    color: #333;
+    margin: 0 0 10px 0;
+  }
+  
+  .quote-display cite {
+    display: block;
+    text-align: right;
+    color: #666;
+  }
+  
+  .quote-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+  }
+  
+  .action-button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .quote-context, .reflection-prompt {
+    margin-top: 15px;
+    font-size: 0.9em;
+    color: #555;
+  }

@@ -1,60 +1,48 @@
 .journal-entry-form {
-  margin-bottom: 2rem;
-  padding: 1.5rem;
-  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+  background-color: #f9f9f9;
+  padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.entry-form-title {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: #444;
-}
-
-.journal-entry-textarea,
-.notes-textarea {
+.journal-entry-form input[type="text"],
+.journal-entry-form textarea,
+.journal-entry-form select {
   width: 100%;
-  padding: 1rem;
+  padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  outline: none;
-  resize: vertical;
-  font-size: 1rem;
+  font-size: 16px;
   transition: border-color 0.3s ease;
 }
 
-.journal-entry-textarea {
-  height: 200px;
-  margin-bottom: 1rem;
+.journal-entry-form input[type="text"]:focus,
+.journal-entry-form textarea:focus,
+.journal-entry-form select:focus {
+  outline: none;
+  border-color: #4CAF50;
 }
 
-.notes-textarea {
-  height: 100px;
+.journal-entry-form textarea {
+  height: 150px;
+  resize: vertical;
 }
 
-.journal-entry-textarea:focus,
-.notes-textarea:focus {
-  border-color: #0084ff;
-}
-
-.save-entry-button {
-  display: block;
-  margin-top: 1rem;
-  padding: 0.75rem 1.5rem;
-  background-color: #0084ff;
-  color: #fff;
+.journal-entry-form button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 15px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  font-size: 16px;
+  transition: background-color 0.3s;
 }
 
-.save-entry-button:hover {
-  background-color: #006dc7;
-}
-
-.save-entry-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
+.journal-entry-form button:hover {
+  background-color: #45a049;
 }

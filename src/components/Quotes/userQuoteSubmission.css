@@ -1,0 +1,39 @@
+.user-quote-submission {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .user-quote-submission form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .user-quote-submission textarea,
+  .user-quote-submission input {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+  }
+  
+  .user-quote-submission textarea {
+    height: 100px;
+    resize: vertical;
+  }
+  
+  .user-quote-submission button {
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .user-quote-submission button:hover {
+    background-color: #218838;
+  }
+  

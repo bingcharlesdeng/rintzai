@@ -21,12 +21,15 @@ const Navbar = () => {
   const renderNavLinks = () => {
     if (isLoggedIn) {
       return (
-        <>
+        <> 
+          <NavLink to="/home" className="navbar-link" activeClassName="active">
+            Home
+          </NavLink>
           <NavLink to="/profile" className="navbar-link" activeClassName="active">
             Profile
           </NavLink>
-          <NavLink to="/home" className="navbar-link" activeClassName="active">
-            Home
+          <NavLink to="/display" className="navbar-link" activeClassName='active'>
+            Display
           </NavLink>
           <NavLink to="/journal" className="navbar-link" activeClassName="active">
             Journal
@@ -39,6 +42,9 @@ const Navbar = () => {
           </NavLink>
           <NavLink to="/quotes" className="navbar-link" activeClassName="active">
             Quotes
+          </NavLink>
+          <NavLink to="/gratitude" className="navbar-link" activeClassName="active">
+            Gratitude
           </NavLink>
           <LogoutButton />
         </>

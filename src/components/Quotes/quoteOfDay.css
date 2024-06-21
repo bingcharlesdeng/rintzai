@@ -1,0 +1,114 @@
+.quote-of-day-container {
+    background-color: #f8f9fa;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 600px;
+    margin: 2rem auto;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .quote-of-day-container::before {
+    content: '"';
+    position: absolute;
+    top: -20px;
+    left: 20px;
+    font-size: 150px;
+    color: rgba(0, 0, 0, 0.1);
+    font-family: Georgia, serif;
+  }
+  
+  .quote-of-day-title {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .quote-content {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .quote-text {
+    font-size: 1.4rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    font-style: italic;
+  }
+  
+  .quote-author {
+    font-size: 1.1rem;
+    color: #666;
+    font-weight: bold;
+  }
+  
+  .quote-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+  }
+  
+  .quote-loader {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .quote-error {
+    color: #dc3545;
+    font-style: italic;
+  }
+  
+  .quote-inspiration {
+    margin-top: 2rem;
+    font-size: 1.1rem;
+    color: #6c757d;
+  }
+  
+  .share-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 1rem;
+  }
+  
+  .share-button:hover {
+    background-color: #0056b3;
+  }
+  
+  @media (max-width: 768px) {
+    .quote-of-day-container {
+      padding: 1.5rem;
+      margin: 1rem;
+    }
+  
+    .quote-of-day-title {
+      font-size: 1.5rem;
+    }
+  
+    .quote-text {
+      font-size: 1.2rem;
+    }
+  
+    .quote-author {
+      font-size: 1rem;
+    }
+  }

@@ -1,0 +1,36 @@
+.gratitude-exercises-container {
+    background-color: #f8f8f8;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+  }
+  
+  .gratitude-exercises-title {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  .gratitude-exercises-text {
+    font-size: 1.2rem;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+  
+  .gratitude-exercises-list {
+    list-style: decimal;
+    margin-left: 2rem;
+    font-size: 1.1rem;
+    color: #333;
+    line-height: 1.6;
+  }
+  
+  .gratitude-exercises-list li {
+    margin-bottom: 1rem;
+  }
+  
+  .gratitude-exercises-list li strong {
+    font-weight: bold;
+  }

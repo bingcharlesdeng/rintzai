@@ -1,0 +1,37 @@
+.user-quotes-list {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .user-quotes-list ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .user-quotes-list li {
+    background-color: #ffffff;
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .user-quotes-list li:hover {
+    background-color: #e9ecef;
+  }
+  
+  .user-quotes-list blockquote {
+    font-style: italic;
+    margin: 0 0 5px 0;
+  }
+  
+  .user-quotes-list cite {
+    display: block;
+    text-align: right;
+    font-size: 0.9em;
+    color: #6c757d;
+  }

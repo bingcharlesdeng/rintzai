@@ -1,0 +1,35 @@
+.journal-calendar {
+    margin-bottom: 30px;
+  }
+  
+  .custom-calendar {
+    width: 100%;
+    max-width: 350px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .calendar-entry-indicator {
+    height: 5px;
+    width: 5px;
+    border-radius: 50%;
+    margin: 0 auto;
+  }
+  
+  .calendar-entry-indicator.happy { background-color: #ffd700; }
+  .calendar-entry-indicator.sad { background-color: #87cefa; }
+  .calendar-entry-indicator.angry { background-color: #ff6347; }
+  .calendar-entry-indicator.neutral { background-color: #d3d3d3; }
+  
+  .react-calendar__tile--active {
+    background: #e6f7ff;
+    color: black;
+  }
+  
+  .react-calendar__tile--active:enabled:hover,
+  .react-calendar__tile--active:enabled:focus {
+    background: #d1efff;
+  }

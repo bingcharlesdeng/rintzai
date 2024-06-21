@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './gratitudeList.css';
 
 const GratitudeList = ({ gratitudes, onAddGratitude }) => {
   const [newGratitude, setNewGratitude] = useState('');
@@ -7,6 +8,7 @@ const GratitudeList = ({ gratitudes, onAddGratitude }) => {
     e.preventDefault();
     if (!newGratitude) return;
 
+    console.log('Adding new gratitude:', newGratitude);
     onAddGratitude(newGratitude);
     setNewGratitude('');
   };
@@ -26,7 +28,7 @@ const GratitudeList = ({ gratitudes, onAddGratitude }) => {
       {gratitudes.length > 0 && (
         <ul>
           {gratitudes.map((gratitude, index) => (
-            <li key={index}>{gratitude}</li>
+            <li key={index}>{gratitude.content}</li>
           ))}
         </ul>
       )}
