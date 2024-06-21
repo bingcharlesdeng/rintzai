@@ -6,6 +6,7 @@ import { createUserInDB } from './userService';
 import './login.css';
 import Navbar from './Navbar';
 
+
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

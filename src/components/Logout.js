@@ -1,5 +1,6 @@
 import { signOut } from 'firebase/auth';
 
+
 export const handleLogout = async (auth) => {
   try {
     await signOut(auth);
