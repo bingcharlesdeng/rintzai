@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaUser, FaClipboard, FaChartBar, FaBook, FaComments, FaQuoteLeft, FaHeart, FaImages } from 'react-icons/fa';
 import './featureSection.css';
 
+
 const features = [
   { name: 'Profile', icon: FaUser, path: '/profile' },
   { name: 'Board', icon: FaClipboard, path: '/board' },
