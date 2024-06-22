@@ -12,8 +12,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const userContext = useUserContext();
-  console.log('Login component rendered. UserContext:', userContext);
+  const { setUser } = useUserContext();
 
   const handleGoogleSignIn = async () => {
     setError(null);
@@ -24,12 +23,7 @@ const Login = () => {
       const user = result.user;
       console.log('Google Sign-In successful. User:', user);
       await createUserInDB(user);
-      if (userContext && typeof userContext.setUser === 'function') {
-        userContext.setUser(user);
-        console.log('User set in context');
-      } else {
-        console.error('setUser is not available in userContext');
-      }
+      setUser(user);
       navigate('/home');
     } catch (error) {
       console.error('Google Sign-In error:', error);
@@ -45,12 +39,7 @@ const Login = () => {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       console.log('Email/Password Login successful. User:', user);
-      if (userContext && typeof userContext.setUser === 'function') {
-        userContext.setUser(user);
-        console.log('User set in context');
-      } else {
-        console.error('setUser is not available in userContext');
-      }
+      setUser(user);
       navigate('/home');
     } catch (error) {
       console.error('Email/Password Login error:', error);

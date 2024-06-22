@@ -1,7 +1,6 @@
 import React from 'react';
 import { useUserContext } from './UserContext';
-import { handleLogout } from './Logout';
-import { getAuth } from 'firebase/auth';
+import { getAuth, signOut } from 'firebase/auth';
 import './LogoutButton.css';
 
 const LogoutButton = () => {
@@ -10,8 +9,9 @@ const LogoutButton = () => {
 
   const handleLogoutClick = async () => {
     try {
-      await handleLogout(auth);
+      await signOut(auth);
       logout();
+      console.log('Logged out successfully!');
     } catch (error) {
       console.error('Logout failed:', error);
     }

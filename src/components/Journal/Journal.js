@@ -18,6 +18,8 @@ import EntryDetails from './EntryDetails';
 import ErrorBoundary from './ErrorBoundary';
 import './journal.css';
 import Navbar from '../Navbar';
+import EntryModal from './EntryModal';
+
 
 const Journal = () => {
   const [entries, setEntries] = useState([]);
@@ -27,6 +29,18 @@ const Journal = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [gratitudes, setGratitudes] = useState([]);
   const { user } = useUserContext();
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleEntrySelect = (entry) => {
+    console.log('Selected entry:', entry);
+    setSelectedEntry(entry);
+    setModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setSelectedEntry(null);
+    setModalOpen(false);
+  };
 
   useEffect(() => {
     console.log('Journal component mounted');
@@ -129,11 +143,6 @@ const Journal = () => {
     }
   };
 
-  const handleEntrySelect = (entry) => {
-    console.log('Selected entry:', entry);
-    setSelectedEntry(entry);
-  };
-
   const handleFilterChange = (newFilter) => {
     console.log('Filter changed to:', newFilter);
     setFilter(newFilter);
@@ -204,11 +213,6 @@ const Journal = () => {
               onEntrySelect={handleEntrySelect}
               selectedEntry={selectedEntry}
             />
-            <PastEntryList 
-              entries={filteredEntries}
-              onEntryClick={handleEntrySelect}
-              highlightSearchTerm={highlightSearchTerm}
-            />
             {selectedEntry && (
               <EntryDetails
                 entry={selectedEntry}
@@ -222,6 +226,13 @@ const Journal = () => {
           </div>
         </div>
       </div>
+      {modalOpen && (
+        <EntryDetails
+          entry={selectedEntry}
+          onClose={handleModalClose}
+          highlightSearchTerm={highlightSearchTerm}
+        />
+      )}
     </ErrorBoundary>
   );
 };
