@@ -1,0 +1,23 @@
+.streak-counter {
+    background-color: #4a90e2;
+    color: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .streak-counter h3 {
+    margin-bottom: 10px;
+  }
+  
+  .streak-count {
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 10px 0;
+  }
+  
+  .streak-counter p {
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }

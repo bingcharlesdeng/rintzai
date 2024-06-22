@@ -34,6 +34,7 @@ const database = getDatabase(app);
 const db = getFirestore(app);
 
 const App = () => {
+  console.log('App component rendered');
   return (
     <BrowserRouter>
       <UserProvider>
@@ -50,8 +51,6 @@ const App = () => {
             <Route path="chat" element={<Chat />} />
             <Route path="quotes" element={<Quotes />} />
             <Route path="gratitude" element={<Gratitude />} />
-
-
           </Route>
         </Routes>
       </UserProvider>

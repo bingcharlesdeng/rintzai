@@ -3,11 +3,19 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './journalCalendar.css';
 
-const JournalCalendar = ({ entries, onSelectDate }) => {
+const JournalCalendar = ({ entries = [], onSelectDate }) => {
   console.log('Rendering JournalCalendar with entries:', entries);
 
   const entriesMap = entries.reduce((acc, entry) => {
-    const dateKey = entry.date.toDate().toDateString();
+    let dateKey;
+    if (entry.date instanceof Date) {
+      dateKey = entry.date.toDateString();
+    } else if (typeof entry.date === 'string') {
+      dateKey = new Date(entry.date).toDateString();
+    } else {
+      console.error('Invalid date format for entry:', entry);
+      return acc;
+    }
     acc[dateKey] = entry;
     return acc;
   }, {});

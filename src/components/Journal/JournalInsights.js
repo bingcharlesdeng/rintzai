@@ -2,11 +2,13 @@ import React from 'react';
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import './journalInsights.css';
 
-const JournalInsights = ({ entries }) => {
+const JournalInsights = ({ entries = [] }) => {
   console.log('Rendering JournalInsights with entries:', entries);
 
   const moodData = entries.reduce((acc, entry) => {
-    acc[entry.mood] = (acc[entry.mood] || 0) + 1;
+    if (entry && entry.mood) {
+      acc[entry.mood] = (acc[entry.mood] || 0) + 1;
+    }
     return acc;
   }, {});
 
@@ -16,9 +18,11 @@ const JournalInsights = ({ entries }) => {
   }));
 
   const tagData = entries.reduce((acc, entry) => {
-    entry.tags.forEach(tag => {
-      acc[tag] = (acc[tag] || 0) + 1;
-    });
+    if (entry && entry.tags && Array.isArray(entry.tags)) {
+      entry.tags.forEach(tag => {
+        acc[tag] = (acc[tag] || 0) + 1;
+      });
+    }
     return acc;
   }, {});
 

@@ -1,22 +1,36 @@
-.feature-buttons {
+.feature-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.feature-button {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-}
-
-.feature-buttons a {
-  padding: 0.75rem 1rem;
-  border-radius: 5px;
-  background-color: #f0f0f0;
-  color: #333;
+  padding: 15px;
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   text-decoration: none;
+  color: #333;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  font-weight: 500;
 }
 
-.feature-buttons a:hover {
-  background-color: #ddd;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+.feature-button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.feature-icon {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #4a90e2;
+}
+
+.feature-button span {
+  font-weight: 500;
+  text-align: center;
 }

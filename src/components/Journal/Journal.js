@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { collection, query, where, orderBy, getDocs, addDoc } from 'firebase/firestore';
+import { serverTimestamp } from 'firebase/firestore';
+
 import { db } from '../../firebase/firebase';
 import { useUserContext } from '../UserContext';
 import JournalEntryForm from './JournalEntryForm';
@@ -11,6 +13,9 @@ import TagCloud from './TagCloud';
 import SearchBar from './SearchBar';
 import JournalPrompts from './JournalPrompts';
 import GratitudeList from './GratitudeList';
+import PastEntryList from './PastEntryList';
+import EntryDetails from './EntryDetails';
+import ErrorBoundary from './ErrorBoundary';
 import './journal.css';
 import Navbar from '../Navbar';
 
@@ -25,8 +30,10 @@ const Journal = () => {
 
   useEffect(() => {
     console.log('Journal component mounted');
-    fetchEntries();
-    fetchGratitudes();
+    if (user && user.uid) {
+      fetchEntries();
+      fetchGratitudes();
+    }
   }, [user]);
 
   const fetchEntries = async () => {
@@ -40,14 +47,30 @@ const Journal = () => {
         orderBy('date', 'desc')
       );
       const querySnapshot = await getDocs(q);
-      const fetchedEntries = querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
+      const fetchedEntries = querySnapshot.docs.map(doc => {
+        const data = doc.data();
+        let formattedDate;
+        if (data.date && typeof data.date.toDate === 'function') {
+          formattedDate = data.date.toDate();
+        } else if (data.date instanceof Date) {
+          formattedDate = data.date;
+        } else if (typeof data.date === 'string') {
+          formattedDate = new Date(data.date);
+        } else {
+          console.warn(`Invalid date format for entry ${doc.id}:`, data.date);
+          formattedDate = new Date();
+        }
+        return {
+          id: doc.id,
+          ...data,
+          date: formattedDate
+        };
+      });
       console.log('Fetched entries:', fetchedEntries);
       setEntries(fetchedEntries);
     } catch (error) {
       console.error('Error fetching entries:', error);
+      setEntries([]);
     } finally {
       setIsLoading(false);
     }
@@ -65,12 +88,14 @@ const Journal = () => {
       const querySnapshot = await getDocs(q);
       const fetchedGratitudes = querySnapshot.docs.map(doc => ({
         id: doc.id,
-        ...doc.data()
+        ...doc.data(),
+        date: doc.data().date.toDate()
       }));
       console.log('Fetched gratitudes:', fetchedGratitudes);
       setGratitudes(fetchedGratitudes);
     } catch (error) {
       console.error('Error fetching gratitudes:', error);
+      setGratitudes([]);
     }
   };
 
@@ -80,7 +105,7 @@ const Journal = () => {
       const docRef = await addDoc(collection(db, 'journalEntries'), {
         ...newEntry,
         userId: user.uid,
-        date: new Date()
+        date: serverTimestamp()
       });
       console.log('New entry added with ID:', docRef.id);
       fetchEntries();
@@ -95,7 +120,7 @@ const Journal = () => {
       const docRef = await addDoc(collection(db, 'gratitudes'), {
         content: newGratitude,
         userId: user.uid,
-        date: new Date()
+        date: serverTimestamp()
       });
       console.log('New gratitude added with ID:', docRef.id);
       fetchGratitudes();
@@ -129,24 +154,43 @@ const Journal = () => {
     });
   };
 
-  const filteredEntries = entries
-    .filter(entry => {
-      if (filter === 'all') return true;
-      return entry.mood === filter;
-    })
-    .filter(entry =>
-      entry.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      entry.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+  const filteredEntries = entries.filter(entry => {
+    if (!entry || !entry.content || !entry.title) {
+      console.log('Invalid entry:', entry);
+      return false;
+    }
+    
+    const contentMatch = entry.content.toLowerCase().includes(searchTerm.toLowerCase());
+    const titleMatch = entry.title.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    return contentMatch || titleMatch;
+  });
+
+
+  console.log('Filtered entries:', filteredEntries);
+
+  const highlightSearchTerm = (text) => {
+    if (!searchTerm || !text) return text;
+    const regex = new RegExp(`(${searchTerm})`, 'gi');
+    return text.replace(regex, '<mark>$1</mark>');
+  };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <>
-      <Navbar /> 
+    <ErrorBoundary>
+      <Navbar />
       <div className="journal-container">
         <h1 className="journal-title">My Journal</h1>
         <div className="journal-layout">
           <div className="journal-sidebar">
-            <SearchBar onSearch={handleSearch} />
+            <SearchBar 
+              entries={entries}
+              onSearch={handleSearch}
+              onEntrySelect={handleEntrySelect}
+            />
             <JournalCalendar entries={entries} onSelectDate={handleEntrySelect} />
             <MoodTracker entries={entries} onFilterChange={handleFilterChange} />
             <TagCloud entries={entries} onTagSelect={handleSearch} />
@@ -160,13 +204,25 @@ const Journal = () => {
               onEntrySelect={handleEntrySelect}
               selectedEntry={selectedEntry}
             />
+            <PastEntryList 
+              entries={filteredEntries}
+              onEntryClick={handleEntrySelect}
+              highlightSearchTerm={highlightSearchTerm}
+            />
+            {selectedEntry && (
+              <EntryDetails
+                entry={selectedEntry}
+                onBackClick={() => setSelectedEntry(null)}
+                highlightSearchTerm={highlightSearchTerm}
+              />
+            )}
           </div>
           <div className="journal-insights">
             <JournalInsights entries={entries} />
           </div>
         </div>
       </div>
-    </>
+    </ErrorBoundary>
   );
 };
 
