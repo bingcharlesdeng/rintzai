@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './DailyChallenge.css';
+import './dailyChallenge.css';
 
 const DailyChallenge = () => {
   const [isCompleted, setIsCompleted] = useState(false);
