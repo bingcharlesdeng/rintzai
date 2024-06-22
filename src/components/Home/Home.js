@@ -9,7 +9,7 @@ import ActivityFeed from './ActivityFeed';
 import StreakCounter from './StreakCounter';
 import DailyChallenge from './DailyChallenge';
 import ProgressChart from './ProgressChart';
-import './Home.css';
+import './home.css';
 
 const Home = () => {
   const { user } = useUserContext();
