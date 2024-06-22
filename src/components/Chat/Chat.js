@@ -4,7 +4,7 @@ import ConversationList from './ConversationList';
 import ChatInput from './ChatInput';
 import NewChatModal from './NewChatModal';
 import ConversationSearch from './ConversationSearch';
-import { sendMessage, fetchConversationsForUser, createNewConversation } from './messageService';
+import { sendMessage, createNewConversation } from './messageService';
 import { db, collection, onSnapshot, query, where, orderBy } from '../../firebase/firebase';
 import './chat.css';
 import { useUserContext } from '../UserContext';
@@ -101,24 +101,24 @@ const Chat = () => {
     }
   };
 
-  const handleSelectUser = async (selectedUser) => {
-    const existingConversation = conversations.find((conversation) =>
-      conversation.participants.includes(selectedUser.id) && conversation.participants.includes(user.uid)
-    );
+  // const handleSelectUser = async (selectedUser) => {
+  //   const existingConversation = conversations.find((conversation) =>
+  //     conversation.participants.includes(selectedUser.id) && conversation.participants.includes(user.uid)
+  //   );
 
-    if (existingConversation) {
-      setSelectedConversation(existingConversation);
-      console.log('Selected existing conversation:', existingConversation);
-    } else {
-      try {
-        const newConversation = await createNewConversation(selectedUser.id, user.uid);
-        setSelectedConversation(newConversation);
-        console.log('Created new conversation:', newConversation);
-      } catch (error) {
-        console.error('Error creating new conversation:', error);
-      }
-    }
-  };
+  //   if (existingConversation) {
+  //     setSelectedConversation(existingConversation);
+  //     console.log('Selected existing conversation:', existingConversation);
+  //   } else {
+  //     try {
+  //       const newConversation = await createNewConversation(selectedUser.id, user.uid);
+  //       setSelectedConversation(newConversation);
+  //       console.log('Created new conversation:', newConversation);
+  //     } catch (error) {
+  //       console.error('Error creating new conversation:', error);
+  //     }
+  //   }
+  // };
 
   return (
     <>

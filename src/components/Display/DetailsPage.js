@@ -3,10 +3,10 @@ import React from 'react';
 import './detailsPage.css';
 
 const DetailsPage = ({ caption, setCaption, location, setLocation, altText, setAltText, onSubmit }) => {
-  const handleSubmit = () => {
-    console.log('Submitting post details');
-    onSubmit();
-  };
+//   const handleSubmit = () => {
+//     console.log('Submitting post details');
+//     onSubmit();
+//   };
 
   return (
     <div className="details-page">

@@ -29,9 +29,9 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const database = getDatabase(app);
-const db = getFirestore(app);
+// const auth = getAuth(app);
+// const database = getDatabase(app);
+// const db = getFirestore(app);
 
 const App = () => {
   console.log('App component rendered');

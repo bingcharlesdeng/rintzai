@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import './conversationList.css';
-import { formatRelativeTime } from './utils';
 import { db, collection, getDocs, query, where } from '../../firebase/firebase';
 import ConversationItem from './ConversationItem';
 
