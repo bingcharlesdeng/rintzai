@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Navbar from '../Navbar';
+import Navbar from '../Routes/Navbar';
 import QuoteOfDay from './QuoteOfDay';
 import QuoteDisplay from './QuoteDisplay';
 import QuoteCustomization from './QuoteCustomization';
@@ -7,7 +7,7 @@ import QuoteCategories from './QuoteCategories';
 import UserQuoteSubmission from './UserQuoteSubmission';
 import UserQuotesList from './UserQuotesList';
 import { fetchQuoteOfDay, fetchQuotes, submitUserQuote, fetchUserQuotes, favoriteQuote, fetchFavoriteQuotes, searchQuotes } from './quoteService';
-import { useUserContext } from '../UserContext';
+import { useUserContext } from '../User/UserContext';
 import './quotes.css';
 
 const Quotes = () => {

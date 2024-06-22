@@ -4,10 +4,12 @@ import ProfileHeader from './ProfileHeader';
 import ProfileNavigation from './ProfileNavigation';
 import ProfileContent from './ProfileContent';
 import ProfileSidebar from './ProfileSidebar';
-import { useUserContext } from '../UserContext';
+import { useUserContext } from '../User/UserContext';
 import { fetchUserProfile, fetchUserMoodEntries, updateUserProfile } from './profileService';
 import LoadingSpinner from '../LoadingSpinner';
-import Navbar from '../Navbar';
+import Navbar from '../Routes/Navbar';
+import { db } from '../../firebase/firebase';
+
 
 const Profile = () => {
   const { user } = useUserContext();

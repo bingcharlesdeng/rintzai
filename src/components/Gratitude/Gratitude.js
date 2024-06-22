@@ -4,7 +4,7 @@ import GratitudeList from './GratitudeList';
 import GratitudeEducation from './GratitudeEducation';
 import GratitudeExercises from './GratitudeExercises';
 import GratitudeQuotes from './GratitudeQuotes';
-import Navbar from '../Navbar';
+import Navbar from '../Routes/Navbar';
 
 const Gratitude = () => {
   return (

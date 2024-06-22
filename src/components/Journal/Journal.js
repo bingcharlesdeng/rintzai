@@ -3,7 +3,7 @@ import { collection, query, where, orderBy, getDocs, addDoc } from 'firebase/fir
 import { serverTimestamp } from 'firebase/firestore';
 
 import { db } from '../../firebase/firebase';
-import { useUserContext } from '../UserContext';
+import { useUserContext } from '../User/UserContext';
 import JournalEntryForm from './JournalEntryForm';
 import JournalEntryList from './JournalEntryList';
 import JournalInsights from './JournalInsights';
@@ -17,7 +17,7 @@ import PastEntryList from './PastEntryList';
 import EntryDetails from './EntryDetails';
 import ErrorBoundary from './ErrorBoundary';
 import './journal.css';
-import Navbar from '../Navbar';
+import Navbar from '../Routes/Navbar';
 import EntryModal from './EntryModal';
 
 

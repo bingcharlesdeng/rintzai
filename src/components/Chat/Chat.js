@@ -7,8 +7,8 @@ import ConversationSearch from './ConversationSearch';
 import { sendMessage, createNewConversation } from './messageService';
 import { db, collection, onSnapshot, query, where, orderBy } from '../../firebase/firebase';
 import './chat.css';
-import { useUserContext } from '../UserContext';
-import Navbar from '../Navbar';
+import { useUserContext } from '../User/UserContext';
+import Navbar from '../Routes/Navbar';
 
 const Chat = () => {
   const [selectedConversation, setSelectedConversation] = useState(null);

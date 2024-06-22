@@ -1,6 +1,6 @@
 import React from 'react';
-import Login from './components/Login';
-import Signup from './components/Signup';
+import Login from './components/Routes/Login';
+import Signup from './components/Routes/Signup';
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getDatabase } from 'firebase/database';
@@ -12,8 +12,8 @@ import Chat from './components/Chat/Chat';
 import Quotes from './components/Quotes/Quotes';
 import Profile from './components/Profile/Profile';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { UserProvider } from './components/UserContext';
-import ProtectedRoute from './components/ProtectedRoute';
+import { UserProvider } from './components/User/UserContext';
+import ProtectedRoute from './components/Routes/ProtectedRoute';
 import Display from './components/Display/Display';
 import Gratitude from './components/Gratitude/Gratitude';
 

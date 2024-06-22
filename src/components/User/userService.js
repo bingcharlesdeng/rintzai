@@ -1,4 +1,4 @@
-import { db, doc, setDoc } from '../firebase/firebase';
+import { db, doc, setDoc } from '../../firebase/firebase';
 
 const createUserInDB = async (user) => {
   try {

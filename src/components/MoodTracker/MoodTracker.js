@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Layout from '../Layout';
 import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
 import { Navigate } from 'react-router-dom';
-import { useUserContext } from '../UserContext';
+import { useUserContext } from '../User/UserContext';
 import './moodTracker.css';
 import MoodInsights from './MoodInsights';
 import MoodChart from './MoodChart';

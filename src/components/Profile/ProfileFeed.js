@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './profileFeed.css';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase/firebase';
-import { useUserContext } from '../UserContext';
+import { useUserContext } from '../User/UserContext';
 
 const ProfileFeed = ({ profile }) => {
   const { user } = useUserContext();

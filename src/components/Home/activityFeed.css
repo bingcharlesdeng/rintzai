@@ -2,12 +2,13 @@
     background-color: #ffffff;
     border-radius: 15px;
     padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   }
   
   .activity-feed h2 {
     margin-bottom: 15px;
     color: #333;
+    font-size: 1.5rem;
   }
   
   .activity-feed ul {
@@ -17,7 +18,7 @@
   
   .activity-item {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     margin-bottom: 15px;
     padding-bottom: 15px;
     border-bottom: 1px solid #eee;
@@ -27,17 +28,27 @@
     border-bottom: none;
   }
   
+  .activity-icon {
+    font-size: 1.5rem;
+    margin-right: 15px;
+  }
+  
+  .activity-content {
+    display: flex;
+    flex-direction: column;
+  }
+  
   .activity-user {
     font-weight: bold;
     color: #4a90e2;
   }
   
   .activity-action {
-    margin-top: 5px;
+    margin-top: 2px;
   }
   
   .activity-time {
     font-size: 0.8rem;
     color: #888;
-    margin-top: 5px;
+    margin-top: 2px;
   }

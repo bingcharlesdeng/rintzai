@@ -1,0 +1,44 @@
+.quote-section {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .quote-section h3 {
+    color: #333;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+  }
+  
+  .quote-section blockquote {
+    font-style: italic;
+    color: #555;
+    margin: 0 0 15px 0;
+  }
+  
+  .quote-section blockquote p {
+    font-size: 1.1rem;
+    line-height: 1.4;
+  }
+  
+  .quote-section blockquote footer {
+    font-size: 0.9rem;
+    color: #888;
+    margin-top: 10px;
+  }
+  
+  .new-quote-button {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .new-quote-button:hover {
+    background-color: #3a7bc8;
+  }

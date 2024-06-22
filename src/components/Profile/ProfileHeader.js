@@ -3,7 +3,7 @@ import './profileHeader.css';
 import MoodIndicator from './MoodIndicator';
 import EditProfileModal from './EditProfileModal';
 import MessageModal from './MessageModal';
-import { useUserContext } from '../UserContext';
+import { useUserContext } from '../User/UserContext';
 import { updateFriendStatus, supportUser } from './profileService';
 import defaultAvatar from '../../assets/default-avatar.png';
 

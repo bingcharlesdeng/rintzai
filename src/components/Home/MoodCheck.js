@@ -3,12 +3,18 @@ import './moodCheck.css';
 
 const MoodCheck = ({ onComplete }) => {
   const [selectedMood, setSelectedMood] = useState(null);
-  const moods = ['😄', '😊', '😐', '😔', '😢'];
+  const moods = [
+    { emoji: '😄', label: 'Happy' },
+    { emoji: '😊', label: 'Content' },
+    { emoji: '😐', label: 'Neutral' },
+    { emoji: '😔', label: 'Sad' },
+    { emoji: '😢', label: 'Upset' },
+  ];
 
   const handleMoodSelect = (mood) => {
     setSelectedMood(mood);
     setTimeout(() => {
-      onComplete();
+      onComplete(mood);
     }, 1000);
   };
 
@@ -22,7 +28,8 @@ const MoodCheck = ({ onComplete }) => {
             className={`mood-button ${selectedMood === mood ? 'selected' : ''}`}
             onClick={() => handleMoodSelect(mood)}
           >
-            {mood}
+            <span className="mood-emoji">{mood.emoji}</span>
+            <span className="mood-label">{mood.label}</span>
           </button>
         ))}
       </div>

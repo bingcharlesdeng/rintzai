@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword } from 'firebase/auth';
-import { useUserContext } from './UserContext';
-import { auth } from '../firebase/firebase';
-import { createUserInDB } from './userService';
+import { useUserContext } from '../User/UserContext';
+import { auth } from '../../firebase/firebase';
+import { createUserInDB } from '../User/userService';
 import './login.css';
 import Navbar from './Navbar';
 import { Link, useNavigate } from 'react-router-dom';

@@ -2,9 +2,9 @@
 import React, { useState } from 'react';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import { useUserContext } from './UserContext';
-import { auth } from '../firebase/firebase';
-import { createUserInDB } from './userService';
+import { useUserContext } from '../User/UserContext';
+import { auth } from '../../firebase/firebase';
+import { createUserInDB } from '../User/userService';
 import './signup.css';
 
 const Signup = () => {
