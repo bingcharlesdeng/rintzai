@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import ChatWindow from './ChatWindow';
 import ConversationList from './ConversationList';
 import ChatInput from './ChatInput';
@@ -6,21 +6,18 @@ import NewChatModal from './NewChatModal';
 import ConversationSearch from './ConversationSearch';
 import { sendMessage, fetchConversationsForUser, createNewConversation } from './messageService';
 import { db, collection, onSnapshot, query, where, orderBy } from '../../firebase/firebase';
-
 import './chat.css';
-import UserContext from '../UserContext';
+import { useUserContext } from '../UserContext';
 import Navbar from '../Navbar';
-
 
 const Chat = () => {
   const [selectedConversation, setSelectedConversation] = useState(null);
   const [conversations, setConversations] = useState([]);
   const [isNewChatModalOpen, setIsNewChatModalOpen] = useState(false);
   const [searchedConversations, setSearchedConversations] = useState([]);
-  const { user } = useContext(UserContext);
+  const { user } = useUserContext();
   const [searchResults, setSearchResults] = useState([]);
 
-  
   useEffect(() => {
     const fetchUserConversations = async () => {
       if (user) {
@@ -87,11 +84,8 @@ const Chat = () => {
     setSelectedConversation(conversation);
     if (messageId) {
       scrollToMessage(messageId);
-            // Scroll to the specific message in the chat window
     }
-
     console.log('Selected conversation:', conversation);
-
   };
 
   const handleSendMessage = (message) => {
@@ -107,9 +101,9 @@ const Chat = () => {
     }
   };
 
-  const handleSelectUser = async (user) => {
+  const handleSelectUser = async (selectedUser) => {
     const existingConversation = conversations.find((conversation) =>
-      conversation.participants.includes(user.id) && conversation.participants.includes(user.uid)
+      conversation.participants.includes(selectedUser.id) && conversation.participants.includes(user.uid)
     );
 
     if (existingConversation) {
@@ -117,7 +111,7 @@ const Chat = () => {
       console.log('Selected existing conversation:', existingConversation);
     } else {
       try {
-        const newConversation = await createNewConversation(user.id, user.uid);
+        const newConversation = await createNewConversation(selectedUser.id, user.uid);
         setSelectedConversation(newConversation);
         console.log('Created new conversation:', newConversation);
       } catch (error) {

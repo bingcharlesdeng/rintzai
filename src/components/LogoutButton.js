@@ -1,11 +1,11 @@
 import React from 'react';
 import { useUserContext } from './UserContext';
-import { getAuth, signOut } from 'firebase/auth';
-import './LogoutButton.css';
+import { signOut } from 'firebase/auth';
+import { auth } from '../firebase/firebase';
+import './logoutButton.css';
 
 const LogoutButton = () => {
   const { logout } = useUserContext();
-  const auth = getAuth();
 
   const handleLogoutClick = async () => {
     try {

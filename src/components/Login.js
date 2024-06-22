@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import { signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword } from 'firebase/auth';
 import { useUserContext } from './UserContext';
 import { auth } from '../firebase/firebase';
 import { createUserInDB } from './userService';
 import './login.css';
 import Navbar from './Navbar';
+import { Link, useNavigate } from 'react-router-dom';
+
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -46,6 +47,7 @@ const Login = () => {
       setError('Invalid email or password. Please try again.');
     }
   };
+
 
   return (
     <>

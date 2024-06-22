@@ -3,17 +3,13 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { useUserContext } from './UserContext';
 
 const ProtectedRoute = () => {
-  const { isLoggedIn, isLoading } = useUserContext();
+  const { user, isLoading } = useUserContext();
 
   if (isLoading) {
-    return null;
+    return <div>Loading...</div>;
   }
 
-  if (!isLoggedIn) {
-    return <Navigate to="/login" />;
-  }
-
-  return <Outlet />;
+  return user ? <Outlet /> : <Navigate to="/login" />;
 };
 
 export default ProtectedRoute;
