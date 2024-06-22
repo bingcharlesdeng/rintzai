@@ -19,7 +19,7 @@ const Navbar = () => {
   };
 
   const renderNavLinks = () => {
-    if (isLoggedIn) {
+    if (user) {
       return (
         <> 
           <NavLink to="/home" className="navbar-link" activeClassName="active">
