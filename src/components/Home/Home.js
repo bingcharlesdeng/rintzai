@@ -1,8 +1,9 @@
+// Home.js
 import React, { useState, useEffect } from 'react';
 import { useUserContext } from '../User/UserContext';
 import Navbar from '../Routes/Navbar';
 import WelcomeMessage from '../WelcomeMessage';
-import FeatureSection from './FeatureSection';
+import QuickAccessGrid from './QuickAccessGrid';
 import QuoteSection from '../Quotes/QuoteSection';
 import MoodCheck from './MoodCheck';
 import ActivityFeed from './ActivityFeed';
@@ -34,7 +35,7 @@ const Home = () => {
         <div className="left-column">
           <WelcomeMessage user={user} />
           {showMoodCheck && <MoodCheck onComplete={handleMoodCheckComplete} />}
-          <FeatureSection />
+          <QuickAccessGrid />
           <ProgressChart />
         </div>
         <div className="right-column">

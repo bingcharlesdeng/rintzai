@@ -1,12 +1,14 @@
+// Navbar.js
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useUserContext } from '../User/UserContext';
-import LogoutButton from './LogoutButton';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../firebase/firebase';
 import './navbar.css';
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const { user, isLoggedIn } = useUserContext();
+  const { user, logout } = useUserContext();
 
   const handleGoBack = () => {
     navigate(-1);
@@ -18,17 +20,28 @@ const Navbar = () => {
     console.log('Navigating to home');
   };
 
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      logout();
+      navigate('/login');
+      console.log('Logged out successfully');
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
+
   const renderNavLinks = () => {
     if (user) {
       return (
-        <> 
+        <>
           <NavLink to="/home" className="navbar-link" activeClassName="active">
             Home
           </NavLink>
           <NavLink to="/profile" className="navbar-link" activeClassName="active">
             Profile
           </NavLink>
-          <NavLink to="/display" className="navbar-link" activeClassName='active'>
+          <NavLink to="/display" className="navbar-link" activeClassName="active">
             Display
           </NavLink>
           <NavLink to="/journal" className="navbar-link" activeClassName="active">
@@ -46,7 +59,9 @@ const Navbar = () => {
           <NavLink to="/gratitude" className="navbar-link" activeClassName="active">
             Gratitude
           </NavLink>
-          <LogoutButton />
+          <button onClick={handleLogout} className="navbar-logout">
+            Logout
+          </button>
         </>
       );
     }
