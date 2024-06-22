@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useUserContext } from '../User/UserContext';
-import Navbar from '../routes/Navbar';
+import Navbar from '../Routes/Navbar';
 import WelcomeMessage from '../WelcomeMessage';
 import FeatureSection from './FeatureSection';
 import QuoteSection from '../Quotes/QuoteSection';
