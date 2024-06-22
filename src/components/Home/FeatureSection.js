@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaUser, FaClipboard, FaChartBar, FaBook, FaComments, FaQuoteLeft, FaHeart, FaImages } from 'react-icons/fa';
-import './featureSection.css';
+import './FeatureSection.css';
 
 const features = [
   { name: 'Profile', icon: FaUser, path: '/profile', color: '#4CAF50' },

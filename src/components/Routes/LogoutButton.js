@@ -2,6 +2,7 @@ import React from 'react';
 import { useUserContext } from '../User/UserContext';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase/firebase';
+import './LogoutButton.css';
 
 const LogoutButton = () => {
   const { logout } = useUserContext();
