@@ -3,7 +3,7 @@ import { db, collection, onSnapshot, query, where, orderBy } from '../../firebas
 import './chatWindow.css';
 import ChatMessage from './ChatMessage';
 
-const ChatWindow = ({ selectedConversation, loggedInUser }) => {
+const ChatWindow = ({ selectedConversation, loggedInUser, selectedMessage }) => {
   const [messages, setMessages] = useState([]);
   const chatWindowRef = useRef(null);
 
@@ -42,6 +42,16 @@ const ChatWindow = ({ selectedConversation, loggedInUser }) => {
     }
   }, [messages]);
 
+  useEffect(() => {
+    if (selectedMessage) {
+      const messageElement = document.getElementById(selectedMessage.id);
+      if (messageElement) {
+        messageElement.scrollIntoView({ behavior: 'smooth' });
+        messageElement.classList.add('highlighted');
+      }
+    }
+  }, [selectedMessage]);
+
   return (
     <div className="chat-window" ref={chatWindowRef}>
       <div className="message-list">
@@ -51,7 +61,8 @@ const ChatWindow = ({ selectedConversation, loggedInUser }) => {
               key={message.id}
               message={message}
               loggedInUser={loggedInUser}
-              messageId={message.id} // Add the message ID as a prop
+              messageId={message.id}
+              isHighlighted={message.id === selectedMessage?.id}
             />
           ))
         ) : (

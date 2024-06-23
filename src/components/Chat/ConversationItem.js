@@ -3,30 +3,21 @@ import { formatRelativeTime } from './utils';
 import './conversationItem.css';
 import { db, doc, getDoc } from '../../firebase/firebase';
 
-
-const ConversationItem = ({ conversation, onSelectConversation, isSelected, loggedInUser }) => {
+const ConversationItem = ({ conversation, onSelectConversation, isSelected, loggedInUser, isSearchResult }) => {
   const [participantName, setParticipantName] = useState('');
 
   useEffect(() => {
     const fetchParticipantName = async () => {
-      // Get the participant that is not the logged-in user
       const otherParticipant = conversation.participants.find((participantId) => participantId !== loggedInUser.uid);
 
       if (otherParticipant) {
-        // Fetch the user document with the matching ID
         const userDoc = await getDoc(doc(db, 'users', otherParticipant));
 
         if (userDoc.exists()) {
-          // Get the name of the other participant
           const userData = userDoc.data();
-          
           setParticipantName(userData.name);
         }
-        
-      }
-
-      else{
-        console.log(loggedInUser.name, "else loggedInUser");
+      } else {
         setParticipantName(loggedInUser.displayName);
       }
     };
@@ -34,9 +25,8 @@ const ConversationItem = ({ conversation, onSelectConversation, isSelected, logg
     fetchParticipantName();
   }, [conversation.participants, loggedInUser.uid]);
 
-  const handleClick = () => onSelectConversation(conversation);
+  const handleClick = () => onSelectConversation(conversation, isSearchResult ? conversation.matchingMessages[0] : null);
 
-  // Extract conversation details
   const { avatarUrl, lastMessage, unreadCount, lastMessageTimestamp } = conversation;
 
   return (
@@ -51,7 +41,11 @@ const ConversationItem = ({ conversation, onSelectConversation, isSelected, logg
       <div className="conversation-details">
         <div className="conversation-name">{participantName}</div>
         <div className="conversation-last-message">
-          <span className="last-message-text">{lastMessage}</span>
+          {isSearchResult ? (
+            <span className="search-preview">{conversation.matchingMessages[0].content}</span>
+          ) : (
+            <span className="last-message-text">{lastMessage}</span>
+          )}
           <span className="last-message-timestamp">{formatRelativeTime(lastMessageTimestamp)}</span>
         </div>
       </div>

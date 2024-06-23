@@ -1,26 +1,31 @@
 import React from 'react';
 import './post.css';
 
-const Post = ({ post, onClick, onDeletePost }) => {
-  console.log('Rendering Post:', post);
+const Post = React.memo(({ post, onClick, onDeletePost }) => {
+  const handleClick = (e) => {
+    e.stopPropagation();
+    onClick();
+  };
+
+  const handleDelete = (e) => {
+    e.stopPropagation();
+    onDeletePost();
+  };
 
   return (
-    <div className="post" onClick={onClick}>
+    <div className="post" onClick={handleClick}>
       {post.type === 'image' ? (
         <img
           src={post.url}
           alt={post.caption}
           className="post-media"
-          onLoad={() => console.log('Image loaded successfully:', post.url)}
-          onError={() => console.error('Error loading image:', post.url)}
+          loading="lazy"
         />
       ) : (
         <video
           src={post.url}
-          controls
           className="post-media"
-          onLoadedData={() => console.log('Video loaded successfully:', post.url)}
-          onError={() => console.error('Error loading video:', post.url)}
+          preload="metadata"
         />
       )}
       <div className="post-overlay">
@@ -29,13 +34,13 @@ const Post = ({ post, onClick, onDeletePost }) => {
           <span>{post.likes || 0}</span>
         </div>
         <div className="post-actions">
-          <button className="delete-button" onClick={(e) => { e.stopPropagation(); onDeletePost(); }}>
+          <button className="delete-button" onClick={handleDelete}>
             <i className="fas fa-trash"></i>
           </button>
         </div>
       </div>
     </div>
   );
-};
+});
 
 export default Post;

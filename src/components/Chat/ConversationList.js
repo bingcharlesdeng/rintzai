@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import './conversationList.css';
 import { db, collection, getDocs, query, where } from '../../firebase/firebase';
 import ConversationItem from './ConversationItem';
+import SearchResultItem from './SearchResultItem';
 
 const ConversationList = ({ conversations, searchResults, onSelectConversation, selectedConversation, loggedInUser }) => {
   const [participantNames, setParticipantNames] = useState({});
 
   useEffect(() => {
     const fetchParticipantNames = async () => {
+      if (conversations.length === 0) return;
+
       const participantIds = conversations.reduce((ids, conversation) => [...ids, ...conversation.participants], []);
       const uniqueParticipantIds = [...new Set(participantIds)];
 
@@ -24,6 +27,7 @@ const ConversationList = ({ conversations, searchResults, onSelectConversation, 
       });
 
       setParticipantNames(names);
+      console.log('Fetched participant names:', names);
     };
 
     fetchParticipantNames();
@@ -33,27 +37,34 @@ const ConversationList = ({ conversations, searchResults, onSelectConversation, 
     const names = conversation.participants
       .map((participantId) => participantNames[participantId])
       .filter((name) => name !== loggedInUser.name);
-    console.log(names, "names");
-    console.log(participantNames, "participant object");
     return names.join(', ');
   };
-
-  const conversationsToRender = searchResults.length > 0 ? searchResults : conversations;
 
   return (
     <div className="conversation-list-container">
       <div className="conversation-list-wrapper">
         <ul className="conversation-list">
-          {conversationsToRender.map((conversation) => (
-            <ConversationItem
-              key={conversation.id}
-              conversation={conversation}
-              onSelectConversation={() => onSelectConversation(conversation)}
-              isSelected={selectedConversation?.id === conversation.id}
-              getParticipantNames={getParticipantNames}
-              loggedInUser={loggedInUser}
-            />
-          ))}
+          {searchResults.length > 0 ? (
+            searchResults.map((result) => (
+              <SearchResultItem
+                key={result.id}
+                result={result}
+                onSelectConversation={onSelectConversation}
+                loggedInUser={loggedInUser}
+              />
+            ))
+          ) : (
+            conversations.map((conversation) => (
+              <ConversationItem
+                key={conversation.id}
+                conversation={conversation}
+                onSelectConversation={() => onSelectConversation(conversation)}
+                isSelected={selectedConversation?.id === conversation.id}
+                getParticipantNames={getParticipantNames}
+                loggedInUser={loggedInUser}
+              />
+            ))
+          )}
         </ul>
       </div>
     </div>

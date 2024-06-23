@@ -1,0 +1,28 @@
+.search-result-item {
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .search-result-item:hover {
+    background-color: var(--hover-color);
+  }
+  
+  .result-preview {
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+  
+  .highlight {
+    background-color: yellow;
+    font-weight: bold;
+  }
+  
+  .result-metadata {
+    font-size: 12px;
+    color: var(--light-text);
+  }
+  
+  .result-timestamp {
+    font-style: italic;
+  }

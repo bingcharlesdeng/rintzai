@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import ChatWindow from './ChatWindow';
 import ConversationList from './ConversationList';
 import ChatInput from './ChatInput';
-import NewChatModal from './NewChatModal';
+import UserSearch from './UserSearch';
 import ConversationSearch from './ConversationSearch';
-import { sendMessage, createNewConversation } from './messageService';
+import { sendMessage, createNewConversation, fetchConversationsForUser } from './messageService';
 import { db, collection, onSnapshot, query, where, orderBy } from '../../firebase/firebase';
 import './chat.css';
 import { useUserContext } from '../User/UserContext';
@@ -13,10 +13,10 @@ import Navbar from '../Routes/Navbar';
 const Chat = () => {
   const [selectedConversation, setSelectedConversation] = useState(null);
   const [conversations, setConversations] = useState([]);
-  const [isNewChatModalOpen, setIsNewChatModalOpen] = useState(false);
-  const [searchedConversations, setSearchedConversations] = useState([]);
-  const { user } = useUserContext();
+  const [isUserSearchOpen, setIsUserSearchOpen] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
+  const [selectedMessage, setSelectedMessage] = useState(null);
+  const { user } = useUserContext();
 
   useEffect(() => {
     const fetchUserConversations = async () => {
@@ -33,7 +33,6 @@ const Chat = () => {
             ...doc.data(),
           }));
           setConversations(updatedConversations);
-          setSearchedConversations(updatedConversations);
           console.log('Fetched user conversations:', updatedConversations);
         });
   
@@ -46,46 +45,45 @@ const Chat = () => {
     fetchUserConversations();
   }, [user]);
 
-  const scrollToMessage = (messageId) => {
-    const chatWindowElement = document.querySelector('.chat-window');
-    const messageElement = document.getElementById(messageId);
-
-    if (chatWindowElement && messageElement) {
-      const scrollOffset = messageElement.offsetTop - chatWindowElement.offsetTop;
-      chatWindowElement.scrollTop = scrollOffset;
-    }
-  };
-
-  const handleSearchResults = (matchingConversations) => {
-    setSearchResults(matchingConversations);
-    console.log('Searched conversations:', matchingConversations);
+  const handleSearchResults = (results) => {
+    setSearchResults(results);
+    console.log('Search results:', results);
   };
 
   const handleNewChat = () => {
-    setIsNewChatModalOpen(true);
+    setIsUserSearchOpen(true);
   };
 
-  const handleCloseNewChatModal = () => {
-    setIsNewChatModalOpen(false);
+  const handleCloseUserSearch = () => {
+    setIsUserSearchOpen(false);
   };
 
   const handleStartChat = async (selectedUser) => {
     try {
-      const newConversation = await createNewConversation(user.uid, selectedUser.id);
-      setSelectedConversation(newConversation);
-      handleCloseNewChatModal();
-      console.log('Started new conversation:', newConversation);
+      const existingConversation = conversations.find(conv => 
+        conv.participants.includes(selectedUser.id) && conv.participants.includes(user.uid)
+      );
+
+      if (existingConversation) {
+        setSelectedConversation(existingConversation);
+      } else {
+        const newConversation = await createNewConversation(user.uid, selectedUser.id);
+        setSelectedConversation(newConversation);
+      }
+      handleCloseUserSearch();
+      console.log('Started chat with:', selectedUser.name);
     } catch (error) {
       console.error('Error creating new conversation:', error);
     }
   };
 
-  const handleSelectConversation = (conversation, messageId) => {
+  const handleSelectConversation = (conversation, message = null) => {
     setSelectedConversation(conversation);
-    if (messageId) {
-      scrollToMessage(messageId);
-    }
+    setSelectedMessage(message);
     console.log('Selected conversation:', conversation);
+    if (message) {
+      console.log('Selected message:', message);
+    }
   };
 
   const handleSendMessage = (message) => {
@@ -101,25 +99,6 @@ const Chat = () => {
     }
   };
 
-  // const handleSelectUser = async (selectedUser) => {
-  //   const existingConversation = conversations.find((conversation) =>
-  //     conversation.participants.includes(selectedUser.id) && conversation.participants.includes(user.uid)
-  //   );
-
-  //   if (existingConversation) {
-  //     setSelectedConversation(existingConversation);
-  //     console.log('Selected existing conversation:', existingConversation);
-  //   } else {
-  //     try {
-  //       const newConversation = await createNewConversation(selectedUser.id, user.uid);
-  //       setSelectedConversation(newConversation);
-  //       console.log('Created new conversation:', newConversation);
-  //     } catch (error) {
-  //       console.error('Error creating new conversation:', error);
-  //     }
-  //   }
-  // };
-
   return (
     <>
       <Navbar />
@@ -130,9 +109,6 @@ const Chat = () => {
               New Chat
             </button>
           </div>
-          {isNewChatModalOpen && (
-            <NewChatModal onClose={handleCloseNewChatModal} onStartChat={handleStartChat} />
-          )}
           <ConversationSearch
             conversations={conversations}
             onSearchResults={handleSearchResults}
@@ -148,13 +124,20 @@ const Chat = () => {
         <div className="chat-area">
           {selectedConversation ? (
             <>
-              <ChatWindow selectedConversation={selectedConversation} loggedInUser={user} />
+              <ChatWindow 
+                selectedConversation={selectedConversation} 
+                loggedInUser={user} 
+                selectedMessage={selectedMessage}
+              />
               <ChatInput onSendMessage={handleSendMessage} />
             </>
           ) : (
-            <div className="no-chat-selected">Select a conversation to start chatting</div>
+            <div className="no-chat-selected">Select a conversation or start a new chat</div>
           )}
         </div>
+        {isUserSearchOpen && (
+          <UserSearch onClose={handleCloseUserSearch} onStartChat={handleStartChat} />
+        )}
       </div>
     </>
   );

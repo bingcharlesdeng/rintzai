@@ -91,3 +91,14 @@
     border-radius: 50%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
+
+  /* ... existing styles ... */
+
+.search-preview {
+  font-style: italic;
+  color: var(--accent-color);
+}
+
+.conversation-item.active .search-preview {
+  color: white;
+}

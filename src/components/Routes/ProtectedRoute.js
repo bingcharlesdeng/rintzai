@@ -6,10 +6,10 @@ const ProtectedRoute = () => {
   const { user, isLoading } = useUserContext();
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className="loading-spinner">Loading...</div>;
   }
 
-  return user ? <Outlet /> : <Navigate to="/login" />;
+  return user ? <Outlet /> : <Navigate to="/login" replace />;
 };
 
 export default ProtectedRoute;

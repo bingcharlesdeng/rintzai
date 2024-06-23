@@ -16,6 +16,7 @@ import {
   arrayUnion,
   getDoc,
   setDoc,
+  or
 } from 'firebase/firestore';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { getAuth, connectAuthEmulator } from 'firebase/auth';
@@ -58,5 +59,6 @@ export {
   ref,
   uploadBytesResumable,
   getDownloadURL,
-  auth
+  auth,
+  or
 };

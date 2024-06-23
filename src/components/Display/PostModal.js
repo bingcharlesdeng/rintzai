@@ -1,57 +1,87 @@
-// PostModal.js
-import React from 'react';
+import React, { useState } from 'react';
 import './postModal.css';
+import { motion } from 'framer-motion';
 
-const PostModal = ({ post, onClose }) => {
-  if (!post) {
-    return null;
-  }
+const PostModal = ({ post, onClose, onDelete, onEdit }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedCaption, setEditedCaption] = useState(post.caption);
+  const [editedLocation, setEditedLocation] = useState(post.location);
+  const [editedAltText, setEditedAltText] = useState(post.altText);
+  const [editedTags, setEditedTags] = useState(post.tags ? post.tags.join(', ') : '');
 
-  console.log('Rendering PostModal for post:', post);
+  const handleEdit = () => {
+    onEdit(post.id, {
+      caption: editedCaption,
+      location: editedLocation,
+      altText: editedAltText,
+      tags: editedTags.split(',').map(tag => tag.trim()),
+    });
+    setIsEditing(false);
+  };
 
   return (
-    <div className="modal-overlay">
-      <div className="post-modal">
-        <div className="modal-content">
-          <div className="modal-header">
-            <button className="close-button" onClick={onClose}>
-              <i className="fas fa-times"></i>
-            </button>
-          </div>
-          <div className="modal-body">
-            <div className="modal-media-container">
-              {post.type === 'image' && (
-                <img src={post.url} alt={post.caption} className="modal-media" />
-              )}
-              {post.type === 'video' && (
-                <video src={post.url} controls className="modal-media" />
-              )}
-            </div>
-            <div className="modal-details">
-              <div className="post-header">
-                <img src={post.userAvatar} alt="User Avatar" className="user-avatar" />
-                <h3 className="username">{post.username}</h3>
-              </div>
-              <div className="post-caption">{post.caption}</div>
-              <div className="post-comments">
-                {/* Render comments here */}
-              </div>
-              <div className="post-actions">
-                <button className="like-button">
-                  <i className="fas fa-heart"></i>
-                </button>
-                <button className="comment-button">
-                  <i className="fas fa-comment"></i>
-                </button>
-                <button className="share-button">
-                  <i className="fas fa-share"></i>
-                </button>
-              </div>
-            </div>
-          </div>
+    <motion.div 
+      className="post-modal"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <motion.div 
+        className="post-modal-content"
+        initial={{ scale: 0.8, y: -50 }}
+        animate={{ scale: 1, y: 0 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+      >
+        <div className="post-modal-media">
+          {post.type === 'image' ? (
+            <img src={post.url} alt={post.altText || 'Post image'} />
+          ) : (
+            <video src={post.url} controls />
+          )}
         </div>
-      </div>
-    </div>
+        <div className="post-modal-info">
+          {isEditing ? (
+            <>
+              <textarea
+                value={editedCaption}
+                onChange={(e) => setEditedCaption(e.target.value)}
+                placeholder="Caption"
+              />
+              <input
+                type="text"
+                value={editedLocation}
+                onChange={(e) => setEditedLocation(e.target.value)}
+                placeholder="Location"
+              />
+              <input
+                type="text"
+                value={editedAltText}
+                onChange={(e) => setEditedAltText(e.target.value)}
+                placeholder="Alt Text"
+              />
+              <input
+                type="text"
+                value={editedTags}
+                onChange={(e) => setEditedTags(e.target.value)}
+                placeholder="Tags (comma separated)"
+              />
+              <button onClick={handleEdit} className="save-button">Save Changes</button>
+            </>
+          ) : (
+            <>
+              <p className="post-caption">{post.caption}</p>
+              <p className="post-location">{post.location}</p>
+              <p className="post-tags">Tags: {post.tags ? post.tags.join(', ') : 'No tags'}</p>
+              <button onClick={() => setIsEditing(true)} className="edit-button">Edit</button>
+            </>
+          )}
+          <button onClick={() => onDelete(post.id)} className="delete-button">Delete</button>
+        </div>
+        <button onClick={onClose} className="close-button">
+          <i className="fas fa-times"></i>
+        </button>
+      </motion.div>
+    </motion.div>
   );
 };
 
