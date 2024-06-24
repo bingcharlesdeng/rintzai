@@ -9,78 +9,111 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  backdrop-filter: blur(5px);
 }
 
 .new-post-modal {
   background-color: white;
-  padding: 40px;
+  padding: 2.5rem;
   border-radius: 20px;
   width: 90%;
-  max-width: 600px;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.close-button {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close-button:hover {
+  color: var(--primary-color);
 }
 
 .new-post-modal h2 {
   margin-top: 0;
+  margin-bottom: 1.25rem;
+  font-size: 1.5rem;
   color: #333;
-  font-size: 28px;
-  font-weight: 600;
-  margin-bottom: 30px;
 }
 
-.new-post-modal form {
+.media-type-selector,
+.dimension-selector {
+  margin-bottom: 1.25rem;
+}
+
+.media-type-selector label {
+  margin-right: 1rem;
+}
+
+.dropzone {
+  border: 2px dashed var(--primary-color);
+  border-radius: 10px;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 1.25rem;
+  transition: all 0.3s ease;
+  background-color: var(--background-color);
+}
+
+.dropzone.active {
+  border-color: var(--secondary-color);
+  background-color: #f0f0ff;
+}
+
+.stage-2 img,
+.stage-2 video,
+.stage-3 img,
+.stage-3 video {
+  max-width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.stage-3-content {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.media-preview {
+  flex: 1;
+}
+
+.post-details {
+  flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-.media-type-selector {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.media-type-selector label {
-  margin: 0 10px;
-  cursor: pointer;
-}
-
-.file-input-container {
-  position: relative;
-  margin-bottom: 20px;
-}
-
-.file-input-container input[type="file"] {
-  position: absolute;
-  left: -9999px;
-}
-
-.file-input-label {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #6c5ce7;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.file-input-label:hover {
-  background-color: #5641e5;
-}
-
-.file-name {
-  margin-top: 10px;
-  font-style: italic;
-}
-
 .new-post-modal textarea,
 .new-post-modal input[type="text"] {
-  margin-bottom: 20px;
-  padding: 12px;
-  border: 1px solid #ddd;
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
-  font-size: 16px;
-  transition: all 0.3s ease;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.new-post-modal textarea:focus,
+.new-post-modal input[type="text"]:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 0 2px var(--shadow-color);
 }
 
 .new-post-modal textarea {
@@ -88,43 +121,56 @@
   resize: vertical;
 }
 
-.new-post-modal textarea:focus,
-.new-post-modal input[type="text"]:focus {
-  border-color: #6c5ce7;
-  box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.2);
-}
-
-.modal-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-}
-
-.submit-button,
-.cancel-button {
-  padding: 12px 24px;
+.new-post-modal button {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--primary-color);
+  color: white;
   border: none;
   border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-size: 16px;
-  font-weight: 500;
 }
 
-.submit-button {
-  background-color: #6c5ce7;
-  color: white;
+.new-post-modal button:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px var(--shadow-color);
 }
 
-.submit-button:hover {
-  background-color: #5641e5;
+.stage-4 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
-.cancel-button {
-  background-color: #f0f0f0;
-  color: #333;
+.loading-spinner {
+  margin: 1.25rem 0;
 }
 
-.cancel-button:hover {
-  background-color: #e0e0e0;
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid var(--primary-color);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  .new-post-modal {
+    padding: 1.5rem;
+  }
+
+  .stage-3-content {
+    flex-direction: column;
+  }
 }

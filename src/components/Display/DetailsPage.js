@@ -1,12 +1,10 @@
-// DetailsPage.js
 import React from 'react';
 import './detailsPage.css';
 
-const DetailsPage = ({ caption, setCaption, location, setLocation, altText, setAltText, onSubmit }) => {
-//   const handleSubmit = () => {
-//     console.log('Submitting post details');
-//     onSubmit();
-//   };
+const DetailsPage = ({ caption, setCaption, location, setLocation, altText, setAltText, tags, setTags }) => {
+  const handleTagChange = (e) => {
+    setTags(e.target.value.split(',').map(tag => tag.trim()));
+  };
 
   return (
     <div className="details-page">
@@ -42,7 +40,17 @@ const DetailsPage = ({ caption, setCaption, location, setLocation, altText, setA
           onChange={(e) => setAltText(e.target.value)}
         />
       </div>
-      
+      <div className="form-group">
+        <label htmlFor="tags-input">Tags</label>
+        <input
+          id="tags-input"
+          className="tags-input"
+          type="text"
+          placeholder="Add tags (comma-separated)"
+          value={tags.join(', ')}
+          onChange={handleTagChange}
+        />
+      </div>
     </div>
   );
 };

@@ -1,15 +1,18 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, lazy, Suspense } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import imageCompression from 'browser-image-compression';
 import './display.css';
 import Header from './Header';
-import Gallery from './Gallery';
 import Navbar from '../Routes/Navbar';
 import { useUserContext } from '../User/UserContext';
 import { collection, query, where, getDocs, addDoc, deleteDoc, doc, updateDoc, orderBy, limit, startAfter } from 'firebase/firestore';
-import { db, storage, ref, uploadBytesResumable, getDownloadURL } from '../../firebase/firebase';
+import { db, storage, ref, uploadBytesResumable, getDownloadURL, arrayUnion } from '../../firebase/firebase';
 import NewPostModal from './NewPostModal';
 import PostModal from './PostModal';
 import LoadingSpinner from './LoadingSpinner';
-import { toast } from 'react-toastify';
+
+const Gallery = lazy(() => import('./Gallery'));
 
 const Display = () => {
   const { user } = useUserContext();
@@ -42,13 +45,18 @@ const Display = () => {
           ...doc.data(),
         }));
 
-        setPosts((prevPosts) => [...prevPosts, ...fetchedPosts]);
+        setPosts((prevPosts) => {
+          const newPosts = fetchedPosts.filter(
+            (newPost) => !prevPosts.some((prevPost) => prevPost.id === newPost.id)
+          );
+          return [...prevPosts, ...newPosts];
+        });
         setLastVisible(querySnapshot.docs[querySnapshot.docs.length - 1]);
         setHasMore(querySnapshot.docs.length === 12);
-        setIsLoading(false);
       } catch (error) {
         console.error('Error fetching posts:', error);
         toast.error('Failed to load posts. Please try again.');
+      } finally {
         setIsLoading(false);
       }
     }
@@ -64,8 +72,13 @@ const Display = () => {
   const handleNewPostSubmit = async (newPost) => {
     try {
       setIsLoading(true);
-      const fileUrl = await uploadFile(newPost.file);
+      const compressedFile = await imageCompression(newPost.file, {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 1920
+      });
+      const fileUrl = await uploadFile(compressedFile);
       const postData = {
+        id: Date.now().toString(),
         type: newPost.type,
         caption: newPost.caption,
         location: newPost.location,
@@ -146,6 +159,42 @@ const Display = () => {
     }
   };
 
+  const handleAddComment = async (postId, comment) => {
+    try {
+      const postRef = doc(db, 'posts', postId);
+      await updateDoc(postRef, {
+        comments: arrayUnion(comment)
+      });
+      setPosts(posts.map(post => 
+        post.id === postId 
+          ? { ...post, comments: [...(post.comments || []), comment] }
+          : post
+      ));
+      toast.success('Comment added successfully!');
+    } catch (error) {
+      console.error('Error adding comment:', error);
+      toast.error('Failed to add comment. Please try again.');
+    }
+  };
+
+  const handleAddTag = async (postId, tag) => {
+    try {
+      const postRef = doc(db, 'posts', postId);
+      await updateDoc(postRef, {
+        tags: arrayUnion(tag)
+      });
+      setPosts(posts.map(post => 
+        post.id === postId 
+          ? { ...post, tags: [...(post.tags || []), tag] }
+          : post
+      ));
+      toast.success('Tag added successfully!');
+    } catch (error) {
+      console.error('Error adding tag:', error);
+      toast.error('Failed to add tag. Please try again.');
+    }
+  };
+
   if (isLoading && posts.length === 0) {
     return <LoadingSpinner />;
   }
@@ -155,12 +204,14 @@ const Display = () => {
       <Navbar />
       <div className="display-container">
         <Header user={user} posts={posts} onNewPostClick={handleNewPostClick} />
-        <Gallery 
-          posts={posts} 
-          onPostClick={handlePostClick} 
-          onDeletePost={handleDeletePost}
-          onEditPost={handleEditPost}
-        />
+        <Suspense fallback={<LoadingSpinner />}>
+          <Gallery 
+            posts={posts} 
+            onPostClick={handlePostClick} 
+            onDeletePost={handleDeletePost}
+            onEditPost={handleEditPost}
+          />
+        </Suspense>
         {hasMore && (
           <button onClick={fetchPosts} className="load-more-button">
             Load more
@@ -178,9 +229,12 @@ const Display = () => {
             onClose={handlePostModalClose}
             onDelete={handleDeletePost}
             onEdit={handleEditPost}
+            addComment={handleAddComment}
+            addTag={handleAddTag}
           />
         )}
       </div>
+      <ToastContainer />
     </>
   );
 };

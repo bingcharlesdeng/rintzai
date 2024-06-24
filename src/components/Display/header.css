@@ -2,9 +2,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 30px 0;
-  border-bottom: 1px solid #e0e0e0;
-  margin-bottom: 30px;
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 2rem;
 }
 
 .user-info {
@@ -13,65 +13,99 @@
 }
 
 .user-avatar {
-  width: 90px;
-  height: 90px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   object-fit: cover;
-  margin-right: 25px;
-  border: 3px solid #6c5ce7;
-  box-shadow: 0 2px 10px rgba(108, 92, 231, 0.2);
+  margin-right: 2rem;
+  border: 3px solid var(--primary-color);
+  box-shadow: 0 2px 10px var(--shadow-color);
 }
 
 .user-details h1 {
-  font-size: 28px;
-  color: #333;
-  margin-bottom: 5px;
+  font-size: 2rem;
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
   font-weight: 600;
 }
 
 .user-details p {
-  font-size: 16px;
-  color: #666;
+  font-size: 1rem;
+  color: var(--text-color-light);
+  margin-bottom: 0.5rem;
+}
+
+.user-bio {
+  font-size: 0.9rem;
+  color: var(--text-color-light);
+  max-width: 300px;
 }
 
 .user-stats {
   display: flex;
-  margin-top: 15px;
+  justify-content: space-between;
+  width: 300px;
 }
 
 .stat-item {
-  margin-right: 25px;
   text-align: center;
 }
 
 .stat-count {
-  font-size: 20px;
+  font-size: 1.5rem;
   font-weight: 600;
-  color: #333;
+  color: var(--text-color);
+  display: block;
 }
 
 .stat-label {
-  font-size: 14px;
-  color: #666;
+  font-size: 0.9rem;
+  color: var(--text-color-light);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .new-post-button {
-  padding: 12px 24px;
-  background-color: #6c5ce7;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--primary-color);
   color: white;
   border: none;
   border-radius: 30px;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 10px rgba(108, 92, 231, 0.2);
+  transition: all var(--transition-speed) ease;
+  box-shadow: 0 2px 10px var(--shadow-color);
+  display: flex;
+  align-items: center;
+}
+
+.new-post-button i {
+  margin-right: 0.5rem;
 }
 
 .new-post-button:hover {
-  background-color: #5641e5;
+  background-color: var(--secondary-color);
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+  box-shadow: 0 4px 15px var(--shadow-color);
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .user-info {
+    margin-bottom: 1.5rem;
+  }
+
+  .user-stats {
+    width: 100%;
+    margin-bottom: 1.5rem;
+  }
+
+  .new-post-button {
+    align-self: flex-start;
+  }
 }

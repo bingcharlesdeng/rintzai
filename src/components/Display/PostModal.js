@@ -1,87 +1,141 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useSwipeable } from 'react-swipeable';
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import './postModal.css';
-import { motion } from 'framer-motion';
 
-const PostModal = ({ post, onClose, onDelete, onEdit }) => {
+const PostModal = ({ post, onClose, onDelete, onEdit, addComment, addTag }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [editedCaption, setEditedCaption] = useState(post.caption);
-  const [editedLocation, setEditedLocation] = useState(post.location);
-  const [editedAltText, setEditedAltText] = useState(post.altText);
-  const [editedTags, setEditedTags] = useState(post.tags ? post.tags.join(', ') : '');
+  const [editedPost, setEditedPost] = useState({ ...post });
+  const [newComment, setNewComment] = useState('');
+  const [newTag, setNewTag] = useState('');
+
+  const handleOutsideClick = useCallback((e) => {
+    if (e.target.classList.contains('post-modal')) {
+      onClose();
+    }
+  }, [onClose]);
+
+  useEffect(() => {
+    document.addEventListener('click', handleOutsideClick);
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  }, [handleOutsideClick]);
+
+  const handlers = useSwipeable({
+    onSwipedDown: () => onClose(),
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true
+  });
 
   const handleEdit = () => {
-    onEdit(post.id, {
-      caption: editedCaption,
-      location: editedLocation,
-      altText: editedAltText,
-      tags: editedTags.split(',').map(tag => tag.trim()),
-    });
+    onEdit(post.id, editedPost);
     setIsEditing(false);
   };
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditedPost(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleAddComment = () => {
+    if (newComment.trim()) {
+      addComment(post.id, newComment);
+      setNewComment('');
+    }
+  };
+
+  const handleAddTag = () => {
+    if (newTag.trim()) {
+      addTag(post.id, newTag);
+      setNewTag('');
+    }
+  };
+
   return (
-    <motion.div 
-      className="post-modal"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-    >
-      <motion.div 
-        className="post-modal-content"
-        initial={{ scale: 0.8, y: -50 }}
-        animate={{ scale: 1, y: 0 }}
-        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-      >
+    <div {...handlers} className="post-modal">
+      <div className="post-modal-content">
+        <button onClick={onClose} className="exit-button" aria-label="Close modal">
+          &times;
+        </button>
         <div className="post-modal-media">
-          {post.type === 'image' ? (
-            <img src={post.url} alt={post.altText || 'Post image'} />
-          ) : (
-            <video src={post.url} controls />
-          )}
+          <TransformWrapper>
+            <TransformComponent>
+              {post.type === 'image' ? (
+                <img src={post.url} alt={post.altText || 'Post image'} />
+              ) : (
+                <video src={post.url} controls />
+              )}
+            </TransformComponent>
+          </TransformWrapper>
         </div>
         <div className="post-modal-info">
           {isEditing ? (
-            <>
+            <div className="edit-section">
               <textarea
-                value={editedCaption}
-                onChange={(e) => setEditedCaption(e.target.value)}
+                name="caption"
+                value={editedPost.caption}
+                onChange={handleInputChange}
                 placeholder="Caption"
+                aria-label="Edit caption"
               />
               <input
                 type="text"
-                value={editedLocation}
-                onChange={(e) => setEditedLocation(e.target.value)}
+                name="location"
+                value={editedPost.location}
+                onChange={handleInputChange}
                 placeholder="Location"
+                aria-label="Edit location"
               />
-              <input
-                type="text"
-                value={editedAltText}
-                onChange={(e) => setEditedAltText(e.target.value)}
-                placeholder="Alt Text"
-              />
-              <input
-                type="text"
-                value={editedTags}
-                onChange={(e) => setEditedTags(e.target.value)}
-                placeholder="Tags (comma separated)"
-              />
-              <button onClick={handleEdit} className="save-button">Save Changes</button>
-            </>
+              <button onClick={handleEdit} className="save-button" aria-label="Save changes">Save Changes</button>
+            </div>
           ) : (
-            <>
+            <div className="view-section">
               <p className="post-caption">{post.caption}</p>
               <p className="post-location">{post.location}</p>
-              <p className="post-tags">Tags: {post.tags ? post.tags.join(', ') : 'No tags'}</p>
-              <button onClick={() => setIsEditing(true)} className="edit-button">Edit</button>
-            </>
+              <button onClick={() => setIsEditing(true)} className="edit-button" aria-label="Edit post">Edit</button>
+            </div>
           )}
-          <button onClick={() => onDelete(post.id)} className="delete-button">Delete</button>
+          <div className="comments-section">
+            <h3>Comments</h3>
+            <div className="post-comments">
+              {post.comments && post.comments.map((comment, index) => (
+                <p key={index} className="comment-item">{comment}</p>
+              ))}
+            </div>
+            <div className="add-comment">
+              <input
+                type="text"
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                placeholder="Add a comment"
+                aria-label="Add a comment"
+              />
+              <button onClick={handleAddComment} aria-label="Post comment">Post</button>
+            </div>
+          </div>
+          <div className="tags-section">
+            <h3>Tags</h3>
+            <div className="post-tags">
+              {post.tags && post.tags.map((tag, index) => (
+                <span key={index} className="tag-item">{tag}</span>
+              ))}
+            </div>
+            <div className="add-tag">
+              <input
+                type="text"
+                value={newTag}
+                onChange={(e) => setNewTag(e.target.value)}
+                placeholder="Add a tag"
+                aria-label="Add a tag"
+              />
+              <button onClick={handleAddTag} aria-label="Add tag">Add</button>
+            </div>
+          </div>
+          <button onClick={() => onDelete(post.id)} className="delete-button" aria-label="Delete post">Delete Post</button>
         </div>
-        <button onClick={onClose} className="close-button">
-          <i className="fas fa-times"></i>
-        </button>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 };
 

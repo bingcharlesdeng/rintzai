@@ -1,7 +1,6 @@
 import React from 'react';
 import { formatRelativeTime } from './utils';
 import './chatMessage.css';
-
 const ChatMessage = ({ message, loggedInUser, messageId, isHighlighted }) => {
   const { content, senderId, timestamp } = message;
   const isSentByLoggedInUser = senderId === loggedInUser.uid;
