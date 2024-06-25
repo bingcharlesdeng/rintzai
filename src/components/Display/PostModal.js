@@ -8,6 +8,11 @@ const PostModal = ({ post, onClose, onDelete, onEdit, addComment, addTag }) => {
   const [editedPost, setEditedPost] = useState({ ...post });
   const [newComment, setNewComment] = useState('');
   const [newTag, setNewTag] = useState('');
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    setEditedPost({ ...post });
+  }, [post]);
 
   const handleOutsideClick = useCallback((e) => {
     if (e.target.classList.contains('post-modal')) {
@@ -28,9 +33,15 @@ const PostModal = ({ post, onClose, onDelete, onEdit, addComment, addTag }) => {
     trackMouse: true
   });
 
-  const handleEdit = () => {
-    onEdit(post.id, editedPost);
-    setIsEditing(false);
+  const handleEdit = async () => {
+    try {
+      await onEdit(post.id, editedPost);
+      setIsEditing(false);
+      setError('');
+    } catch (error) {
+      console.error('Error updating post:', error);
+      setError('Failed to update post. Please try again.');
+    }
   };
 
   const handleInputChange = (e) => {
@@ -38,17 +49,35 @@ const PostModal = ({ post, onClose, onDelete, onEdit, addComment, addTag }) => {
     setEditedPost(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleAddComment = () => {
+  const handleAddComment = async () => {
     if (newComment.trim()) {
-      addComment(post.id, newComment);
-      setNewComment('');
+      try {
+        await addComment(post.id, newComment);
+        setEditedPost(prev => ({
+          ...prev,
+          comments: [...(prev.comments || []), newComment]
+        }));
+        setNewComment('');
+      } catch (error) {
+        console.error('Error adding comment:', error);
+        setError('Failed to add comment. Please try again.');
+      }
     }
   };
 
-  const handleAddTag = () => {
+  const handleAddTag = async () => {
     if (newTag.trim()) {
-      addTag(post.id, newTag);
-      setNewTag('');
+      try {
+        await addTag(post.id, newTag);
+        setEditedPost(prev => ({
+          ...prev,
+          tags: [...(prev.tags || []), newTag]
+        }));
+        setNewTag('');
+      } catch (error) {
+        console.error('Error adding tag:', error);
+        setError('Failed to add tag. Please try again.');
+      }
     }
   };
 
@@ -61,10 +90,10 @@ const PostModal = ({ post, onClose, onDelete, onEdit, addComment, addTag }) => {
         <div className="post-modal-media">
           <TransformWrapper>
             <TransformComponent>
-              {post.type === 'image' ? (
-                <img src={post.url} alt={post.altText || 'Post image'} />
+              {editedPost.type === 'image' ? (
+                <img src={editedPost.url} alt={editedPost.altText || 'Post image'} />
               ) : (
-                <video src={post.url} controls />
+                <video src={editedPost.url} controls />
               )}
             </TransformComponent>
           </TransformWrapper>
@@ -88,18 +117,19 @@ const PostModal = ({ post, onClose, onDelete, onEdit, addComment, addTag }) => {
                 aria-label="Edit location"
               />
               <button onClick={handleEdit} className="save-button" aria-label="Save changes">Save Changes</button>
+              {error && <p className="error-message">{error}</p>}
             </div>
           ) : (
             <div className="view-section">
-              <p className="post-caption">{post.caption}</p>
-              <p className="post-location">{post.location}</p>
+              <p className="post-caption">{editedPost.caption}</p>
+              <p className="post-location">{editedPost.location}</p>
               <button onClick={() => setIsEditing(true)} className="edit-button" aria-label="Edit post">Edit</button>
             </div>
           )}
           <div className="comments-section">
             <h3>Comments</h3>
             <div className="post-comments">
-              {post.comments && post.comments.map((comment, index) => (
+              {editedPost.comments && editedPost.comments.map((comment, index) => (
                 <p key={index} className="comment-item">{comment}</p>
               ))}
             </div>
@@ -117,7 +147,7 @@ const PostModal = ({ post, onClose, onDelete, onEdit, addComment, addTag }) => {
           <div className="tags-section">
             <h3>Tags</h3>
             <div className="post-tags">
-              {post.tags && post.tags.map((tag, index) => (
+              {editedPost.tags && editedPost.tags.map((tag, index) => (
                 <span key={index} className="tag-item">{tag}</span>
               ))}
             </div>
@@ -132,7 +162,7 @@ const PostModal = ({ post, onClose, onDelete, onEdit, addComment, addTag }) => {
               <button onClick={handleAddTag} aria-label="Add tag">Add</button>
             </div>
           </div>
-          <button onClick={() => onDelete(post.id)} className="delete-button" aria-label="Delete post">Delete Post</button>
+          <button onClick={() => onDelete(editedPost.id)} className="delete-button" aria-label="Delete post">Delete Post</button>
         </div>
       </div>
     </div>

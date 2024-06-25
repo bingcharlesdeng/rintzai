@@ -129,6 +129,11 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
+.error-message {
+  color: #ff6b6b;
+  margin-top: 0.5rem;
+}
+
 .comments-section,
 .tags-section {
   margin-top: 1.5rem;
