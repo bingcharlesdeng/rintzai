@@ -13,14 +13,14 @@
 }
 
 .post-modal-content {
-  background-color: white;
+  background-color: var(--background-color);
   border-radius: 20px;
   display: flex;
   width: 90%;
   max-width: 1000px;
   height: 90vh;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 30px var(--shadow-color);
   position: relative;
 }
 
@@ -31,10 +31,10 @@
   background: none;
   border: none;
   font-size: 24px;
-  color: #333;
+  color: var(--text-color);
   cursor: pointer;
   z-index: 10;
-  transition: color 0.3s ease;
+  transition: color var(--transition-speed) ease;
 }
 
 .exit-button:hover {
@@ -74,7 +74,9 @@
   border: 1px solid var(--border-color);
   border-radius: 8px;
   font-size: 1rem;
-  transition: border-color 0.3s ease;
+  transition: border-color var(--transition-speed) ease;
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 .post-modal-info textarea:focus,
@@ -101,7 +103,7 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all var(--transition-speed) ease;
   font-size: 1rem;
   font-weight: 500;
   margin-top: 1rem;
@@ -118,7 +120,7 @@
 }
 
 .save-button {
-  background-color: #4cd137;
+  background-color: var(--secondary-color);
   color: white;
 }
 
@@ -126,7 +128,7 @@
 .delete-button:hover,
 .save-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px var(--shadow-color);
 }
 
 .error-message {
@@ -141,7 +143,7 @@
 
 .comment-item,
 .tag-item {
-  background-color: #f0f0f0;
+  background-color: var(--border-color);
   padding: 0.75rem;
   margin-bottom: 0.75rem;
   border-radius: 5px;
@@ -159,7 +161,7 @@
   margin-right: 0.5rem;
   margin-bottom: 0.5rem;
   padding: 0.25rem 0.75rem;
-  background-color: #e0e0e0;
+  background-color: var(--border-color);
   border-radius: 15px;
   font-size: 0.9rem;
 }
@@ -183,7 +185,7 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color var(--transition-speed) ease;
 }
 
 .add-comment button:hover,

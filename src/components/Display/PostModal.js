@@ -148,7 +148,7 @@ const PostModal = ({ post, onClose, onDelete, onEdit, addComment, addTag }) => {
             <h3>Tags</h3>
             <div className="post-tags">
               {editedPost.tags && editedPost.tags.map((tag, index) => (
-                <span key={index} className="tag-item">{tag}</span>
+                <span key={index} className="tag-item">#{tag}</span>
               ))}
             </div>
             <div className="add-tag">

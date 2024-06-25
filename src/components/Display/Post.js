@@ -29,11 +29,19 @@ const Post = React.memo(({ post, onClick, onDeletePost }) => {
         />
       )}
       <div className="post-overlay">
-        <div className="post-likes">
-          <i className="fas fa-heart"></i>
-          <span>{post.likes || 0}</span>
+        <div className="post-info">
+          <p className="post-caption">{post.caption}</p>
+          {post.location && <p className="post-location">{post.location}</p>}
         </div>
         <div className="post-actions">
+          <div className="post-likes">
+            <i className="fas fa-heart"></i>
+            <span>{post.likes || 0}</span>
+          </div>
+          <div className="post-comments">
+            <i className="fas fa-comment"></i>
+            <span>{post.comments ? post.comments.length : 0}</span>
+          </div>
           <button className="delete-button" onClick={handleDelete}>
             <i className="fas fa-trash"></i>
           </button>

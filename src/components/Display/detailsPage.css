@@ -5,10 +5,10 @@
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
-  padding: 1.5rem;
+  padding: 2rem;
   background-color: var(--background-color);
-  border-radius: 10px;
-  box-shadow: 0 2px 10px var(--shadow-color);
+  border-radius: 15px;
+  box-shadow: 0 4px 15px var(--shadow-color);
 }
 
 .form-group {
@@ -20,6 +20,7 @@
   font-weight: 600;
   margin-bottom: 0.5rem;
   color: var(--text-color);
+  font-size: 1rem;
 }
 
 .caption-input,
@@ -29,13 +30,13 @@
   width: 100%;
   padding: 0.75rem;
   border: 1px solid var(--border-color);
-  border-radius: 5px;
+  border-radius: 8px;
   font-size: 1rem;
-  transition: border-color var(--transition-speed) ease;
+  transition: all var(--transition-speed) ease;
 }
 
 .caption-input {
-  height: 100px;
+  height: 120px;
   resize: vertical;
 }
 
@@ -48,8 +49,27 @@
   box-shadow: 0 0 0 2px var(--shadow-color);
 }
 
+.submit-button {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+  width: 100%;
+}
+
+.submit-button:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px var(--shadow-color);
+}
+
 @media (max-width: 768px) {
   .details-page {
-    padding: 1rem;
+    padding: 1.5rem;
   }
 }

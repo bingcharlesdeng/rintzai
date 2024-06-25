@@ -51,6 +51,9 @@ const DetailsPage = ({ caption, setCaption, location, setLocation, altText, setA
           onChange={handleTagChange}
         />
       </div>
+      <div className="form-group">
+        <button className="submit-button" type="submit">Save Details</button>
+      </div>
     </div>
   );
 };

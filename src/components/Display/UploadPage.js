@@ -1,5 +1,5 @@
-// UploadPage.js
 import React from 'react';
+import { useDropzone } from 'react-dropzone';
 import './uploadPage.css';
 
 const UploadPage = ({ mediaType, setMediaType, onFileUpload, mediaPreview }) => {
@@ -7,11 +7,20 @@ const UploadPage = ({ mediaType, setMediaType, onFileUpload, mediaPreview }) => 
     setMediaType(e.target.value);
   };
 
-  const handleFileUpload = (e) => {
-    const file = e.target.files[0];
-    console.log('File selected:', file);
-    onFileUpload(file);
+  const onDrop = (acceptedFiles) => {
+    if (acceptedFiles && acceptedFiles.length > 0) {
+      console.log('File selected:', acceptedFiles[0]);
+      onFileUpload(acceptedFiles[0]);
+    }
   };
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ 
+    onDrop,
+    accept: mediaType === 'image' 
+      ? { 'image/*': ['.jpeg', '.jpg', '.png', '.gif'] }
+      : { 'video/*': ['.mp4', '.mov', '.avi'] },
+    maxFiles: 1
+  });
 
   return (
     <div className="upload-page">
@@ -35,23 +44,15 @@ const UploadPage = ({ mediaType, setMediaType, onFileUpload, mediaPreview }) => 
           Video
         </label>
       </div>
-      <div className="media-upload">
-        <label htmlFor="file-upload" className="file-upload-label">
-          <i className="fas fa-cloud-upload-alt"></i> Select File
-        </label>
-        <input
-          id="file-upload"
-          type="file"
-          accept={mediaType === 'image' ? 'image/*' : 'video/*'}
-          onChange={handleFileUpload}
-        />
+      <div {...getRootProps()} className={`dropzone ${isDragActive ? 'active' : ''}`}>
+        <input {...getInputProps()} />
+        <p>{isDragActive ? 'Drop the files here ...' : "Drag 'n' drop some files here, or click to select files"}</p>
       </div>
       {mediaPreview && (
         <div className="media-preview-container">
-          {mediaType === 'image' && (
+          {mediaType === 'image' ? (
             <img src={mediaPreview} alt="Media Preview" className="media-preview" />
-          )}
-          {mediaType === 'video' && (
+          ) : (
             <video src={mediaPreview} controls className="media-preview"></video>
           )}
         </div>

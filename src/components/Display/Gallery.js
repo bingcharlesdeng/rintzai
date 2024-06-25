@@ -15,6 +15,12 @@ const Gallery = ({ posts, onPostClick }) => {
           </div>
           <div className="gallery-item-overlay">
             <p className="gallery-item-caption">{post.caption}</p>
+            {post.location && <p className="gallery-item-location">{post.location}</p>}
+            <div className="gallery-item-tags">
+              {post.tags && post.tags.map((tag, index) => (
+                <span key={index} className="gallery-item-tag">#{tag}</span>
+              ))}
+            </div>
           </div>
         </div>
       ))}

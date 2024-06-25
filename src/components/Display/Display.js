@@ -135,9 +135,10 @@ const Display = () => {
 
   const handlePostClick = (post) => {
     console.log('Post clicked:', post);
-    console.log('Post ID:', post.id); // Log the post ID for debugging
+    console.log('Post ID:', post.id);
     setSelectedPost(post);
   };
+  
   const handlePostModalClose = () => setSelectedPost(null);
 
   const handleDeletePost = async (postId) => {
@@ -227,13 +228,9 @@ const Display = () => {
     }
   };
 
-  // if (isLoading && posts.length === 0) {
-  //   return <LoadingSpinner />;
-  // }
-
   return (
+    <> <Navbar />
     <div className="display-container">
-      <Navbar />
       <Header user={user} posts={posts} onNewPostClick={handleNewPostClick} />
       <Suspense fallback={<LoadingSpinner />}>
         <Gallery 
@@ -264,6 +261,8 @@ const Display = () => {
       )}
       <ToastContainer position="bottom-right" />
     </div>
+    </>
+
   );
 };
 
