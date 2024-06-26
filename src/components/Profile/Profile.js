@@ -10,13 +10,13 @@ import LoadingSpinner from '../LoadingSpinner';
 import Navbar from '../Routes/Navbar';
 import { db } from '../../firebase/firebase';
 
-
 const Profile = () => {
   const { user } = useUserContext();
   const [activeTab, setActiveTab] = useState('Journey');
   const [profile, setProfile] = useState(null);
   const [moodEntries, setMoodEntries] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
     console.log('Profile component mounted');
@@ -60,6 +60,20 @@ const Profile = () => {
     }
   };
 
+  const handleFieldChange = (field, value) => {
+    setProfile(prevProfile => ({
+      ...prevProfile,
+      [field]: value
+    }));
+  };
+
+  const handleEditToggle = () => {
+    if (editMode) {
+      handleProfileUpdate(profile);
+    }
+    setEditMode(!editMode);
+  };
+
   if (isLoading) {
     return <LoadingSpinner />;
   }
@@ -79,9 +93,16 @@ const Profile = () => {
           latestMood={latestMood}
           isOwnProfile={true}
           onProfileUpdate={handleProfileUpdate}
+          editMode={editMode}
+          onEditToggle={handleEditToggle}
+          onFieldChange={handleFieldChange}
         />
         <div className="profile-content">
-          <ProfileSidebar profile={profile} />
+          <ProfileSidebar 
+            profile={profile} 
+            editMode={editMode}
+            onFieldChange={handleFieldChange}
+          />
           <div className="profile-main">
             <ProfileNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
             <ProfileContent 
@@ -89,6 +110,8 @@ const Profile = () => {
               activeTab={activeTab} 
               moodEntries={moodEntries}
               onProfileUpdate={handleProfileUpdate}
+              editMode={editMode}
+              onFieldChange={handleFieldChange}
             />
           </div>
         </div>

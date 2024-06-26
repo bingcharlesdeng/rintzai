@@ -1,11 +1,11 @@
 import React from 'react';
 import './loadingSpinner.css';
 
-const LoadingSpinner = ({ size = 'medium', color = 'primary' }) => {
+const LoadingSpinner = ({ size = 'medium', color = 'primary', text = 'Loading...' }) => {
   return (
     <div className={`loading-spinner-container ${size}`}>
       <div className={`loading-spinner ${color}`}></div>
-      <p className="loading-text">Loading...</p>
+      {text && <p className="loading-text">{text}</p>}
     </div>
   );
 };

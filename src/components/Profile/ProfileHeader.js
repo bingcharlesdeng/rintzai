@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './profileHeader.css';
 import MoodIndicator from './MoodIndicator';
 import EditProfileModal from './EditProfileModal';
 import MessageModal from './MessageModal';
 import { useUserContext } from '../User/UserContext';
-import { updateFriendStatus, supportUser } from './profileService';
+import { updateFriendStatus, supportUser, uploadAvatar } from './profileService';
 import defaultAvatar from '../../assets/default-avatar.png';
 
-const ProfileHeader = ({ profile, latestMood, isOwnProfile, onProfileUpdate }) => {
+const ProfileHeader = ({ profile, latestMood, isOwnProfile, onProfileUpdate, editMode, onEditToggle, onFieldChange }) => {
   const { user } = useUserContext();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
   const [error, setError] = useState(null);
+  const fileInputRef = useRef(null);
 
   console.log('Rendering ProfileHeader', { profile, latestMood, isOwnProfile });
 
@@ -64,10 +65,29 @@ const ProfileHeader = ({ profile, latestMood, isOwnProfile, onProfileUpdate }) =
     }
   };
 
+  const handleAvatarDoubleClick = () => {
+    if (isOwnProfile && editMode) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleAvatarChange = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      try {
+        const avatarUrl = await uploadAvatar(user.uid, file);
+        onFieldChange('avatarUrl', avatarUrl);
+      } catch (error) {
+        console.error('Error uploading avatar:', error);
+        setError('Failed to upload avatar. Please try again.');
+      }
+    }
+  };
+
   return (
     <div className="profile-header">
       <div className="header-content">
-        <div className="avatar">
+        <div className="avatar" onDoubleClick={handleAvatarDoubleClick}>
           <img 
             src={profile.avatarUrl || defaultAvatar} 
             alt={`${profile.name}'s avatar`} 
@@ -77,16 +97,55 @@ const ProfileHeader = ({ profile, latestMood, isOwnProfile, onProfileUpdate }) =
               e.target.src = defaultAvatar;
             }}
           />
+          {isOwnProfile && editMode && (
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleAvatarChange}
+              accept="image/*"
+              style={{ display: 'none' }}
+            />
+          )}
         </div>
         <div className="profile-info">
-          <h2 className="profile-name">{profile.name || 'Anonymous User'}</h2>
-          <p className="profile-tagline">{profile.tagline || 'No tagline set'}</p>
+          {editMode ? (
+            <>
+              <input
+                type="text"
+                value={profile.name || ''}
+                onChange={(e) => onFieldChange('name', e.target.value)}
+                placeholder="Enter your name"
+                className="name-input"
+              />
+              <input
+                type="text"
+                value={profile.tagline || ''}
+                onChange={(e) => onFieldChange('tagline', e.target.value)}
+                placeholder="Enter your tagline"
+                className="tagline-input"
+              />
+            </>
+          ) : (
+            <>
+              <h2 className="profile-name">{profile.name || 'Anonymous User'}</h2>
+              <p className="profile-tagline">{profile.tagline || 'No tagline set'}</p>
+            </>
+          )}
           <MoodIndicator mood={latestMood} />
         </div>
       </div>
       <div className="profile-stats">
         <div className="stat">
-          <span className="stat-value">{profile.daysClean || 0}</span>
+          {editMode ? (
+            <input
+              type="number"
+              value={profile.daysClean || 0}
+              onChange={(e) => onFieldChange('daysClean', parseInt(e.target.value))}
+              className="stat-input"
+            />
+          ) : (
+            <span className="stat-value">{profile.daysClean || 0}</span>
+          )}
           <span className="stat-label">Days Clean</span>
         </div>
         <div className="stat">
@@ -100,7 +159,12 @@ const ProfileHeader = ({ profile, latestMood, isOwnProfile, onProfileUpdate }) =
       </div>
       <div className="profile-actions">
         {isOwnProfile ? (
-          <button className="action-button" onClick={handleEditProfile}>Edit Profile</button>
+          <>
+            <button className="action-button" onClick={handleEditProfile}>Edit Profile</button>
+            <button className="action-button" onClick={onEditToggle}>
+              {editMode ? 'Save Changes' : 'Edit Profile'}
+            </button>
+          </>
         ) : (
           <>
             <button className="action-button" onClick={handleMessage}>Message</button>

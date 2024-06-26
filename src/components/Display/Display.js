@@ -11,23 +11,27 @@ import { db, storage, ref, uploadBytesResumable, getDownloadURL, arrayUnion } fr
 import NewPostModal from './NewPostModal';
 import PostModal from './PostModal';
 import LoadingSpinner from './LoadingSpinner';
+import SearchBar from './SearchBar';
+import { updateUserProfile, fetchUserProfile } from './profileService';
 
 const Gallery = lazy(() => import('./Gallery'));
 
 const Display = () => {
-  const { user } = useUserContext();
+  const { user, setUser } = useUserContext();
   const [posts, setPosts] = useState([]);
   const [isNewPostModalOpen, setIsNewPostModalOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [lastVisible, setLastVisible] = useState(null);
   const [hasMore, setHasMore] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [avatarUpdateSuccess, setAvatarUpdateSuccess] = useState(false);
+  const [isAvatarLoaded, setIsAvatarLoaded] = useState(false);
 
   const fetchPosts = useCallback(async () => {
-    if (user && hasMore) {
+    if (user && hasMore && isAvatarLoaded) {
       setIsLoading(true);
       try {
-        console.log('Fetching posts for user:', user.uid);
         const postsRef = collection(db, 'posts');
         let q = query(
           postsRef,
@@ -46,8 +50,6 @@ const Display = () => {
           ...doc.data(),
         }));
 
-        console.log('Fetched posts:', fetchedPosts);
-
         setPosts((prevPosts) => {
           const newPosts = fetchedPosts.filter(
             (newPost) => !prevPosts.some((prevPost) => prevPost.id === newPost.id)
@@ -63,11 +65,31 @@ const Display = () => {
         setIsLoading(false);
       }
     }
-  }, [user, hasMore, lastVisible]);
+  }, [user, hasMore, lastVisible, isAvatarLoaded]);
 
   useEffect(() => {
-    fetchPosts();
-  }, [fetchPosts]);
+    if (isAvatarLoaded) {
+      fetchPosts();
+    }
+  }, [fetchPosts, isAvatarLoaded]);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (user && user.uid) {
+        try {
+          const userData = await fetchUserProfile(user.uid);
+          if (userData && userData.photoURL) {
+            setUser(prevUser => ({ ...prevUser, photoURL: userData.photoURL }));
+          }
+          setIsAvatarLoaded(true);
+        } catch (error) {
+          console.error('Error fetching user profile:', error);
+          setIsAvatarLoaded(true);
+        }
+      }
+    };
+    fetchUserData();
+  }, [user, setUser]);
 
   const handleNewPostClick = () => setIsNewPostModalOpen(true);
   const handleNewPostModalClose = () => setIsNewPostModalOpen(false);
@@ -75,7 +97,6 @@ const Display = () => {
   const handleNewPostSubmit = async (newPost) => {
     try {
       setIsLoading(true);
-      console.log('Submitting new post:', newPost);
       const compressedFile = await imageCompression(newPost.file, {
         maxSizeMB: 1,
         maxWidthOrHeight: 1920
@@ -92,7 +113,6 @@ const Display = () => {
         tags: newPost.tags,
       };
       const docRef = await addDoc(collection(db, 'posts'), postData);
-      console.log('New post added with ID:', docRef.id);
       setPosts(prevPosts => [{ id: docRef.id, ...postData }, ...prevPosts]);
       setIsNewPostModalOpen(false);
       toast.success('Post created successfully!');
@@ -122,7 +142,6 @@ const Display = () => {
         async () => {
           try {
             const fileUrl = await getDownloadURL(uploadTask.snapshot.ref);
-            console.log('File uploaded successfully. URL:', fileUrl);
             resolve(fileUrl);
           } catch (error) {
             console.error('Error getting download URL:', error);
@@ -134,8 +153,6 @@ const Display = () => {
   };
 
   const handlePostClick = (post) => {
-    console.log('Post clicked:', post);
-    console.log('Post ID:', post.id);
     setSelectedPost(post);
   };
   
@@ -144,7 +161,6 @@ const Display = () => {
   const handleDeletePost = async (postId) => {
     try {
       setIsLoading(true);
-      console.log('Deleting post:', postId);
       await deleteDoc(doc(db, 'posts', postId));
       setPosts(posts.filter((post) => post.id !== postId));
       toast.success('Post deleted successfully!');
@@ -159,7 +175,6 @@ const Display = () => {
   const handleEditPost = async (postId, updatedData) => {
     try {
       setIsLoading(true);
-      console.log('Editing post:', postId, 'with data:', updatedData);
       const postRef = doc(db, 'posts', postId);
       await updateDoc(postRef, updatedData);
       setPosts(posts.map((post) => 
@@ -176,13 +191,11 @@ const Display = () => {
 
   const handleAddComment = async (postId, comment) => {
     try {
-      console.log('Adding comment to post:', postId, 'Comment:', comment);
       const postRef = doc(db, 'posts', postId);
       const postDoc = await getDoc(postRef);
       
       if (!postDoc.exists()) {
         console.error('Post does not exist:', postId);
-        toast.error('Failed to add comment. Post not found.');
         return;
       }
   
@@ -194,22 +207,18 @@ const Display = () => {
           ? { ...post, comments: [...(post.comments || []), comment] }
           : post
       ));
-      toast.success('Comment added successfully!');
     } catch (error) {
       console.error('Error adding comment:', error);
-      toast.error('Failed to add comment. Please try again.');
     }
   };
   
   const handleAddTag = async (postId, tag) => {
     try {
-      console.log('Adding tag to post:', postId, 'Tag:', tag);
       const postRef = doc(db, 'posts', postId);
       const postDoc = await getDoc(postRef);
       
       if (!postDoc.exists()) {
         console.error('Post does not exist:', postId);
-        toast.error('Failed to add tag. Post not found.');
         return;
       }
   
@@ -221,28 +230,63 @@ const Display = () => {
           ? { ...post, tags: [...(post.tags || []), tag] }
           : post
       ));
-      toast.success('Tag added successfully!');
     } catch (error) {
       console.error('Error adding tag:', error);
-      toast.error('Failed to add tag. Please try again.');
     }
   };
 
+  const handleAvatarUpdate = async (newAvatarUrl) => {
+    try {
+      await updateUserProfile(user.uid, { photoURL: newAvatarUrl });
+      setUser(prevUser => ({
+        ...prevUser,
+        photoURL: newAvatarUrl
+      }));
+      if (!avatarUpdateSuccess) {
+        setAvatarUpdateSuccess(true);
+      }
+    } catch (error) {
+      console.error('Error updating avatar:', error);
+      toast.error('Failed to update avatar. Please try again.');
+    }
+  };
+
+  const filteredPosts = posts.filter(post => 
+    post.caption.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    post.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
+  );
+
   return (
-    <> <Navbar />
+    <>
+    <Navbar />
     <div className="display-container">
-      <Header user={user} posts={posts} onNewPostClick={handleNewPostClick} />
-      <Suspense fallback={<LoadingSpinner />}>
-        <Gallery 
-          posts={posts} 
-          onPostClick={handlePostClick}
-        />
-      </Suspense>
-      {hasMore && (
-        <button onClick={fetchPosts} className="load-more-button">
-          Load more
-        </button>
-      )}
+      <div className="display-content">
+        <div className="display-sidebar">
+          <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        </div>
+        <div className="display-main">
+        <Header 
+            user={user} 
+            posts={posts} 
+            onNewPostClick={handleNewPostClick}
+            onAvatarUpdate={handleAvatarUpdate}
+            isAvatarLoaded={isAvatarLoaded}
+          />
+          {isAvatarLoaded && (
+            <Suspense fallback={<LoadingSpinner />}>
+              <Gallery 
+                posts={filteredPosts} 
+                onPostClick={handlePostClick}
+              />
+            </Suspense>
+          )}
+          {hasMore && isAvatarLoaded && (
+            <button onClick={fetchPosts} className="load-more-button">
+              Load more
+            </button>
+          )}
+        </div>
+      </div>
       {isNewPostModalOpen && (
         <NewPostModal
           onClose={handleNewPostModalClose}
@@ -259,10 +303,9 @@ const Display = () => {
           addTag={handleAddTag}
         />
       )}
-      <ToastContainer position="bottom-right" />
+      <ToastContainer position="bottom-right" limit={1} />
     </div>
     </>
-
   );
 };
 

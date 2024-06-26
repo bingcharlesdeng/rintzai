@@ -1,4 +1,5 @@
 import { doc, getDoc, collection, query, where, getDocs, updateDoc, arrayUnion } from 'firebase/firestore';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db } from '../../firebase/firebase';
 
 export const fetchUserProfile = async (userId) => {
@@ -53,4 +54,14 @@ export const supportUser = async (supporterId, supportedId) => {
     supportNetwork: arrayUnion(supporterId)
   });
   console.log('User supported successfully');
+};
+
+export const uploadAvatar = async (userId, file) => {
+  console.log('Uploading avatar for user:', userId);
+  const storage = getStorage();
+  const avatarRef = ref(storage, `avatars/${userId}`);
+  await uploadBytes(avatarRef, file);
+  const downloadURL = await getDownloadURL(avatarRef);
+  console.log('Avatar uploaded successfully');
+  return downloadURL;
 };

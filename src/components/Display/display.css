@@ -1,11 +1,10 @@
 :root {
-  --primary-color: #4a90e2;
-  --secondary-color: #50c878;
+  --primary-color: #6c5ce7;
+  --secondary-color: #5641e5;
   --background-color: #f8f9fa;
   --text-color: #333;
-  --text-color-light: #666;
   --border-color: #e0e0e0;
-  --shadow-color: rgba(0, 0, 0, 0.1);
+  --shadow-color: rgba(108, 92, 231, 0.2);
   --transition-speed: 0.3s;
 }
 
@@ -13,16 +12,12 @@ body {
   font-family: 'Roboto', sans-serif;
   background-color: var(--background-color);
   color: var(--text-color);
-  line-height: 1.6;
 }
 
 .display-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
 }
 
 .load-more-button {
@@ -46,39 +41,8 @@ body {
   box-shadow: 0 4px 15px var(--shadow-color);
 }
 
-.display-container h1, 
-.display-container h2, 
-.display-container h3 {
-  color: var(--text-color);
-  margin-bottom: 1rem;
-}
-
-.display-container p {
-  margin-bottom: 1rem;
-}
-
-.display-container input[type="text"],
-.display-container textarea {
-  width: 100%;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  font-size: 1rem;
-}
-
-.display-container button {
-  cursor: pointer;
-  transition: all var(--transition-speed) ease;
-}
-
-.display-container button:hover {
-  opacity: 0.8;
-}
-
 @media (max-width: 768px) {
   .display-container {
     padding: 1rem;
-    gap: 1rem;
   }
 }
