@@ -23,6 +23,11 @@ const Navbar = () => {
         { to: '/cbt', label: 'CBT' },
         { to: '/habits', label: 'Habit Tracker' },
         { to: '/dbt', label: 'DBT' },
+        { to: '/sleep', label: 'Sleep Tracker' },
+        { to: '/music', label: 'Mood Music' },
+
+
+
 
       ],
     },
@@ -33,6 +38,8 @@ const Navbar = () => {
         { to: '/gratitude', label: 'Gratitude' },
         { to: '/quotes', label: 'Quotes' },
         { to: '/affirmations', label: 'Affirmations' },
+        { to: '/mental', label: 'Mental Illness' },
+
 
 
       ],

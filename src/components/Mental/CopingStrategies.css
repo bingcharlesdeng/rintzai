@@ -1,0 +1,57 @@
+/* src/components/Mental/CopingStrategies.css */
+.coping-strategies {
+    padding: 1rem;
+  }
+  
+  .strategies-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+  
+  .strategy-item {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .strategy-item h3 {
+    color: #4CAF50;
+    margin-bottom: 0.5rem;
+  }
+  
+  .strategy-item button {
+    padding: 0.5rem 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 1rem;
+  }
+  
+  .strategy-item button:hover {
+    background-color: #45a049;
+  }
+  
+  .strategy-item button.active {
+    background-color: #2E7D32;
+  }
+  
+  .strategy-steps {
+    margin-top: 1rem;
+  }
+  
+  .strategy-steps h4 {
+    margin-bottom: 0.5rem;
+  }
+  
+  .strategy-steps ol {
+    padding-left: 1.5rem;
+  }
+  
+  .strategy-steps li {
+    margin-bottom: 0.5rem;
+  }

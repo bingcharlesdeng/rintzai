@@ -1,0 +1,74 @@
+/* src/components/Mental/CrisisSupport.css */
+.crisis-support {
+    padding: 1rem;
+  }
+  
+  .emergency-message {
+    background-color: #ffcccb;
+    color: #d8000c;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+  }
+  
+  .resource-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+  
+  .resource-item {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .resource-item h3 {
+    color: #4CAF50;
+    margin-bottom: 0.5rem;
+  }
+  
+  .resource-item a {
+    color: #4CAF50;
+    text-decoration: none;
+  }
+  
+  .resource-item a:hover {
+    text-decoration: underline;
+  }
+  
+  .crisis-plan {
+    background-color: #f0f0f0;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 2rem;
+  }
+  
+  .crisis-plan h3 {
+    color: #4CAF50;
+    margin-bottom: 1rem;
+  }
+  
+  .crisis-plan ul {
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .crisis-plan li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .crisis-plan button {
+    padding: 0.5rem 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .crisis-plan button:hover {
+    background-color: #45a049;
+  }

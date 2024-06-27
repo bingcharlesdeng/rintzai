@@ -38,6 +38,10 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 const auth = getAuth(app);
 
+export const moodPlaylistsCollection = collection(db, 'moodPlaylists');
+export const calmingSoundsCollection = collection(db, 'calmingSounds');
+export const userMoodsCollection = collection(db, 'userMoods');
+
 // if (process.env.NODE_ENV === 'development') {
 //   connectAuthEmulator(auth, 'http://localhost:8000')
 // }

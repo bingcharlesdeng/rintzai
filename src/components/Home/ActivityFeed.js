@@ -11,7 +11,7 @@ const ActivityFeed = () => {
 
   return (
     <div className="activity-feed">
-      <h2>Community Activity</h2>
+      <h3>Community Activity</h3>
       <ul>
         {activities.map((activity, index) => (
           <li key={index} className="activity-item">

@@ -1,0 +1,71 @@
+/* src/components/Mental/PrivacySettings.css */
+.privacy-settings {
+    padding: 1rem;
+  }
+  
+  .setting {
+    margin-bottom: 1.5rem;
+  }
+  
+  .setting label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+  }
+  
+  .setting input[type="checkbox"],
+  .setting select {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .setting select {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .data-export,
+  .account-deletion {
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 2rem;
+  }
+  
+  .data-export h3,
+  .account-deletion h3 {
+    color: #4CAF50;
+    margin-bottom: 1rem;
+  }
+  
+  .data-export button,
+  .account-deletion button {
+    padding: 0.5rem 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 1rem;
+  }
+  
+  .data-export button:hover,
+  .account-deletion button:hover {
+    background-color: #45a049;
+  }
+  
+  .account-deletion button {
+    background-color: #f44336;
+  }
+  
+  .account-deletion button:hover {
+    background-color: #d32f2f;
+  }
+  
+  .data-export button:disabled,
+  .account-deletion button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }

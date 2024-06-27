@@ -1,11 +1,18 @@
 .progress-chart {
-    background-color: #ffffff;
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .progress-chart canvas {
-    max-width: 100%;
-    height: auto;
-  }
+  background-color: #ffffff;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.progress-chart canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+.progress-chart h3 {
+  color: #333;
+  font-size: 1.4rem;
+  font-weight: 300;
+  margin-bottom: 15px;
+}

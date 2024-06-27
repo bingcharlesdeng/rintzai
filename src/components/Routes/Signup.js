@@ -1,11 +1,11 @@
-// Signup.js
 import React, { useState } from 'react';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useUserContext } from '../User/UserContext';
 import { auth } from '../../firebase/firebase';
 import { createUserInDB } from '../User/userService';
 import './signup.css';
+import signup from '../../assets/signup.jpeg';
 
 const Signup = () => {
   const { setUser } = useUserContext();
@@ -16,17 +16,22 @@ const Signup = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null);
+    setIsLoading(true);
 
     if (!name || !email || !password || !confirmPassword) {
       setError('Please fill in all fields');
+      setIsLoading(false);
       return;
     }
 
     if (password !== confirmPassword) {
       setError('Passwords do not match');
+      setIsLoading(false);
       return;
     }
 
@@ -36,69 +41,66 @@ const Signup = () => {
       await updateProfile(user, { displayName: name });
       await createUserInDB(user);
 
-      setName('');
-      setEmail('');
-      setPassword('');
-      setConfirmPassword('');
-      setError(null);
-
       setUser(user);
       navigate('/home');
     } catch (error) {
       console.error("Error during signup:", error);
       setError(error.message || 'Signup failed. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="signup-container">
       <div className="signup-card">
-        <img src="logo.png" alt="Logo" className="logo" />
-        <h2 className="signup-title">Sign Up</h2>
+        <img src={signup} alt="Logo" className="logo" />
+        <h2 className="signup-title">Create Your Account</h2>
         <form onSubmit={handleSubmit} className="signup-form">
           <div className="form-group">
-            <label htmlFor="name" className="form-label">Name:</label>
             <input
               type="text"
-              id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              placeholder="Full Name"
               className="form-input"
             />
           </div>
           <div className="form-group">
-            <label htmlFor="email" className="form-label">Email:</label>
             <input
               type="email"
-              id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email"
               className="form-input"
             />
           </div>
           <div className="form-group">
-            <label htmlFor="password" className="form-label">Password:</label>
             <input
               type="password"
-              id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
               className="form-input"
             />
           </div>
           <div className="form-group">
-            <label htmlFor="confirmPassword" className="form-label">Confirm Password:</label>
             <input
               type="password"
-              id="confirmPassword"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="Confirm Password"
               className="form-input"
             />
           </div>
-          <button type="submit" className="signup-button">Sign Up</button>
-          {error && <p className="error">{error}</p>}
+          <button type="submit" className="signup-button" disabled={isLoading}>
+            {isLoading ? 'Signing up...' : 'Sign Up'}
+          </button>
+          {error && <p className="error-message">{error}</p>}
         </form>
+        <p className="login-text">
+          Already have an account? <Link to="/login" className="login-link">Log in</Link>
+        </p>
       </div>
     </div>
   );

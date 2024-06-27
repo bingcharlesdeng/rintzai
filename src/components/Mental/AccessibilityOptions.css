@@ -1,0 +1,38 @@
+/* src/components/Mental/AccessibilityOptions.css */
+.accessibility-options {
+    padding: 1rem;
+  }
+  
+  .option {
+    margin-bottom: 1.5rem;
+  }
+  
+  .option label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+  }
+  
+  .option select,
+  .option input[type="checkbox"] {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .option select {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .option input[type="checkbox"] {
+    margin-right: 0.5rem;
+  }
+  
+  @media (min-width: 768px) {
+    .accessibility-options {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+  }

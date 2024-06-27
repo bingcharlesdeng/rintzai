@@ -31,17 +31,29 @@ const Home = () => {
     <div className="home-container">
       <Navbar />
       <main className="content">
-        <div className="left-column">
+        <div className="main-column">
           <WelcomeMessage user={user} />
           {showMoodCheck && <MoodCheck onComplete={handleMoodCheckComplete} />}
-          <FeatureSection />
-          <ProgressChart />
-        </div>
-        <div className="right-column">
-          <StreakCounter />
-          <DailyChallenge />
-          <ActivityFeed />
-          <QuoteSection />
+          <div className="dashboard-grid">
+            <div className="dashboard-item wide">
+              <FeatureSection />
+            </div>
+            <div className="dashboard-item">
+              <StreakCounter />
+            </div>
+            <div className="dashboard-item">
+              <DailyChallenge />
+            </div>
+            <div className="dashboard-item wide">
+              <ProgressChart />
+            </div>
+            <div className="dashboard-item">
+              <ActivityFeed />
+            </div>
+            <div className="dashboard-item">
+              <QuoteSection />
+            </div>
+          </div>
         </div>
       </main>
     </div>

@@ -1,0 +1,90 @@
+.personalized-dashboard {
+    padding: 1rem;
+  }
+
+  /* src/components/Mental/PersonalizedDashboard.css (continued) */
+.mood-chart {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+  }
+  
+  .goals-section {
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .goals-section h3 {
+    color: #4CAF50;
+    margin-bottom: 1rem;
+  }
+  
+  .goals-section ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .goals-section li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .goals-section input[type="checkbox"] {
+    margin-right: 0.5rem;
+  }
+  
+  .goals-section button {
+    padding: 0.5rem 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 1rem;
+  }
+  
+  .goals-section button:hover {
+    background-color: #45a049;
+  }
+  
+  .coping-strategies-summary {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+  }
+  
+  .coping-strategies-summary h3 {
+    color: #4CAF50;
+    margin-bottom: 1rem;
+  }
+  
+  .coping-strategies-summary ul {
+    padding-left: 1.5rem;
+  }
+  
+  .next-steps {
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    padding: 1rem;
+  }
+  
+  .next-steps h3 {
+    color: #4CAF50;
+    margin-bottom: 1rem;
+  }
+  
+  .next-steps ul {
+    padding-left: 1.5rem;
+  }
+  
+  .next-steps li {
+    margin-bottom: 0.5rem;
+  }

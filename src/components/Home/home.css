@@ -11,21 +11,51 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px 20px;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 30px;
 }
 
-@media (min-width: 768px) {
-  .content {
-    grid-template-columns: 2fr 1fr;
-  }
-}
-
-.left-column, .right-column {
+.main-column {
   display: flex;
   flex-direction: column;
   gap: 30px;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.dashboard-item {
+  background-color: #ffffff;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dashboard-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.dashboard-item.wide {
+  grid-column: span 2;
+}
+
+@media (max-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dashboard-item.wide {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @keyframes fadeIn {
@@ -35,17 +65,4 @@
 
 .fade-in {
   animation: fadeIn 0.5s ease-in;
-}
-
-.content > * {
-  background-color: #ffffff;
-  border-radius: 15px;
-  padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.content > *:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }

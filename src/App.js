@@ -23,7 +23,9 @@ import Habits from './components/Habits/Habits';
 import DBT from './components/DBT/DBT';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import MentalIllness from './components/Mental/MentalIllness';
+import SleepTracker from './components/Sleep/SleepTracker';
+import MoodMusic from './components/Music/MoodMusic';
 const App = () => {
   return (
     <BrowserRouter>
@@ -50,6 +52,14 @@ const App = () => {
             <Route path="affirmations" element={<Affirmations />} />
             <Route path="habits" element={<Habits />} />
             <Route path="dbt" element={<DBT />} />
+            <Route path="mental" element={<MentalIllness />} />
+            <Route path="sleep" element={<SleepTracker />} />
+            <Route path="music" element={<MoodMusic />} />
+
+
+
+
+
           </Route>
         </Routes>
         <ToastContainer position="bottom-right" autoClose={3000} />
