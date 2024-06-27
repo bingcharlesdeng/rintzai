@@ -1,0 +1,27 @@
+.cognitive-distortions .distortions-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .distortion-item {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1rem;
+  }
+  
+  .distortion-form {
+    margin-bottom: 2rem;
+  }
+  
+  .distortion-examples {
+    margin-top: 2rem;
+  }
+  
+  .distortion-example-item {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }

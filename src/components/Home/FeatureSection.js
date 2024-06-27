@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaUser, FaClipboard, FaChartBar, FaBook, FaComments, FaQuoteLeft, FaHeart, FaImages } from 'react-icons/fa';
+import { FaUser, FaClipboard, FaChartBar, FaBook, FaComments, FaQuoteLeft, FaHeart, FaImages, FaBullseye, FaTasks } from 'react-icons/fa';
 import './FeatureSection.css';
 
 const features = [
@@ -12,6 +12,8 @@ const features = [
   { name: 'Quotes', icon: FaQuoteLeft, path: '/quotes', color: '#F44336' },
   { name: 'Gratitude', icon: FaHeart, path: '/gratitude', color: '#E91E63' },
   { name: 'Display', icon: FaImages, path: '/display', color: '#795548' },
+  { name: 'Vision', icon: FaBullseye, path: '/vision', color: '#607D8B' },
+  { name: 'Goals', icon: FaTasks, path: '/goals', color: '#009688' },
 ];
 
 const FeatureButton = ({ name, icon: Icon, path, color }) => (

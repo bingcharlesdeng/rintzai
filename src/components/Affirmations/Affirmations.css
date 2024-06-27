@@ -1,0 +1,24 @@
+.affirmations-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .affirmations-content {
+    display: flex;
+    gap: 2rem;
+  }
+  
+  .affirmations-main {
+    flex: 2;
+  }
+  
+  .affirmations-sidebar {
+    flex: 1;
+  }
+  
+  .loading {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2rem;
+  }

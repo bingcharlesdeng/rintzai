@@ -1,0 +1,42 @@
+.dbt-skills {
+    margin-bottom: 2rem;
+  }
+  
+  .skill-modules {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .skill-modules button {
+    padding: 0.5rem 1rem;
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .skill-modules button.active {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .skill-list ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .skill-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .skill-details {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 4px;
+  }

@@ -1,0 +1,37 @@
+.meditation-list ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .meditation-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .meditation-list li:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .meditation-list img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 1rem;
+  }
+  
+  .meditation-info h3 {
+    margin: 0 0 0.5rem 0;
+  }
+  
+  .meditation-info p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #666;
+  }

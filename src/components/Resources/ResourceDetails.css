@@ -1,0 +1,41 @@
+.resource-details {
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    padding: 1rem;
+  }
+  
+  .resource-details h2 {
+    margin-top: 0;
+  }
+  
+  .resource-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  .resource-link {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+  }
+  
+  .bookmark-button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .bookmark-button.bookmarked {
+    background-color: #f44336;
+  }

@@ -1,0 +1,31 @@
+.peer-connections {
+    display: flex;
+    gap: 2rem;
+  }
+  
+  .peer-suggestions, .current-connections {
+    flex: 1;
+  }
+  
+  .peer-item, .connection-item {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .peer-item button, .connection-item button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .peer-item button:disabled, .connection-item button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }

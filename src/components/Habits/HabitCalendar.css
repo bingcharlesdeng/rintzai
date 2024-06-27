@@ -1,0 +1,19 @@
+.habit-calendar {
+    margin-bottom: 2rem;
+  }
+  
+  .habit-calendar .react-calendar {
+    width: 100%;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .habit-calendar .react-calendar__tile--active {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .habit-calendar .react-calendar__tile.completed {
+    background-color: #81C784;
+    color: white;
+  }

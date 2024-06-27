@@ -1,0 +1,33 @@
+.meditation-insights {
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    padding: 1rem;
+  }
+  
+  .insight-stat {
+    margin-bottom: 1rem;
+  }
+  
+  .insight-stat h3 {
+    margin: 0;
+    font-size: 1rem;
+    color: #666;
+  }
+  
+  .insight-stat p {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  .category-breakdown {
+    margin-top: 2rem;
+  }
+  
+  .insight-recommendations {
+    margin-top: 2rem;
+  }
+  
+  .insight-recommendations ul {
+    padding-left: 1.5rem;
+  }

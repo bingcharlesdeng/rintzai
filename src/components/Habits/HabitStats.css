@@ -1,0 +1,15 @@
+.habit-stats {
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .habit-stats h2 {
+    margin-bottom: 1rem;
+  }
+  
+  .habit-stats p {
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+  }

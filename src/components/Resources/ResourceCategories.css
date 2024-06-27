@@ -1,0 +1,18 @@
+.resource-categories ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .resource-categories li {
+    padding: 0.5rem;
+    cursor: pointer;
+  }
+  
+  .resource-categories li:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .resource-categories li.active {
+    font-weight: bold;
+    background-color: #e0e0e0;
+  }

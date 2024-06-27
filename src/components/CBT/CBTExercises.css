@@ -1,0 +1,31 @@
+.cbt-exercises .exercises-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .exercise-item {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1rem;
+    cursor: pointer;
+  }
+  
+  .selected-exercise {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .exercise-history {
+    margin-top: 2rem;
+  }
+  
+  .exercise-entry {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }

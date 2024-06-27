@@ -1,0 +1,31 @@
+.meditation-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .meditation-content {
+    display: flex;
+    gap: 2rem;
+  }
+  
+  .meditation-sidebar {
+    flex: 1;
+  }
+  
+  .meditation-main {
+    flex: 2;
+  }
+  
+  .meditation-welcome {
+    text-align: center;
+    padding: 2rem;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+  }
+  
+  .loading {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2rem;
+  }

@@ -1,0 +1,24 @@
+.habits-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .habits-content {
+    display: flex;
+    gap: 2rem;
+  }
+  
+  .habits-sidebar {
+    flex: 1;
+  }
+  
+  .habits-main {
+    flex: 2;
+  }
+  
+  .loading {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2rem;
+  }

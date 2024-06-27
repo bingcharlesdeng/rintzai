@@ -1,0 +1,31 @@
+.meditation-progress {
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    padding: 1rem;
+  }
+  
+  .progress-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  
+  .stat {
+    text-align: center;
+  }
+  
+  .stat h3 {
+    margin: 0;
+    font-size: 1rem;
+    color: #666;
+  }
+  
+  .stat p {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .progress-chart {
+    height: 200px;
+  }

@@ -1,0 +1,22 @@
+.meditation-settings {
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    padding: 1rem;
+  }
+  
+  .setting {
+    margin-bottom: 1rem;
+  }
+  
+  .setting label {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  
+  .setting input,
+  .setting select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }

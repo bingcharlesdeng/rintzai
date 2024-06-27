@@ -1,0 +1,20 @@
+.resource-search form {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .resource-search input {
+    flex-grow: 1;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .resource-search button {
+    padding: 0.5rem 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }

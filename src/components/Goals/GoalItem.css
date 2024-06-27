@@ -1,0 +1,68 @@
+.goal-item {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .goal-item:hover {
+    transform: translateY(-5px);
+  }
+  
+  .goal-item h3 {
+    margin-top: 0;
+    color: #333;
+    font-size: 1.5em;
+  }
+  
+  .goal-item p {
+    color: #666;
+    margin-bottom: 10px;
+  }
+  
+  .goal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 15px;
+  }
+  
+  .goal-actions button {
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .goal-actions button:hover {
+    background-color: #45a049;
+  }
+  
+  .goal-edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .goal-edit-form input,
+  .goal-edit-form textarea,
+  .goal-edit-form select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .goal-edit-form button {
+    align-self: flex-end;
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }

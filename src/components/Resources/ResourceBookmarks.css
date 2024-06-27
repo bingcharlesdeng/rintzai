@@ -1,0 +1,13 @@
+.resource-bookmarks ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .resource-bookmarks li {
+    padding: 0.5rem;
+    cursor: pointer;
+  }
+  
+  .resource-bookmarks li:hover {
+    background-color: #f0f0f0;
+  }

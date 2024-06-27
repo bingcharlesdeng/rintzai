@@ -1,0 +1,54 @@
+.affirmation-reminders {
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    padding: 1rem;
+  }
+  
+  .add-reminder {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .day-toggles {
+    display: flex;
+    gap: 0.25rem;
+  }
+  
+  .day-toggles button {
+    padding: 0.25rem 0.5rem;
+    background-color: #ddd;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .day-toggles button.active {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .reminder-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .reminder-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    background-color: white;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+  }
+  
+  .reminder-list button {
+    padding: 0.25rem 0.5rem;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }

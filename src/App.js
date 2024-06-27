@@ -1,40 +1,30 @@
 import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { UserProvider } from './components/User/UserContext';
+import ProtectedRoute from './components/Routes/ProtectedRoute';
 import Login from './components/Routes/Login';
 import Signup from './components/Routes/Signup';
-import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getDatabase } from 'firebase/database';
-import { getFirestore } from 'firebase/firestore';
 import Home from './components/Home/Home';
 import Journal from './components/Journal/Journal';
 import MoodTracker from './components/MoodTracker/MoodTracker';
 import Chat from './components/Chat/Chat';
 import Quotes from './components/Quotes/Quotes';
 import Profile from './components/Profile/Profile';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { UserProvider } from './components/User/UserContext';
-import ProtectedRoute from './components/Routes/ProtectedRoute';
 import Display from './components/Display/Display';
 import Gratitude from './components/Gratitude/Gratitude';
-
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyCJ01FLhx02bbSNDc9-9zzW1oI2paG1Bkw",
-  authDomain: "rintzai.firebaseapp.com",
-  projectId: "rintzai",
-  storageBucket: "rintzai.appspot.com",
-  messagingSenderId: "876261149307",
-  appId: "1:876261149307:web:f5989c05cb26e7ce02b0de",
-  measurementId: "G-QTYQMGGG0L"
-};
-
-const app = initializeApp(firebaseConfig);
-// const auth = getAuth(app);
-// const database = getDatabase(app);
-// const db = getFirestore(app);
+import Vision from './components/Vision/Vision';
+import Goals from './components/Goals/Goals';
+import Meditation from './components/Meditation/Meditation';
+import Resources from './components/Resources/Resources';
+import CBT from './components/CBT/CBT';
+import Social from './components/Social/Social';
+import Affirmations from './components/Affirmations/Affirmations';
+import Habits from './components/Habits/Habits';
+import DBT from './components/DBT/DBT';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
-  console.log('App component rendered');
   return (
     <BrowserRouter>
       <UserProvider>
@@ -51,8 +41,18 @@ const App = () => {
             <Route path="chat" element={<Chat />} />
             <Route path="quotes" element={<Quotes />} />
             <Route path="gratitude" element={<Gratitude />} />
+            <Route path="vision" element={<Vision />} />
+            <Route path="goals" element={<Goals />} />
+            <Route path="meditation" element={<Meditation />} />
+            <Route path="resources" element={<Resources />} />
+            <Route path="cbt" element={<CBT />} />
+            <Route path="social" element={<Social />} />
+            <Route path="affirmations" element={<Affirmations />} />
+            <Route path="habits" element={<Habits />} />
+            <Route path="dbt" element={<DBT />} />
           </Route>
         </Routes>
+        <ToastContainer position="bottom-right" autoClose={3000} />
       </UserProvider>
     </BrowserRouter>
   );
