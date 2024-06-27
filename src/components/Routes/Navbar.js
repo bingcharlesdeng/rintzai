@@ -24,11 +24,6 @@ const Navbar = () => {
         { to: '/habits', label: 'Habit Tracker' },
         { to: '/dbt', label: 'DBT' },
         { to: '/sleep', label: 'Sleep Tracker' },
-        { to: '/music', label: 'Mood Music' },
-
-
-
-
       ],
     },
     {
@@ -38,20 +33,16 @@ const Navbar = () => {
         { to: '/gratitude', label: 'Gratitude' },
         { to: '/quotes', label: 'Quotes' },
         { to: '/affirmations', label: 'Affirmations' },
-        { to: '/mental', label: 'Mental Illness' },
-
-
-
+        { to: '/mental', label: 'Mental Health' },
       ],
     }, 
     { 
-      label: 'People',
+      label: 'Community',
       children: [
         { to: '/chat', label: 'Chat' },
         { to: '/resources', label: 'Resources' },
         { to: '/profile', label: 'Profile' },
         { to: '/social', label: 'Social' },
-
       ],
     }
   ];
@@ -96,8 +87,10 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-container">
         <Link to="/" className="navbar-logo">Rintzai</Link>
-        <button className="menu-toggle" onClick={toggleMenu} aria-label="Toggle menu">
-          ☰
+        <button className={`menu-toggle ${isMenuOpen ? 'active' : ''}`} onClick={toggleMenu} aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
         </button>
         <div className={`navbar-links ${isMenuOpen ? 'open' : ''}`}>
           {user && navLinks.map(renderNavLink)}
