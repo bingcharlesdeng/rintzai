@@ -1,7 +1,8 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import { UserProvider } from './components/User/UserContext';
 import ProtectedRoute from './components/Routes/ProtectedRoute';
+import Navbar from './components/Routes/Navbar';
 import Login from './components/Routes/Login';
 import Signup from './components/Routes/Signup';
 import Home from './components/Home/Home';
@@ -21,11 +22,16 @@ import Social from './components/Social/Social';
 import Affirmations from './components/Affirmations/Affirmations';
 import Habits from './components/Habits/Habits';
 import DBT from './components/DBT/DBT';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import MentalIllness from './components/Mental/MentalIllness';
 import SleepTracker from './components/Sleep/SleepTracker';
 import MoodMusic from './components/Music/MoodMusic';
+import Voice from './components/Voice/Voice';
+import Progress from './components/Progress/Progress';
+import Recommendations from './components/Recommendations/Recommendations';
+import Community from './components/Community/Community';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const App = () => {
   return (
     <BrowserRouter>
@@ -34,32 +40,38 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/" element={<ProtectedRoute />}>
-            <Route index element={<Home />} />
-            <Route path='profile' element={<Profile/>} />
-            <Route path="display" element={<Display />} />
-            <Route path="home" element={<Home />} />
-            <Route path="journal" element={<Journal />} />
-            <Route path="mood-tracker" element={<MoodTracker />} />
-            <Route path="chat" element={<Chat />} />
-            <Route path="quotes" element={<Quotes />} />
-            <Route path="gratitude" element={<Gratitude />} />
-            <Route path="vision" element={<Vision />} />
-            <Route path="goals" element={<Goals />} />
-            <Route path="meditation" element={<Meditation />} />
-            <Route path="resources" element={<Resources />} />
-            <Route path="cbt" element={<CBT />} />
-            <Route path="social" element={<Social />} />
-            <Route path="affirmations" element={<Affirmations />} />
-            <Route path="habits" element={<Habits />} />
-            <Route path="dbt" element={<DBT />} />
-            <Route path="mental" element={<MentalIllness />} />
-            <Route path="sleep" element={<SleepTracker />} />
-            <Route path="music" element={<MoodMusic />} />
-
-
-
-
-
+            <Route element={
+              <>
+                <Navbar />
+                <Outlet />
+              
+           </> }>
+              <Route index element={<Home />} />
+              <Route path="home" element={<Home />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="display" element={<Display />} />
+              <Route path="journal" element={<Journal />} />
+              <Route path="mood-tracker" element={<MoodTracker />} />
+              <Route path="chat" element={<Chat />} />
+              <Route path="quotes" element={<Quotes />} />
+              <Route path="gratitude" element={<Gratitude />} />
+              <Route path="vision" element={<Vision />} />
+              <Route path="goals" element={<Goals />} />
+              <Route path="meditation" element={<Meditation />} />
+              <Route path="resources" element={<Resources />} />
+              <Route path="cbt" element={<CBT />} />
+              <Route path="social" element={<Social />} />
+              <Route path="affirmations" element={<Affirmations />} />
+              <Route path="habits" element={<Habits />} />
+              <Route path="dbt" element={<DBT />} />
+              <Route path="mental" element={<MentalIllness />} />
+              <Route path="sleep" element={<SleepTracker />} />
+              <Route path="music" element={<MoodMusic />} />
+              <Route path="voice" element={<Voice />} />
+              <Route path="progress" element={<Progress />} />
+              <Route path="recommendations" element={<Recommendations />} />
+              <Route path="community" element={<Community />} />
+            </Route>
           </Route>
         </Routes>
         <ToastContainer position="bottom-right" autoClose={3000} />

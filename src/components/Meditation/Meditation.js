@@ -54,8 +54,7 @@ const Meditation = () => {
   }
 
   return (
-    <>
-      <Navbar />
+      
       <div className="meditation-container">
         <h1>Meditation Center</h1>
         <div className="meditation-content">
@@ -87,7 +86,7 @@ const Meditation = () => {
           </div>
         </div>
       </div>
-    </>
+    
   );
 };
 

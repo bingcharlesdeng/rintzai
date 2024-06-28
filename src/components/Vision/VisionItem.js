@@ -92,8 +92,9 @@ const VisionItem = ({ item, onUpdate, onDelete, onDrop }) => {
           <div className="vision-item-actions">
             <button onClick={handleEdit}>Edit</button>
             <button onClick={() => onDelete(item.id)}>Delete</button>
-          </div>
-        </>
+          </div>''
+          </>
+        
       )}
     </div>
   );

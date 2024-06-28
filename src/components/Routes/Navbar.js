@@ -24,6 +24,10 @@ const Navbar = () => {
         { to: '/habits', label: 'Habit Tracker' },
         { to: '/dbt', label: 'DBT' },
         { to: '/sleep', label: 'Sleep Tracker' },
+        { to: '/vision', label: 'Vision Board' },
+        { to: '/music', label: 'Mood Music' },
+        { to: '/voice', label: 'Voice Journal' },
+        { to: '/progress', label: 'Progress Tracker' },
       ],
     },
     {
@@ -43,8 +47,12 @@ const Navbar = () => {
         { to: '/resources', label: 'Resources' },
         { to: '/profile', label: 'Profile' },
         { to: '/social', label: 'Social' },
+        { to: '/collaboration', label: 'Collaboration' },
+        { to: '/community', label: 'Community' },
       ],
-    }
+    },
+    { to: '/recommendations', label: 'Recommendations' },
+    { to: '/display', label: 'Display' },
   ];
 
   const handleDropdownToggle = (label) => {

@@ -29,7 +29,7 @@ const Home = () => {
 
   return (
     <div className="home-container">
-      <Navbar />
+      
       <main className="content">
         <div className="main-column">
           <WelcomeMessage user={user} />

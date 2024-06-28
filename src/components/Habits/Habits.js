@@ -77,8 +77,8 @@ const Habits = () => {
   }
 
   return (
-    <>
-      <Navbar />
+    
+      
       <div className="habits-container">
         <h1>Habit Tracker</h1>
         <div className="habits-content">
@@ -111,7 +111,7 @@ const Habits = () => {
           </div>
         </div>
       </div>
-    </>
+    
   );
 };
 

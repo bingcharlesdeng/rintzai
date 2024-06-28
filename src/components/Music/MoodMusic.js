@@ -160,7 +160,6 @@ const MoodMusic = ({ userId }) => {
   };
 
   return (
-    <><Navbar/>
     <div className="mood-music">
       <h2>Mood-Based Wellness Center</h2>
       <div className="mood-selector">
@@ -251,7 +250,7 @@ const MoodMusic = ({ userId }) => {
         </ul>
       </div>
     </div>
-    </>
+    
   );
 };
 

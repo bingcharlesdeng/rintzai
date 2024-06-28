@@ -55,8 +55,8 @@ const MeditationInsights = ({ userData }) => {
               ))}
             </ul>
           </div>
-        </>
-      ) : (
+        
+     </> ) : (
         <p>Meditate more to unlock insights!</p>
       )}
     </div>

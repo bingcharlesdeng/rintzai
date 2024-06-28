@@ -1,0 +1,47 @@
+.journal-insights {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .word-frequency, .sentiment-analysis, .topic-analysis, .writing-patterns {
+    margin-bottom: 2rem;
+  }
+  
+  .word-list {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .word-list li {
+    background-color: #f0f0f0;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+  }
+  
+  .word-list li:hover {
+    transform: scale(1.05);
+    background-color: #e0e0e0;
+  }
+  
+  .sentiment-analysis p, .writing-patterns p {
+    margin: 0.5rem 0;
+  }
+  
+  .topic-analysis ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .topic-analysis li {
+    background-color: #f0f0f0;
+    margin: 0.5rem 0;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+  }

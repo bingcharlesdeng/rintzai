@@ -68,7 +68,7 @@ const CBT = () => {
 
   return (
     <>
-      <Navbar />
+      
       <div className="cbt-container">
         <h1>Cognitive Behavioral Therapy Tools</h1>
         <div className="cbt-content">
@@ -85,7 +85,8 @@ const CBT = () => {
           </main>
         </div>
       </div>
-    </>
+      </>
+    
   );
 };
 

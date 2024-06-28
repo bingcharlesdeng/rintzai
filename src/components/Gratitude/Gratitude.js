@@ -8,8 +8,8 @@ import Navbar from '../Routes/Navbar';
 
 const Gratitude = () => {
   return (
-    <>
-      <Navbar />
+    
+      
       <div className="gratitude-container">
         <h1 className="gratitude-title">Gratitude</h1>
         <p className="gratitude-description">
@@ -20,7 +20,7 @@ const Gratitude = () => {
         <GratitudeExercises />
         <GratitudeQuotes />
       </div>
-    </>
+    
   );
 };
 

@@ -257,8 +257,7 @@ const Display = () => {
   );
 
   return (
-    <>
-    <Navbar />
+    
     <div className="display-container">
       <div className="display-content">
         <div className="display-sidebar">
@@ -305,7 +304,8 @@ const Display = () => {
       )}
       <ToastContainer position="bottom-right" limit={1} />
     </div>
-    </>
+
+    
   );
 };
 

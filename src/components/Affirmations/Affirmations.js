@@ -70,7 +70,7 @@ const Affirmations = () => {
 
   return (
     <>
-      <Navbar />
+      
       <div className="affirmations-container">
         <h1>Daily Affirmations</h1>
         <div className="affirmations-content">

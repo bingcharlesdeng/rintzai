@@ -82,8 +82,7 @@ const Goals = () => {
   };
 
   return (
-    <>
-    <Navbar />
+    
     <div className="goals-container">
       <h1>Goal Planner</h1>
       <GoalCategories 
@@ -112,7 +111,7 @@ const Goals = () => {
         />
       )}
     </div>
-    </>
+    
 
   );
 };

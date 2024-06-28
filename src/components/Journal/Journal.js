@@ -190,7 +190,7 @@ const Journal = () => {
 
   return (
     <ErrorBoundary>
-      <Navbar />
+      
       <div className="journal-container">
         <h1 className="journal-title">My Journal</h1>
         <div className="journal-layout">

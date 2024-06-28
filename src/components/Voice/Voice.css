@@ -1,0 +1,36 @@
+.voice-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .voice-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .voice-container button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .voice-container button:hover {
+    background-color: #45a049;
+  }
+  
+  .voice-container button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  
+  .error-message {
+    color: #ff0000;
+    font-weight: bold;
+  }

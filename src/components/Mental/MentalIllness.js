@@ -72,8 +72,7 @@ const MentalIllness = () => {
   };
 
   return (
-    <>
-    <Navbar/>
+
     <div className="mental-illness-container">
       <h1>Mental Health Support and Education</h1>
       <nav className="mental-illness-nav">
@@ -90,7 +89,7 @@ const MentalIllness = () => {
         {renderActiveSection()}
       </main>
     </div>
-    </>
+    
   );
 };
 

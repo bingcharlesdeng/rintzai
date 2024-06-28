@@ -18,7 +18,7 @@ import {
   setDoc,
   or,
   deleteDoc,
-  limit
+  limit,
 } from 'firebase/firestore';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { getAuth, connectAuthEmulator } from 'firebase/auth';

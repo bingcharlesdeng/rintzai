@@ -100,8 +100,8 @@ const Chat = () => {
   };
 
   return (
-    <>
-      <Navbar />
+    
+      
       <div className="chat-app">
         <div className="sidebar">
           <div className="header">
@@ -139,7 +139,7 @@ const Chat = () => {
           <UserSearch onClose={handleCloseUserSearch} onStartChat={handleStartChat} />
         )}
       </div>
-    </>
+    
   );
 };
 

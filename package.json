@@ -30,7 +30,6 @@
     "react-router-dom": "^6.23.1",
     "react-scripts": "5.0.1",
     "react-swipeable": "^7.0.1",
-    "react-tagcloud": "^2.3.3",
     "react-toastify": "^10.0.5",
     "react-window": "^1.8.10",
     "react-zoom-pan-pinch": "^3.5.0",

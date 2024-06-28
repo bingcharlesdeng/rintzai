@@ -1,0 +1,155 @@
+.progress-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .progress-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .progress-nav {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .progress-nav button {
+    padding: 0.5rem 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .progress-nav button:hover {
+    background-color: #45a049;
+  }
+  
+  .progress-main {
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    padding: 2rem;
+  }
+  
+  .loading {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2rem;
+  }
+  
+  .overall-progress,
+  .mood-analysis,
+  .habit-tracker,
+  .journal-insights,
+  .goal-progress,
+  .therapy-progress,
+  .custom-metrics {
+    margin-bottom: 2rem;
+  }
+  
+  .progress-summary,
+  .mood-insights,
+  .habit-insights,
+  .sentiment-analysis,
+  .topic-analysis,
+  .goal-insights,
+  .therapy-insights,
+  .metric-insights {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .word-cloud-container {
+    height: 400px;
+    width: 100%;
+    background-color: white;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .metric-selector {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .chart-container {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .goal-breakdown,
+  .therapy-techniques,
+  .writing-patterns {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .goal-breakdown ul,
+  .therapy-techniques ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  .goal-breakdown li,
+  .therapy-techniques li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .custom-metrics .metric-insights {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  
+  .custom-metrics .metric-insights p {
+    background-color: #f9f9f9;
+    padding: 0.5rem;
+    border-radius: 4px;
+    margin: 0;
+  }
+  
+  @media (max-width: 768px) {
+    .progress-nav {
+      flex-direction: column;
+    }
+  
+    .progress-nav button {
+      width: 100%;
+    }
+  
+    .custom-metrics .metric-insights {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .trend-positive {
+    color: #4CAF50;
+  }
+  
+  .trend-negative {
+    color: #f44336;
+  }
+  
+  .trend-neutral {
+    color: #FFA500;
+  }

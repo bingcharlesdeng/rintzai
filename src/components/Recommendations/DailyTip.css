@@ -1,0 +1,64 @@
+.daily-tip {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .daily-tip h2 {
+    color: #333;
+    margin-bottom: 1.5rem;
+  }
+  
+  .tip-content {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .tip-category {
+    font-style: italic;
+    color: #666;
+    margin-top: 0.5rem;
+  }
+  
+  .tip-explanation, .tip-action {
+    margin-top: 1.5rem;
+  }
+  
+  .tip-action ol {
+    padding-left: 1.5rem;
+  }
+  
+  .tip-action li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .tip-feedback {
+    margin-top: 2rem;
+  }
+  
+  .feedback-buttons {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .feedback-buttons button {
+    padding: 0.5rem 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .feedback-buttons button:hover {
+    background-color: #45a049;
+  }
+  
+  .no-tip {
+    text-align: center;
+    padding: 2rem;
+    font-style: italic;
+    color: #666;
+  }

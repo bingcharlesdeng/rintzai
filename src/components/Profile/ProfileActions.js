@@ -15,14 +15,14 @@ const ProfileActions = ({ editMode, onEdit, onSave, onCancel }) => {
           <button onClick={onCancel} className="cancel-button">
             Cancel
           </button>
-        </>
+        
       ) : (
         <>
           <button onClick={onEdit} className="edit-button">
             Edit Profile
           </button>
           <button className="more-button">...</button>
-        </>
+        
       )}
     </div>
   );

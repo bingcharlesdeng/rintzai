@@ -73,8 +73,8 @@ const Resources = () => {
   }
 
   return (
-    <>
-      <Navbar />
+    
+      
       <div className="resources-container">
         <h1>Mental Health Resources</h1>
         <div className="resources-content">
@@ -114,7 +114,7 @@ const Resources = () => {
           </div>
         </div>
       </div>
-    </>
+    
   );
 };
 

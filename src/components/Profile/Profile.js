@@ -85,8 +85,7 @@ const Profile = () => {
   const latestMood = moodEntries.length > 0 ? moodEntries[moodEntries.length - 1].mood : null;
 
   return (
-    <>
-      <Navbar />
+    
       <div className="profile-container">
         <ProfileHeader
           profile={profile}
@@ -116,7 +115,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
-    </>
+    
   );
 };
 

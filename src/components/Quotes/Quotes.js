@@ -137,8 +137,8 @@ const Quotes = () => {
   };
 
   return (
-    <>
-      <Navbar />
+  
+      
       <div className="quotes-container" style={{ fontFamily: customization.font }}>
         <h1 className="quotes-title">Daily Inspiration</h1>
         
@@ -212,7 +212,7 @@ const Quotes = () => {
           </div>
         </div>
       </div>
-    </>
+    
   );
 };
 

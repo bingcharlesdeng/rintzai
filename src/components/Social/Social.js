@@ -64,8 +64,8 @@ const Social = () => {
   }
 
   return (
-    <>
-      <Navbar />
+
+      
       <div className="social-container">
         <h1>Social Support Network</h1>
         <div className="social-content">
@@ -81,7 +81,7 @@ const Social = () => {
           </main>
         </div>
       </div>
-    </>
+    
   );
 };
 

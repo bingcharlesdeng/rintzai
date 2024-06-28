@@ -1,0 +1,70 @@
+.mood-based-recommendations {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .mood-based-recommendations h2 {
+    color: #333;
+    margin-bottom: 1.5rem;
+  }
+  
+  .mood-selector {
+    margin-bottom: 1.5rem;
+  }
+  
+  .mood-selector label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+  }
+  
+  .mood-selector select {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .mood-recommendations ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .mood-recommendations li {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .mood-recommendations h4 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    color: #4CAF50;
+  }
+  
+  .recommendation-feedback {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  
+  .recommendation-feedback button {
+    padding: 0.5rem;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+  }
+  
+  .no-recommendations {
+    text-align: center;
+    padding: 2rem;
+    font-style: italic;
+    color: #666;
+  }

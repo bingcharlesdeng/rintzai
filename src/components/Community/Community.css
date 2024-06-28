@@ -1,0 +1,44 @@
+.community-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .community-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .community-nav {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .community-nav button {
+    padding: 0.5rem 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .community-nav button:hover {
+    background-color: #45a049;
+  }
+  
+  .community-main {
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    padding: 2rem;
+  }
+  
+  .loading {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2rem;
+  }

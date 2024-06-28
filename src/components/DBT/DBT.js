@@ -65,7 +65,7 @@ const DBT = () => {
 
   return (
     <>
-      <Navbar />
+      
       <div className="dbt-container">
         <h1>Dialectical Behavior Therapy (DBT)</h1>
         <div className="dbt-content">

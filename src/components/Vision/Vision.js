@@ -85,8 +85,8 @@ const Vision = () => {
   };
 
   return (
-    <>
-      <Navbar />
+    
+      
       <div className="vision-container">
         <h1 className="vision-title">My Vision Board</h1>
         <p className="vision-description">Visualize and organize your goals and dreams.</p>
@@ -110,7 +110,7 @@ const Vision = () => {
           />
         )}
       </div>
-    </>
+    
   );
 };
 
