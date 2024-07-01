@@ -38,20 +38,26 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 const auth = getAuth(app);
 
+// Define collections
 export const moodPlaylistsCollection = collection(db, 'moodPlaylists');
 export const calmingSoundsCollection = collection(db, 'calmingSounds');
 export const userMoodsCollection = collection(db, 'userMoods');
+export const conversationsCollection = collection(db, 'conversations');
+export const usersCollection = collection(db, 'users');
 
+// Uncomment this block if you want to use the auth emulator in development
 // if (process.env.NODE_ENV === 'development') {
 //   connectAuthEmulator(auth, 'http://localhost:8000')
 // }
 
 export {
   db,
+  auth,
+  storage,
   collection,
-  getDocs,
   query,
   where,
+  getDocs,
   addDoc,
   serverTimestamp,
   orderBy,
@@ -61,12 +67,11 @@ export {
   arrayUnion,
   getDoc,
   setDoc,
-  storage,
   ref,
   uploadBytesResumable,
   getDownloadURL,
-  auth,
   or,
   deleteDoc,
-  limit
+  limit,
+  writeBatch
 };

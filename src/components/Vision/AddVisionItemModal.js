@@ -33,7 +33,7 @@ const AddVisionItemModal = ({ onClose, onAddItem }) => {
             required
           />
           <textarea
-            name="description"
+            name="description" 
             value={newItem.description}
             onChange={handleChange}
             placeholder="Description"

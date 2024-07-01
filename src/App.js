@@ -44,8 +44,8 @@ const App = () => {
               <>
                 <Navbar />
                 <Outlet />
-              
-           </> }>
+              </>
+            }>
               <Route index element={<Home />} />
               <Route path="home" element={<Home />} />
               <Route path="profile" element={<Profile />} />
