@@ -1,7 +1,0 @@
-{
-  "name": "Rintzai",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "react"
-}

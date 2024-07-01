@@ -4,8 +4,9 @@
   "private": true,
   "dependencies": {
     "@capacitor/android": "^6.1.0",
+    "@capacitor/cli": "^6.1.0",
     "@capacitor/core": "^6.1.0",
-    "@capacitor/ios": "^6.1.0",
+    "@capacitor/ios": "6.1.0",
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
@@ -43,6 +44,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "CI=false && react-scripts build",
+    "ionic:build": "npm run build && npx cap sync",
+  "ionic:serve": "react-scripts start",
     "test": "react-scripts test",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",

@@ -4,35 +4,7 @@
   "webDir": "build",
   "bundledWebRuntime": false,
   "server": {
-    "iosScheme": "ionic"
-  },
-  "ios": {
-    "contentInset": "always",
-    "allowsLinkPreview": false,
-    "webViewConfiguration": {
-      "allowsAirPlayForMediaPlayback": true,
-      "allowsPictureInPictureMediaPlayback": true,
-      "allowsInlineMediaPlayback": true
-    },
-    "scrollEnabled": true,
-    "backgroundColor": "#ffffffff"
-  },
-  "android": {
-    "allowMixedContent": true
-  },
-  "plugins": {
-    "SplashScreen": {
-      "launchShowDuration": 3000,
-      "launchAutoHide": true,
-      "backgroundColor": "#ffffffff",
-      "androidSplashResourceName": "splash",
-      "androidScaleType": "CENTER_CROP",
-      "showSpinner": true,
-      "androidSpinnerStyle": "large",
-      "iosSpinnerStyle": "small",
-      "spinnerColor": "#999999",
-      "splashFullScreen": true,
-      "splashImmersive": true
-    }
+    "androidScheme": "https",
+    "cleartext": true
   }
 }
