@@ -1,39 +1,34 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { db, collection, onSnapshot, query, where, orderBy } from '../../firebase/firebase';
+import { db, collection, onSnapshot, query, orderBy } from '../../firebase/firebase';
 import './chatWindow.css';
 import ChatMessage from './ChatMessage';
 
-const ChatWindow = ({ selectedConversation, loggedInUser, selectedMessage }) => {
+const ChatWindow = ({ selectedConversation, loggedInUser }) => {
   const [messages, setMessages] = useState([]);
+  const [loading, setLoading] = useState(true);
   const chatWindowRef = useRef(null);
 
   useEffect(() => {
-    const fetchConversationMessages = async () => {
-      if (selectedConversation) {
-        const messagesRef = collection(db, 'messages');
-        const q = query(
-          messagesRef,
-          where('conversationId', '==', selectedConversation.id),
-          orderBy('timestamp', 'asc')
-        );
-        const unsubscribe = onSnapshot(q, (snapshot) => {
-          const fetchedMessages = snapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          }));
-          setMessages(fetchedMessages);
-          console.log('Fetched messages:', fetchedMessages);
-        });
+    if (selectedConversation) {
+      setLoading(true);
+      const messagesRef = collection(db, 'conversations', selectedConversation.id, 'messages');
+      const q = query(messagesRef, orderBy('timestamp', 'asc'));
+      
+      const unsubscribe = onSnapshot(q, (snapshot) => {
+        const fetchedMessages = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setMessages(fetchedMessages);
+        setLoading(false);
+        console.log('Fetched messages:', fetchedMessages);
+      }, (error) => {
+        console.error('Error fetching messages:', error);
+        setLoading(false);
+      });
 
-        return () => {
-          unsubscribe();
-        };
-      } else {
-        setMessages([]);
-      }
-    };
-
-    fetchConversationMessages();
+      return () => unsubscribe();
+    }
   }, [selectedConversation]);
 
   useEffect(() => {
@@ -42,15 +37,9 @@ const ChatWindow = ({ selectedConversation, loggedInUser, selectedMessage }) => 
     }
   }, [messages]);
 
-  useEffect(() => {
-    if (selectedMessage) {
-      const messageElement = document.getElementById(selectedMessage.id);
-      if (messageElement) {
-        messageElement.scrollIntoView({ behavior: 'smooth' });
-        messageElement.classList.add('highlighted');
-      }
-    }
-  }, [selectedMessage]);
+  if (loading) {
+    return <div className="loading">Loading messages...</div>;
+  }
 
   return (
     <div className="chat-window" ref={chatWindowRef}>
@@ -62,7 +51,6 @@ const ChatWindow = ({ selectedConversation, loggedInUser, selectedMessage }) => 
               message={message}
               loggedInUser={loggedInUser}
               messageId={message.id}
-              isHighlighted={message.id === selectedMessage?.id}
             />
           ))
         ) : (

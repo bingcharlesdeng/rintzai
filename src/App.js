@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
-import { Capacitor } from '@capacitor/core';
 import { UserProvider } from './components/User/UserContext';
 import ProtectedRoute from './components/Routes/ProtectedRoute';
 import Navbar from './components/Routes/Navbar';
@@ -34,42 +33,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const initializeApp = async () => {
-      console.log('Initializing app...');
-      try {
-        const platform = Capacitor.getPlatform();
-        console.log('📱 Device platform:', platform);
-
-        if (Capacitor.isNative) {
-          console.log('🚀 Running on a native platform');
-          if (Capacitor.Plugins.StatusBar) {
-            await Capacitor.Plugins.StatusBar.setStyle({ style: 'DARK' });
-          }
-        } else {
-          console.log('🌐 Running on the web');
-        }
-
-        Capacitor.addListener('appUrlOpen', (data) => {
-          console.log('Deep link received:', data.url);
-        });
-
-      } catch (error) {
-        console.error('Error during app initialization:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    initializeApp();
-  }, []);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <BrowserRouter>
       <UserProvider>

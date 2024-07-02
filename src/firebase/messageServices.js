@@ -1,17 +1,21 @@
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { db } from './firebase';
-
-export const sendMessage = async (senderId, recipientId, content) => {
+const sendMessage = async (message, conversationId, senderId, timestamp) => {
   try {
-    const messagesRef = collection(db, 'messages');
     const newMessage = {
+      conversationId,
       senderId,
-      recipientId,
-      content,
-      timestamp: serverTimestamp(),
+      content: message,
+      timestamp: timestamp,
     };
+    const messagesRef = collection(db, 'conversations', conversationId, 'messages');
     const docRef = await addDoc(messagesRef, newMessage);
-    console.log('Message sent successfully with ID:', docRef.id);
+
+    const conversationRef = doc(db, 'conversations', conversationId);
+    await updateDoc(conversationRef, {
+      lastMessage: message,
+      lastMessageTimestamp: timestamp,
+    });
+
+    console.log('Message sent!');
     return docRef.id;
   } catch (error) {
     console.error('Error sending message:', error);
@@ -19,4 +23,9 @@ export const sendMessage = async (senderId, recipientId, content) => {
   }
 };
 
-// You can add more message-related functions here as needed
+const fetchMessages = async (conversationId) => {
+  const messagesRef = collection(db, 'conversations', conversationId, 'messages');
+  const q = query(messagesRef, orderBy('timestamp', 'asc'));
+  const querySnapshot = await getDocs(q);
+  return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+};

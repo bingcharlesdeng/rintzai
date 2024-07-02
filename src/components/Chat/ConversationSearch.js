@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { db, collection, getDocs, query, where, orderBy } from '../../firebase/firebase';
+import { db, collection, query, where, getDocs, doc, getDoc } from '../../firebase/firebase';
 import './conversationSearch.css';
 
-const ConversationSearch = ({ conversations, onSearchResults }) => {
+const ConversationSearch = ({ conversations, onSearchResults, loggedInUser }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleSearch = async (e) => {
@@ -15,47 +15,13 @@ const ConversationSearch = ({ conversations, onSearchResults }) => {
     }
 
     try {
-      const messagesRef = collection(db, 'messages');
-      const q = query(
-        messagesRef,
-        where('content', '>=', term),
-        where('content', '<=', term + '\uf8ff'),
-        orderBy('content'),
-        orderBy('timestamp', 'desc')
-      );
-      const querySnapshot = await getDocs(q);
-      
-      const matchingMessages = querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-        highlighted: doc.data().content.toLowerCase().indexOf(term)
-      }));
-
-      console.log('Matching messages:', matchingMessages);
-
-      const groupedResults = groupMessagesByConversation(matchingMessages, conversations);
-      onSearchResults(groupedResults);
+      const results = await searchConversations(term, conversations, loggedInUser);
+      onSearchResults(results);
+      console.log('Search results:', results);
     } catch (error) {
-      console.error('Error searching messages:', error);
+      console.error('Error searching conversations:', error);
+      onSearchResults([]);
     }
-  };
-
-  const groupMessagesByConversation = (messages, allConversations) => {
-    const groupedMessages = {};
-    messages.forEach(message => {
-      if (!groupedMessages[message.conversationId]) {
-        groupedMessages[message.conversationId] = [];
-      }
-      groupedMessages[message.conversationId].push(message);
-    });
-
-    return Object.keys(groupedMessages).map(conversationId => {
-      const conversation = allConversations.find(c => c.id === conversationId);
-      return {
-        ...conversation,
-        matchingMessages: groupedMessages[conversationId]
-      };
-    });
   };
 
   return (
@@ -70,5 +36,55 @@ const ConversationSearch = ({ conversations, onSearchResults }) => {
     </div>
   );
 };
+
+async function searchConversations(searchTerm, conversations, loggedInUser) {
+  const results = [];
+
+  for (const conversation of conversations) {
+    try {
+      const messagesRef = collection(db, 'conversations', conversation.id, 'messages');
+      const q = query(messagesRef);
+      
+      const querySnapshot = await getDocs(q);
+      
+      const matchingMessages = querySnapshot.docs
+        .map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+          highlighted: doc.data().content.toLowerCase().indexOf(searchTerm.toLowerCase())
+        }))
+        .filter(message => message.highlighted !== -1);
+
+      if (matchingMessages.length > 0) {
+        const otherUser = conversation.participants.find(userId => userId !== loggedInUser.uid);
+        const otherUserName = await getUserName(otherUser);
+
+        results.push({
+          ...conversation,
+          matchingMessages,
+          otherUserName
+        });
+      }
+    } catch (error) {
+      console.error('Error searching conversation:', conversation.id, error);
+    }
+  }
+
+  return results;
+}
+
+async function getUserName(userId) {
+  try {
+    const userRef = doc(db, 'users', userId);
+    const userSnap = await getDoc(userRef);
+    if (userSnap.exists()) {
+      return userSnap.data().name;
+    }
+    return 'Unknown User';
+  } catch (error) {
+    console.error('Error fetching user name:', error);
+    return 'Unknown User';
+  }
+}
 
 export default ConversationSearch;

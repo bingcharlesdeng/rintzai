@@ -4,16 +4,18 @@ import './searchResultItem.css';
 
 const SearchResultItem = ({ result, onSelectConversation, loggedInUser }) => {
   const handleClick = () => {
-    onSelectConversation(result, result.matchingMessages[0]);
+    onSelectConversation(result);
   };
 
-  const previewText = result.matchingMessages[0].content;
-  const highlightIndex = result.matchingMessages[0].highlighted;
-  const searchTerm = previewText.substring(highlightIndex, highlightIndex + result.matchingMessages[0].content.length - highlightIndex);
+  const matchingMessage = result.matchingMessages[0];
+  const previewText = matchingMessage.content;
+  const highlightIndex = matchingMessage.highlighted;
+  const searchTerm = previewText.substring(highlightIndex, highlightIndex + matchingMessage.content.length - highlightIndex);
 
   return (
     <li className="search-result-item" onClick={handleClick}>
       <div className="result-preview">
+        <span className="other-user-name">{result.otherUserName}</span>
         {previewText.substring(0, highlightIndex)}
         <span className="highlight">
           {searchTerm}
@@ -22,7 +24,7 @@ const SearchResultItem = ({ result, onSelectConversation, loggedInUser }) => {
       </div>
       <div className="result-metadata">
         <span className="result-timestamp">
-          {formatRelativeTime(result.matchingMessages[0].timestamp)}
+          {formatRelativeTime(matchingMessage.timestamp)}
         </span>
       </div>
     </li>

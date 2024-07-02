@@ -4,49 +4,43 @@ import ConversationList from './ConversationList';
 import ChatInput from './ChatInput';
 import UserSearch from './UserSearch';
 import ConversationSearch from './ConversationSearch';
-import { sendMessage, createNewConversation, fetchConversationsForUser } from './messageService';
+import { sendMessage, createNewConversation } from './chatService';
 import { db, collection, onSnapshot, query, where, orderBy } from '../../firebase/firebase';
 import './chat.css';
 import { useUserContext } from '../User/UserContext';
-import Navbar from '../Routes/Navbar';
 
 const Chat = () => {
   const [selectedConversation, setSelectedConversation] = useState(null);
   const [conversations, setConversations] = useState([]);
   const [isUserSearchOpen, setIsUserSearchOpen] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
-  const [selectedMessage, setSelectedMessage] = useState(null);
+  const [isSearching, setIsSearching] = useState(false);
   const { user } = useUserContext();
 
   useEffect(() => {
-    const fetchUserConversations = async () => {
-      if (user) {
-        const conversationsRef = collection(db, 'conversations');
-        const q = query(
-          conversationsRef,
-          where('participants', 'array-contains', user.uid),
-          orderBy('lastMessageTimestamp', 'desc')
-        );
-        const unsubscribe = onSnapshot(q, (snapshot) => {
-          const updatedConversations = snapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          }));
-          setConversations(updatedConversations);
-          console.log('Fetched user conversations:', updatedConversations);
-        });
+    if (user) {
+      const conversationsRef = collection(db, 'conversations');
+      const q = query(
+        conversationsRef,
+        where('participants', 'array-contains', user.uid),
+        orderBy('lastMessageTimestamp', 'desc')
+      );
+      const unsubscribe = onSnapshot(q, (snapshot) => {
+        const updatedConversations = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setConversations(updatedConversations);
+        console.log('Fetched user conversations:', updatedConversations);
+      });
   
-        return () => {
-          unsubscribe();
-        };
-      }
-    };
-  
-    fetchUserConversations();
+      return () => unsubscribe();
+    }
   }, [user]);
 
   const handleSearchResults = (results) => {
     setSearchResults(results);
+    setIsSearching(results.length > 0);
     console.log('Search results:', results);
   };
 
@@ -77,69 +71,61 @@ const Chat = () => {
     }
   };
 
-  const handleSelectConversation = (conversation, message = null) => {
+  const handleSelectConversation = (conversation) => {
     setSelectedConversation(conversation);
-    setSelectedMessage(message);
+    setIsSearching(false);
     console.log('Selected conversation:', conversation);
-    if (message) {
-      console.log('Selected message:', message);
-    }
   };
 
-  const handleSendMessage = (message) => {
+  const handleSendMessage = async (message) => {
     if (selectedConversation) {
-      const currentTimestamp = new Date();
-      sendMessage(message, selectedConversation.id, user.uid, currentTimestamp)
-        .then(() => {
-          console.log('Message sent:', message);
-        })
-        .catch((error) => {
-          console.error('Error sending message:', error);
-        });
+      try {
+        await sendMessage(message, selectedConversation.id, user.uid);
+        console.log('Message sent:', message);
+      } catch (error) {
+        console.error('Error sending message:', error);
+      }
     }
   };
 
   return (
-    
-      
-      <div className="chat-app">
-        <div className="sidebar">
-          <div className="header">
-            <button className="new-chat-button" onClick={handleNewChat}>
-              New Chat
-            </button>
-          </div>
-          <ConversationSearch
-            conversations={conversations}
-            onSearchResults={handleSearchResults}
-          />
-          <ConversationList
-            conversations={conversations}
-            searchResults={searchResults}
-            onSelectConversation={handleSelectConversation}
-            selectedConversation={selectedConversation}
-            loggedInUser={user}
-          />
+    <div className="chat-app">
+      <div className="sidebar">
+        <div className="header">
+          <button className="new-chat-button" onClick={handleNewChat}>
+            New Chat
+          </button>
         </div>
-        <div className="chat-area">
-          {selectedConversation ? (
-            <>
-              <ChatWindow 
-                selectedConversation={selectedConversation} 
-                loggedInUser={user} 
-                selectedMessage={selectedMessage}
-              />
-              <ChatInput onSendMessage={handleSendMessage} />
-            </>
-          ) : (
-            <div className="no-chat-selected">Select a conversation or start a new chat</div>
-          )}
-        </div>
-        {isUserSearchOpen && (
-          <UserSearch onClose={handleCloseUserSearch} onStartChat={handleStartChat} />
+        <ConversationSearch
+          conversations={conversations}
+          onSearchResults={handleSearchResults}
+          loggedInUser={user}
+        />
+        <ConversationList
+          conversations={isSearching ? searchResults : conversations}
+          onSelectConversation={handleSelectConversation}
+          selectedConversation={selectedConversation}
+          loggedInUser={user}
+          isSearching={isSearching}
+        />
+      </div>
+      <div className="chat-area">
+        {selectedConversation ? (
+          <>
+            <ChatWindow 
+              selectedConversation={selectedConversation} 
+              loggedInUser={user} 
+            />
+            <ChatInput onSendMessage={handleSendMessage} />
+          </>
+        ) : (
+          <div className="no-chat-selected">Select a conversation or start a new chat</div>
         )}
       </div>
-    
+      {isUserSearchOpen && (
+        <UserSearch onClose={handleCloseUserSearch} onStartChat={handleStartChat} />
+      )}
+    </div>
   );
 };
 
