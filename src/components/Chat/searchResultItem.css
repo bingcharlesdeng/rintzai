@@ -1,9 +1,8 @@
-/* searchResultItem.css */
 .search-result-item {
-  padding: 15px;
+  padding: 12px;
   border-bottom: 1px solid #e0e0e0;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.2s ease;
 }
 
 .search-result-item:hover {
@@ -14,7 +13,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .other-user-name {
@@ -24,19 +23,25 @@
 }
 
 .match-count {
-  font-size: 14px;
+  font-size: 12px;
   color: #666;
+  background-color: #e0e0e0;
+  padding: 2px 6px;
+  border-radius: 10px;
 }
 
 .result-preview {
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
-.result-preview p {
-  margin: 0;
+.message-content {
   font-size: 14px;
   color: #333;
   line-height: 1.4;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .highlight {
@@ -48,5 +53,5 @@
   font-size: 12px;
   color: #888;
   display: block;
-  margin-top: 5px;
+  margin-top: 4px;
 }

@@ -39,9 +39,9 @@ const Chat = () => {
   }, [user]);
 
   const handleSearchResults = (results) => {
+    console.log('Received search results:', results);
     setSearchResults(results);
     setIsSearching(results.length > 0);
-    console.log('Search results:', results);
   };
 
   const handleNewChat = () => {
