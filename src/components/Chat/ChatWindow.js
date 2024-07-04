@@ -1,12 +1,23 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, forwardRef, useImperativeHandle } from 'react';
 import { db, collection, onSnapshot, query, orderBy } from '../../firebase/firebase';
 import './chatWindow.css';
 import ChatMessage from './ChatMessage';
+import LoadingSpinner from './LoadingSpinner';
 
-const ChatWindow = ({ selectedConversation, loggedInUser }) => {
+const ChatWindow = forwardRef(({ selectedConversation, loggedInUser, selectedMessage }, ref) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const chatWindowRef = useRef(null);
+  const selectedMessageRef = useRef(null);
+
+  useImperativeHandle(ref, () => ({
+    scrollToMessage: (messageId) => {
+      const messageElement = document.getElementById(messageId);
+      if (messageElement) {
+        messageElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    },
+  }));
 
   useEffect(() => {
     if (selectedConversation) {
@@ -21,7 +32,6 @@ const ChatWindow = ({ selectedConversation, loggedInUser }) => {
         }));
         setMessages(fetchedMessages);
         setLoading(false);
-        console.log('Fetched messages:', fetchedMessages);
       }, (error) => {
         console.error('Error fetching messages:', error);
         setLoading(false);
@@ -37,8 +47,14 @@ const ChatWindow = ({ selectedConversation, loggedInUser }) => {
     }
   }, [messages]);
 
+  useEffect(() => {
+    if (selectedMessage && ref.current) {
+      ref.current.scrollToMessage(selectedMessage.id);
+    }
+  }, [selectedMessage, ref]);
+
   if (loading) {
-    return <div className="loading">Loading messages...</div>;
+    return <div className="loading"><LoadingSpinner /></div>;
   }
 
   return (
@@ -51,6 +67,8 @@ const ChatWindow = ({ selectedConversation, loggedInUser }) => {
               message={message}
               loggedInUser={loggedInUser}
               messageId={message.id}
+              isHighlighted={selectedMessage && selectedMessage.id === message.id}
+              ref={selectedMessage && selectedMessage.id === message.id ? selectedMessageRef : null}
             />
           ))
         ) : (
@@ -59,6 +77,6 @@ const ChatWindow = ({ selectedConversation, loggedInUser }) => {
       </div>
     </div>
   );
-};
+});
 
 export default ChatWindow;

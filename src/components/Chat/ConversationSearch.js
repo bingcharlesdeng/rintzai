@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { db, collection, query, where, getDocs, doc, getDoc } from '../../firebase/firebase';
+import { db, collection, query, getDocs, doc, getDoc } from '../../firebase/firebase';
 import './conversationSearch.css';
+import LoadingSpinner from './LoadingSpinner';
 
 const ConversationSearch = ({ conversations, onSearchResults, loggedInUser }) => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSearch = async (e) => {
     const term = e.target.value.toLowerCase();
@@ -14,13 +16,16 @@ const ConversationSearch = ({ conversations, onSearchResults, loggedInUser }) =>
       return;
     }
 
+    setIsLoading(true);
+
     try {
       const results = await searchConversations(term, conversations, loggedInUser);
       onSearchResults(results);
-      console.log('Search results:', results);
     } catch (error) {
       console.error('Error searching conversations:', error);
       onSearchResults([]);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -33,6 +38,7 @@ const ConversationSearch = ({ conversations, onSearchResults, loggedInUser }) =>
         onChange={handleSearch}
         className="conversation-search-input"
       />
+      {isLoading && <LoadingSpinner />}
     </div>
   );
 };
@@ -62,7 +68,8 @@ async function searchConversations(searchTerm, conversations, loggedInUser) {
         results.push({
           ...conversation,
           matchingMessages,
-          otherUserName
+          otherUserName,
+          searchTerm
         });
       }
     } catch (error) {

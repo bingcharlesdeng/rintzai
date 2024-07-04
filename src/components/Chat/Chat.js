@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ChatWindow from './ChatWindow';
 import ConversationList from './ConversationList';
 import ChatInput from './ChatInput';
@@ -8,6 +8,7 @@ import { sendMessage, createNewConversation } from './chatService';
 import { db, collection, onSnapshot, query, where, orderBy } from '../../firebase/firebase';
 import './chat.css';
 import { useUserContext } from '../User/UserContext';
+import LoadingSpinner from './LoadingSpinner';
 
 const Chat = () => {
   const [selectedConversation, setSelectedConversation] = useState(null);
@@ -15,7 +16,10 @@ const Chat = () => {
   const [isUserSearchOpen, setIsUserSearchOpen] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
+  const [selectedMessage, setSelectedMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const { user } = useUserContext();
+  const chatWindowRef = useRef(null);
 
   useEffect(() => {
     if (user) {
@@ -31,7 +35,6 @@ const Chat = () => {
           ...doc.data(),
         }));
         setConversations(updatedConversations);
-        console.log('Fetched user conversations:', updatedConversations);
       });
   
       return () => unsubscribe();
@@ -39,7 +42,6 @@ const Chat = () => {
   }, [user]);
 
   const handleSearchResults = (results) => {
-    console.log('Received search results:', results);
     setSearchResults(results);
     setIsSearching(results.length > 0);
   };
@@ -54,6 +56,7 @@ const Chat = () => {
 
   const handleStartChat = async (selectedUser) => {
     try {
+      setIsLoading(true);
       const existingConversation = conversations.find(conv => 
         conv.participants.includes(selectedUser.id) && conv.participants.includes(user.uid)
       );
@@ -65,23 +68,25 @@ const Chat = () => {
         setSelectedConversation(newConversation);
       }
       handleCloseUserSearch();
-      console.log('Started chat with:', selectedUser.name);
     } catch (error) {
       console.error('Error creating new conversation:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handleSelectConversation = (conversation) => {
+  const handleSelectConversation = (conversation, message = null) => {
+    setIsLoading(true);
     setSelectedConversation(conversation);
     setIsSearching(false);
-    console.log('Selected conversation:', conversation);
+    setSelectedMessage(message);
+    setIsLoading(false);
   };
 
   const handleSendMessage = async (message) => {
     if (selectedConversation) {
       try {
         await sendMessage(message, selectedConversation.id, user.uid);
-        console.log('Message sent:', message);
       } catch (error) {
         console.error('Error sending message:', error);
       }
@@ -112,10 +117,20 @@ const Chat = () => {
       <div className="chat-area">
         {selectedConversation ? (
           <>
-            <ChatWindow 
-              selectedConversation={selectedConversation} 
-              loggedInUser={user} 
-            />
+            <div className="chat-window-container">
+              {isLoading ? (
+                <div className="loading-container">
+                  <LoadingSpinner />
+                </div>
+              ) : (
+                <ChatWindow 
+                  selectedConversation={selectedConversation} 
+                  loggedInUser={user} 
+                  selectedMessage={selectedMessage}
+                  ref={chatWindowRef}
+                />
+              )}
+            </div>
             <ChatInput onSendMessage={handleSendMessage} />
           </>
         ) : (
