@@ -62,10 +62,10 @@ const Chat = () => {
       );
 
       if (existingConversation) {
-        setSelectedConversation(existingConversation);
+        handleSelectConversation(existingConversation);
       } else {
         const newConversation = await createNewConversation(user.uid, selectedUser.id);
-        setSelectedConversation(newConversation);
+        handleSelectConversation(newConversation);
       }
       handleCloseUserSearch();
     } catch (error) {
@@ -78,15 +78,30 @@ const Chat = () => {
   const handleSelectConversation = (conversation, message = null) => {
     setIsLoading(true);
     setSelectedConversation(conversation);
-    setIsSearching(false);
     setSelectedMessage(message);
+    setIsSearching(false);
     setIsLoading(false);
+
+    // Scroll to the selected message or to the bottom of the chat
+    setTimeout(() => {
+      if (chatWindowRef.current) {
+        if (message) {
+          chatWindowRef.current.scrollToMessage(message.id);
+        } else {
+          chatWindowRef.current.scrollToMessage(null); // This will scroll to the bottom
+        }
+      }
+    }, 100); // Small delay to ensure the chat window has updated
   };
 
   const handleSendMessage = async (message) => {
     if (selectedConversation) {
       try {
         await sendMessage(message, selectedConversation.id, user.uid);
+        // Scroll to the bottom after sending a message
+        if (chatWindowRef.current) {
+          chatWindowRef.current.scrollToMessage(null);
+        }
       } catch (error) {
         console.error('Error sending message:', error);
       }
