@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { db, collection, query, getDocs, doc, getDoc } from '../../firebase/firebase';
+import { db, collection, query, getDocs, doc, getDoc, orderBy } from '../../firebase/firebase';
 import './conversationSearch.css';
 import LoadingSpinner from './LoadingSpinner';
 
@@ -49,7 +49,7 @@ async function searchConversations(searchTerm, conversations, loggedInUser) {
   for (const conversation of conversations) {
     try {
       const messagesRef = collection(db, 'conversations', conversation.id, 'messages');
-      const q = query(messagesRef);
+      const q = query(messagesRef, orderBy('timestamp', 'desc'));
       
       const querySnapshot = await getDocs(q);
       

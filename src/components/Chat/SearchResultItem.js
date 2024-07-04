@@ -13,22 +13,24 @@ const SearchResultItem = ({ result, onSelectConversation }) => {
         <span className="other-user-name">{result.otherUserName}</span>
         <span className="match-count">{result.matchingMessages.length} match(es)</span>
       </div>
-      {result.matchingMessages.slice(0, 2).map((message, index) => (
-        <div key={index} className="result-preview">
-          <p>
-            <span className="message-content">
-              {message.content.substring(0, message.highlighted)}
-              <span className="highlight">
-                {message.content.substring(message.highlighted, message.highlighted + result.searchTerm.length)}
+      <div className="matching-messages-container">
+        {result.matchingMessages.map((message, index) => (
+          <div key={index} className="result-preview">
+            <p>
+              <span className="message-content">
+                {message.content.substring(0, message.highlighted)}
+                <span className="highlight">
+                  {message.content.substring(message.highlighted, message.highlighted + result.searchTerm.length)}
+                </span>
+                {message.content.substring(message.highlighted + result.searchTerm.length)}
               </span>
-              {message.content.substring(message.highlighted + result.searchTerm.length)}
+            </p>
+            <span className="result-timestamp">
+              {formatRelativeTime(message.timestamp)}
             </span>
-          </p>
-          <span className="result-timestamp">
-            {formatRelativeTime(message.timestamp)}
-          </span>
-        </div>
-      ))}
+          </div>
+        ))}
+      </div>
     </li>
   );
 };

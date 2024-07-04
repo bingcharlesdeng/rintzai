@@ -30,6 +30,11 @@
   border-radius: 10px;
 }
 
+.matching-messages-container {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
 .result-preview {
   margin-bottom: 8px;
 }
