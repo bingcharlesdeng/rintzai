@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './messageModal.css';
-import { sendMessage } from '../../firebase/messageServices';
+import { sendMessage } from './messageServices';
 import { useUserContext } from '../User/UserContext';
 
 const MessageModal = ({ recipientId, recipientName, onClose }) => {
