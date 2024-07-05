@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import ChatWindow from './ChatWindow';
 import ConversationList from './ConversationList';
 import ChatInput from './ChatInput';
@@ -41,10 +41,10 @@ const Chat = () => {
     }
   }, [user]);
 
-  const handleSearchResults = (results) => {
+  const handleSearchResults = useCallback((results) => {
     setSearchResults(results);
     setIsSearching(results.length > 0);
-  };
+  }, []);
 
   const handleNewChat = () => {
     setIsUserSearchOpen(true);
@@ -82,23 +82,21 @@ const Chat = () => {
     setIsSearching(false);
     setIsLoading(false);
 
-    // Scroll to the selected message or to the bottom of the chat
     setTimeout(() => {
       if (chatWindowRef.current) {
         if (message) {
           chatWindowRef.current.scrollToMessage(message.id);
         } else {
-          chatWindowRef.current.scrollToMessage(null); // This will scroll to the bottom
+          chatWindowRef.current.scrollToMessage(null);
         }
       }
-    }, 100); // Small delay to ensure the chat window has updated
+    }, 100);
   };
 
   const handleSendMessage = async (message) => {
     if (selectedConversation) {
       try {
         await sendMessage(message, selectedConversation.id, user.uid);
-        // Scroll to the bottom after sending a message
         if (chatWindowRef.current) {
           chatWindowRef.current.scrollToMessage(null);
         }

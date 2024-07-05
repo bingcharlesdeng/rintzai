@@ -1,32 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { db, collection, query, getDocs, doc, getDoc, orderBy } from '../../firebase/firebase';
 import './conversationSearch.css';
 import LoadingSpinner from './LoadingSpinner';
 
+function useDebounce(value, delay) {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+}
+
 const ConversationSearch = ({ conversations, onSearchResults, loggedInUser }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
-  const handleSearch = async (e) => {
-    const term = e.target.value.toLowerCase();
-    setSearchTerm(term);
-
-    if (term.trim() === '') {
+  const performSearch = useCallback(async (term) => {
+    if (term) {
+      setIsLoading(true);
+      try {
+        const results = await searchConversations(term, conversations, loggedInUser);
+        onSearchResults(results);
+      } catch (error) {
+        console.error('Error searching conversations:', error);
+        onSearchResults([]);
+      } finally {
+        setIsLoading(false);
+      }
+    } else {
       onSearchResults([]);
-      return;
-    }
-
-    setIsLoading(true);
-
-    try {
-      const results = await searchConversations(term, conversations, loggedInUser);
-      onSearchResults(results);
-    } catch (error) {
-      console.error('Error searching conversations:', error);
-      onSearchResults([]);
-    } finally {
       setIsLoading(false);
     }
+  }, [conversations, loggedInUser, onSearchResults]);
+
+  useEffect(() => {
+    performSearch(debouncedSearchTerm);
+  }, [debouncedSearchTerm, performSearch]);
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
   };
 
   return (
